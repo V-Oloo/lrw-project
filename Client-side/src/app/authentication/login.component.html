@@ -1,0 +1,74 @@
+<div class="container-fluid p-h-0 p-v-20 h-100 bg" style="background-image: url('assets/images/others/login-3.png')">
+  <div class="d-flex flex-column justify-content-between h-100">
+      <div class="d-none d-md-block"></div>
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-md-7 col-lg-5 m-h-auto">
+                  <nz-card class="m-b-100 shadow-lg">
+                      <div class="d-flex align-items-center justify-content-between m-b-30">
+                          <img class="img-fluid" alt="" src="assets/images/logo/logo.png">
+                          <h2 class="m-b-0">Sign In</h2>
+                      </div>
+                      <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="loginUser(loginForm.value)">
+                        <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon></nz-alert>
+                          <nz-form-item>
+                              <nz-form-label nzRequired nzFor="userName">email</nz-form-label>
+                              <nz-form-control nzHasFeedback [nzErrorTip]="emailErrorTpl" >
+                                  <nz-input-group [nzPrefix]="prefixUser">
+                                      <input type="text" nz-input formControlName="email" placeholder="Email">
+                                  </nz-input-group>
+                                  <ng-template #emailErrorTpl let-control>
+                                    <ng-container *ngIf="control.hasError('email')">
+                                      The input is not valid E-mail!
+                                    </ng-container>
+                                    <ng-container *ngIf="control.hasError('required')">
+                                      Please input your E-mail!
+                                    </ng-container>
+                                  </ng-template>
+                              </nz-form-control>
+                          </nz-form-item>
+                          <nz-form-item>
+                              <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
+                              <a class="float-right font-size-13 p-t-10 text-muted" [routerLink]="['/authentication/reset-password-1']">Forget Password?</a>
+                              <nz-form-control nzHasFeedback  [nzErrorTip]="passErrorTpl">
+                                  <nz-input-group [nzPrefix]="prefixLock">
+                                      <input type="password" nz-input formControlName="password" placeholder="Password">
+                                  </nz-input-group>
+                                  <ng-template #passErrorTpl let-control>
+                                    <ng-container *ngIf="control.hasError('required')">
+                                      Please input your Password!
+                                    </ng-container>
+                                  </ng-template>
+                              </nz-form-control>
+                          </nz-form-item>
+                          <nz-form-item>
+                              <nz-form-control>
+                                  <div class="d-flex align-items-center justify-content-between">
+                                      <span class="font-size-13 text-muted">Don't have an account? <a class="small" [routerLink]="['/authentication/sign-up-1']"> Signup</a></span>
+                                      <button [disabled]="loading" nz-button class="login-form-button" [nzType]="'primary'">
+                                        Sign In
+                                        <nz-spin [nzSpinning]="loading"></nz-spin>
+                                      </button>
+                                  </div>
+                              </nz-form-control>
+                          </nz-form-item>
+                      </form>
+                      <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+                      <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+                  </nz-card>
+              </div>
+          </div>
+      </div>
+        <div class="d-none d-md-flex p-h-40 justify-content-between">
+            <span class="">© 2020 LRW TRAFFIC SYSTEMS</span>
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a class="text-dark text-link" href="">Legal</a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="text-dark text-link" href="">Privacy</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
