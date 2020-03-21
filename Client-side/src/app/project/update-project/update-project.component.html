@@ -1,0 +1,121 @@
+<nz-card>
+  <h4>Update Project</h4>
+
+  <div class="m-t-25">
+    <form nz-form [formGroup]="ProjectForm" (ngSubmit)="UpdateProject()">
+      <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon></nz-alert>
+      <div class="row">
+        <div class="col-md-12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="name">Project Name</nz-form-label>
+              <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTp">
+                <nz-input-group>
+                  <input type="text" nz-input formControlName="name" placeholder="Project Name">
+                </nz-input-group>
+                <ng-template #nameErrorTp let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please enter Project Name!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+        </div>
+     </div>
+     <div class="row">
+      <div class="col-md-12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="name">Project Description</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="descErrorTp">
+              <nz-input-group>
+                <textarea nz-input formControlName="description"></textarea>
+              </nz-input-group>
+              <ng-template #descErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please Enter project Description!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+       </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="startDate">Start Date</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="startErrorTp">
+              <nz-input-group>
+                <nz-date-picker
+                    class="w-100"
+                    formControlName="startDate"
+                    nzPlaceHolder="Start Date"
+                    (nzOnOpenChange)="handleStartOpenChange($event)">
+                </nz-date-picker>
+
+              </nz-input-group>
+              <ng-template #startErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please enter Start Date!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="startDate">End Date</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="endErrorTp">
+              <nz-input-group>
+                <nz-date-picker
+                  class="w-100"
+                  formControlName="endDate"
+                  nzPlaceHolder="End Date"
+                  [nzOpen]="endOpen"
+                  (nzOnOpenChange)="handleEndOpenChange($event)">
+                </nz-date-picker>
+              </nz-input-group>
+              <ng-template #endErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please enter End Date!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+      </div>
+    </div>
+  <div class="row">
+    <div class="col-md-12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="address">Customer</nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+            <nz-input-group>
+              <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select a Customer" formControlName="customerId">
+                <nz-option  *ngFor="let item of customers" nzLabel="{{item.organization}}" nzValue="{{item.id}}"></nz-option>
+            </nz-select>
+            </nz-input-group>
+            <ng-template #addressErrorTp let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                Please enter the address!
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+    </div>
+ </div>
+ <div class="row">
+   <nz-form-item>
+     <nz-form-control class="pull-right">
+      <button nz-button [disabled]="loading" nzType="primary">
+        Update
+        <nz-spin [nzSpinning]="loading"></nz-spin>
+      </button>
+     </nz-form-control>
+   </nz-form-item>
+ </div>
+    </form>
+      <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+      <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+  </div>
+</nz-card>
+
+
+

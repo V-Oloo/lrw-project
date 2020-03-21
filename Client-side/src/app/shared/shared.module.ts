@@ -7,6 +7,9 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ThemeConstantService } from './services/theme-constant.service';
 import { SearchPipe } from './pipes/search.pipe';
+import { FilterPipeModule } from 'ngx-filter-pipe';
+import { TextMaskModule } from 'angular2-text-mask';
+
 
 @NgModule({
     exports: [
@@ -15,9 +18,12 @@ import { SearchPipe } from './pipes/search.pipe';
         HttpClientModule,
         NgZorroAntdModule,
         PerfectScrollbarModule,
-        SearchPipe
+        SearchPipe,
+        FilterPipeModule,
+        TextMaskModule
     ],
     imports: [
+        TextMaskModule,
         RouterModule,
         CommonModule,
         NgZorroAntdModule,

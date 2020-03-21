@@ -1,0 +1,115 @@
+<nz-card>
+  <h4>Add Customer</h4>
+
+  <div class="m-t-25">
+    <form nz-form [formGroup]="CustomerForm" (ngSubmit)="addCustomer(CustomerForm.value)">
+      <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon></nz-alert>
+      <div class="row">
+        <div class="col-md-6">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="firstname">Organization</nz-form-label>
+              <nz-form-control nzHasFeedback [nzErrorTip]="orgErrorTp">
+                <nz-input-group>
+                  <input type="text" nz-input formControlName="organization" placeholder="organization">
+                </nz-input-group>
+                <ng-template #orgErrorTp let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please input the organization!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div class="col-md-6">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="contactperson">Contact Person</nz-form-label>
+              <nz-form-control nzHasFeedback [nzErrorTip]="contErrorTp">
+                  <nz-input-group>
+                    <input type="text" nz-input formControlName="contactPerson" placeholder="Contact Person">
+                  </nz-input-group>
+                  <ng-template #contErrorTp let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please input contact Person!
+                    </ng-container>
+                  </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
+            <nz-form-control  nzHasFeedback [nzErrorTip]="emailErrorTp">
+              <nz-input-group>
+                <input type="text" nz-input formControlName="email" placeholder="Email">
+              </nz-input-group>
+              <ng-template #emailErrorTp let-control>
+                <ng-container *ngIf="control.hasError('email')">
+                  The input is not valid E-mail!
+                </ng-container>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please enter the E-mail!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+      </div>
+      <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="phone">Phone No.</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="phoneErrorTp" >
+
+              <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+                <ng-template #addOnBeforeTemplate>
+                    <nz-select formControlName="phonePrefix" style="width: 70px;">
+                     <nz-option nzLabel="+1" nzValue="+1"></nz-option>
+                    </nz-select>
+                </ng-template>
+                <input [textMask]="{mask: mask}" formControlName="phone" id="'phone'" nz-input>
+              </nz-input-group>
+              <ng-template #phoneErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please enter the phone number!
+                </ng-container>
+                <!-- <ng-container *ngIf="control.hasError('pattern')">
+                  Please input a valid phone number!
+                </ng-container> -->
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+      </div>
+    </div>
+  <div class="row">
+    <div class="col-md-12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="address">Contact Address</nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="address" placeholder="Address">
+            </nz-input-group>
+            <ng-template #addressErrorTp let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                Please enter the address!
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+    </div>
+ </div>
+ <div class="row">
+   <nz-form-item>
+     <nz-form-control class="pull-right">
+      <button nz-button [disabled]="loading" nzType="primary">
+        Add
+        <nz-spin [nzSpinning]="loading"></nz-spin>
+      </button>
+     </nz-form-control>
+   </nz-form-item>
+ </div>
+    </form>
+      <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+      <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+  </div>
+</nz-card>
+

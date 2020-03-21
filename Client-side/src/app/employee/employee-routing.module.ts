@@ -7,7 +7,7 @@ import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
-    path: 'list',
+    path: '',
     component: EmployeeComponent,
     data: {
         title: 'Employee List'
@@ -22,7 +22,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'profile',
+    path: 'profile/:id',
     component: ProfileComponent,
     data: {
         title: 'Profile'

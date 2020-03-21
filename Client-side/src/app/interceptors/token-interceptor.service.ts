@@ -12,9 +12,8 @@ export class TokenInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // const token: string = localStorage.getItem('JWT_TOKEN');
 
-    const token = this.authService.currentUserValue.accessToken;
+    const token = this.authService.currentUserValue.access_token;
 
     if (token) {
         request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
@@ -32,6 +31,7 @@ export class TokenInterceptorService implements HttpInterceptor {
         map((event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
                 console.log('event--->>>', event);
+              return event;
             }
             return event;
         }));

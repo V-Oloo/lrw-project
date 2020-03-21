@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { EmployeeService } from '../employee.service';
 import { Registration } from 'src/app/models/registration.model';
 import { AuthService } from 'src/app/authentication/auth.service';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { MustMatch } from 'src/app/shared/pipes/password-validator';
 
@@ -41,6 +41,7 @@ export class ProfileComponent implements OnInit {
     this.empService.getEmployee(this.userId).subscribe((res: any) => {
       this.employee = res.data;
       this.editEmployee(res.data);
+      console.log(res.data);
       // user information
 
       this.fname = this.employee.firstname;
@@ -63,7 +64,6 @@ export class ProfileComponent implements OnInit {
     phone: [null, [Validators.required]],
     phonePrefix: ['+1' , [Validators.required]],
     jobTitle: [null, [Validators.required]],
-    department: [null, [Validators.required]],
     address: [null, [Validators.required]],
   });
   }
@@ -77,7 +77,6 @@ export class ProfileComponent implements OnInit {
       phone: data.phone,
       phonePrefix: data.phonePrefix,
       jobTitle: data.jobTitle,
-      department: data.department,
       address: data.address,
     });
   }
@@ -135,5 +134,16 @@ export class ProfileComponent implements OnInit {
                    }
                    );
   }
+
+  fileList = [
+
+];
+previewImage = '';
+previewVisible = false;
+
+handlePreview = (file: UploadFile) => {
+    this.previewImage = file.url || file.thumbUrl;
+    this.previewVisible = true;
+}
 
 }

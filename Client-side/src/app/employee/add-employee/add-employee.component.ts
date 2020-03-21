@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Registration } from 'src/app/models/registration.model';
 import { EmployeeService } from '../employee.service';
-import { error } from 'protractor';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
+import * as zipcode from 'zipcodes';
 
 @Component({
   selector: 'app-add-employee',
@@ -21,6 +21,7 @@ export class AddEmployeeComponent implements OnInit {
 
   RegistrationForm: FormGroup;
   loading = false;
+  public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
     submitForm(registrationInfo: Registration): void {
 
@@ -33,7 +34,7 @@ export class AddEmployeeComponent implements OnInit {
         {
           this.loading = false;
           this.message.create('success', `Employee added successfully`);
-          this.router.navigate(['/employee/list']);
+          this.router.navigate(['/employees']);
         }, error => {
           this.loading = false;
           this.message.create('error', `operation Unsucceeful, try again`);
@@ -51,9 +52,10 @@ export class AddEmployeeComponent implements OnInit {
             phone: [null, [Validators.required]],
             phonePrefix: ['+1' , [Validators.required]],
             jobTitle: [null, [Validators.required]],
-            department: [null, [Validators.required]],
             address: [null, [Validators.required]],
         });
+
+        this.getAddress()
     }
 
     displayValidationErrors() {
@@ -62,6 +64,12 @@ export class AddEmployeeComponent implements OnInit {
         this.RegistrationForm.controls[ i ].updateValueAndValidity();
       }
 
-}
+     }
+
+     getAddress() {
+      var address = zipcode.lookup(60173);
+      console.log("this is address");
+      console.log(address);
+     }
 
 }

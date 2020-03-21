@@ -18,7 +18,11 @@ import { ThemeConstantService } from './shared/services/theme-constant.service';
 
 import { Globals } from './global';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptorService } from './interceptors/token-interceptor.service';
+import { PAGENOTFOUND } from './shared/errors/page-not-found.component';
+import { JwtInterceptor } from './shared/interceptor/token.interceptor';
+import { HttpErrorInterceptor } from './shared/interceptor/error.interceptor';
+import { ACCESSDENIED } from './shared/errors/error-2.component';
+
 
 registerLocaleData(en);
 
@@ -26,7 +30,9 @@ registerLocaleData(en);
     declarations: [
         AppComponent,
         CommonLayoutComponent,
-        FullLayoutComponent
+        FullLayoutComponent,
+        PAGENOTFOUND,
+        ACCESSDENIED
     ],
     imports: [
         BrowserModule,
@@ -35,12 +41,18 @@ registerLocaleData(en);
         AppRoutingModule,
         TemplateModule,
         SharedModule,
-        NgChartjsModule
+        NgChartjsModule,
+
     ],
     providers: [
-      // {
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: JwtInterceptor,
+        multi: true
+       },
+      //  {
       //   provide: HTTP_INTERCEPTORS,
-      //   useClass: TokenInterceptorService,
+      //   useClass: HttpErrorInterceptor,
       //   multi: true
       //  },
         Globals,

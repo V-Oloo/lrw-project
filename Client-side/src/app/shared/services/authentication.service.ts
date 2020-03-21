@@ -4,10 +4,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User } from '../interfaces/user.type';
+import { Login } from 'src/app/models/login.model';
+import { environment } from 'src/environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
-const USER_AUTH_API_URL = '/api-url';
+const API_URL = environment.apiUrl;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
@@ -21,19 +26,47 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(username: string, password: string) {
-        return this.http.post<any>(USER_AUTH_API_URL, { username, password })
+    public isAuthenticated(): boolean {
+      return !!localStorage.getItem('currentUser');
+    }
+
+    login(authCredentials: Login) {
+        return this.http.post<any>(`${API_URL}/employees/login`, authCredentials)
         .pipe(map(user => {
-            if (user && user.token) {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
+            if (user && user.data.result.access_token) {
+                localStorage.setItem('currentUser', JSON.stringify(user.data.result));
+                this.currentUserSubject.next(user.data.result);
             }
             return user;
         }));
     }
 
+    getJwtToken() {
+      const currentUser = this.currentUserValue;
+      const token = currentUser.access_token;
+
+      return token;
+    }
+
+    isTokenExpired(): boolean {
+      const helper = new JwtHelperService();
+      return !helper.isTokenExpired(this.getJwtToken());
+    }
+
     logout() {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+    }
+
+    resetPassword(email: string) {
+      return this.http.get<any>(`${API_URL}/users/genpasswordreset/${email}`);
+    }
+
+    resendEmail(email: string) {
+      return this.http.get<any>(`${API_URL}/employees/resendconfirmationemail/${email}`);
+    }
+
+    passwordReset(user: { newPassword: any; token: any; userId: any; }) {
+      return this.http.post<any>(`${API_URL}/employees/password_reset` , user);
     }
 }

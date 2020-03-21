@@ -65,7 +65,7 @@
                        <nz-option nzLabel="+1" nzValue="+1"></nz-option>
                       </nz-select>
                   </ng-template>
-                  <input formControlName="phone" id="'phone'" nz-input>
+                  <input [textMask]="{mask: mask}" formControlName="phone" id="'phone'" nz-input type="text" >
                 </nz-input-group>
                 <ng-template #phoneErrorTp let-control>
                   <ng-container *ngIf="control.hasError('required')">
@@ -84,7 +84,7 @@
         <div nz-row nzGutter="16">
           <div nz-col class="gutter-row" nzSpan="12">
             <nz-form-item>
-              <nz-form-label nzRequired nzFor="title">Job Title</nz-form-label>
+              <nz-form-label nzRequired nzFor="title">Role</nz-form-label>
               <nz-form-control  nzHasFeedback [nzErrorTip]="jobErrorTp">
                 <nz-select id="title" formControlName="jobTitle" nzPlaceHolder="Select Job Title">
                   <nz-option nzValue="SUPERVISOR" nzLabel="SUPERVISOR"></nz-option>
@@ -92,33 +92,13 @@
                 </nz-select>
                 <ng-template #jobErrorTp let-control>
                   <ng-container *ngIf="control.hasError('required')">
-                    Please select job title!
+                    Please select employee role!
                   </ng-container>
                 </ng-template>
               </nz-form-control>
             </nz-form-item>
           </div>
           <div nz-col class="gutter-row" nzSpan="12">
-            <nz-form-item>
-            <nz-form-label nzRequired nzFor="department">Department</nz-form-label>
-            <nz-form-control nzHasFeedback [nzErrorTip]="deptErrorTp">
-              <nz-select id="department" formControlName="department" nzPlaceHolder="Select Department">
-                <nz-option nzValue="HUMAN RESOURCE" nzLabel="HUMAN RESOURCE"></nz-option>
-                <nz-option nzValue="ICT" nzLabel="ICT"></nz-option>
-                <nz-option nzValue="FINANCE" nzLabel="FINANCE"></nz-option>
-              </nz-select>
-              <ng-template #deptErrorTp let-control>
-                <ng-container *ngIf="control.hasError('required')">
-                  Please select department!
-                </ng-container>
-              </ng-template>
-            </nz-form-control>
-            </nz-form-item>
-          </div>
-        </div>
-
-        <div nz-row nzGutter="16">
-          <div nz-col class="gutter-row" nzSpan="24">
             <nz-form-item>
               <nz-form-label nzRequired nzFor="address">Contact Address</nz-form-label>
               <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">

@@ -1,0 +1,28 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-12">
+        <nz-card>
+          <h4>Cancel Assigned Task</h4>
+
+          <nz-comment>
+            <nz-comment-content>
+              <form nz-form [formGroup]="CommentForm" (ngSubmit)="addComment(CommentForm.value)">
+
+                <nz-form-item>
+                  <nz-form-label nzRequired nzFor="name">Reason For Cancellation</nz-form-label>
+                  <textarea  nz-input rows="4" formControlName="comment"></textarea>
+                </nz-form-item>
+                <nz-form-item>
+                    <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="CommentForm.invalid">
+                         Cancel
+                    </button>
+                </nz-form-item>
+
+              </form>
+
+            </nz-comment-content>
+        </nz-comment>
+        </nz-card>
+      </div>
+  </div>
+</div>

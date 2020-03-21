@@ -1,0 +1,151 @@
+<div class="page-header">
+  <div class="d-md-flex align-items-md-center justify-content-between">
+      <div class="media m-v-10 align-items-center">
+          <nz-avatar nzIcon="user" [nzSize]="50" nzSrc="assets/images/avatars/thumb-3.jpg"></nz-avatar>
+          <div class="media-body m-l-15">
+              <h4 class="m-b-0">Welcome back, {{fname}}!</h4>
+              <span class="text-gray">{{role}}</span>
+          </div>
+      </div>
+      <div class="d-md-flex align-items-center d-none">
+          <div class="media align-items-center m-r-40 m-v-5">
+              <div class="font-size-27">
+                  <i class="text-primary" nz-icon nzType="profile" theme="outline"></i>
+              </div>
+              <div class="d-flex align-items-center m-l-10">
+                  <h2 class="m-b-0 m-r-5">{{totalTasks}}</h2>
+                  <span class="text-gray">Tasks</span>
+              </div>
+          </div>
+          <!-- <div class="media align-items-center m-r-40 m-v-5">
+              <div class="font-size-27">
+                  <i class="text-success" nz-icon nzType="appstore" theme="outline"></i>
+              </div>
+              <div class="d-flex align-items-center m-l-10">
+                  <h2 class="m-b-0 m-r-5">21</h2>
+                  <span class="text-gray">Projects</span>
+              </div>
+          </div> -->
+          <!-- <div class="media align-items-center m-v-5">
+              <div class="font-size-27">
+                  <i class="text-danger" nz-icon nzType="team" theme="outline"></i>
+              </div>
+              <div class="d-flex align-items-center m-l-10">
+                  <h2 class="m-b-0 m-r-5">39</h2>
+                  <span class="text-gray">Members</span>
+              </div>
+          </div> -->
+      </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <nz-card>
+      <nz-tabset [nzTabPosition]="position" [nzType]="'line'">
+        <nz-tab nzTitle="OPEN">
+          <nz-list
+          [nzDataSource]="openTasks"
+          [nzItemLayout]="'vertical'"
+          [nzRenderItem]="item"
+          [nzPagination]="pagination">
+          <ng-template #item let-item>
+              <nz-list-item [nzContent]="item.content" [nzActions]="[starAction,likeAction]" [nzExtra]="extra">
+              <ng-template #starAction>
+                <span nz-tooltip nzTitle="Start Task">
+                  <button nz-button [nzSize]="size" nzType="dashed" (click)="startTask(item.task_id)">
+                    Start
+                  </button>
+                </span>
+              </ng-template>
+              <ng-template #likeAction>
+                <span nz-tooltip nzTitle="Cancel Task">
+                  <button nz-button [nzSize]="size" nzType="dashed" routerLink="/technician/cancel/{{item.task_id}}">
+                    Cancel
+                  </button>
+                </span>
+              </ng-template>
+                  <nz-list-item-meta
+                      [nzAvatar]="'assets/images/avatars/avatar.png'"
+                      [nzTitle]="nzTitle"
+                      [nzDescription]="item.task_description">
+                      <ng-template #nzTitle>{{item.task_name}}</ng-template>
+                  </nz-list-item-meta>
+                  <ng-template #extra>
+                      <!-- <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"> -->
+                  </ng-template>
+              </nz-list-item>
+          </ng-template>
+          <ng-template #pagination>
+              <nz-pagination [nzPageIndex]="1" [nzTotal]="50" [nzPageSize]="10"></nz-pagination>
+          </ng-template>
+          </nz-list>
+        </nz-tab>
+        <nz-tab nzTitle="IN_PROGRESS">
+          <nz-list
+          [nzDataSource]="inprogress"
+          [nzItemLayout]="'vertical'"
+          [nzRenderItem]="task"
+          [nzPagination]="pagination">
+          <ng-template #task let-task>
+              <nz-list-item [nzContent]="task.content" [nzActions]="[likeAction,msgAction]" [nzExtra]="extra">
+              <ng-template #likeAction>
+                <span nz-tooltip nzTitle="Cancel Task">
+                  <button nz-button [nzSize]="size" nzType="dashed" routerLink="/technician/cancel/{{task.task_id}}">
+                    Cancel
+                  </button>
+                </span>
+              </ng-template>
+              <ng-template #msgAction>
+                  <span nz-tooltip nzTitle="Finish Task">
+                   <button nz-button [nzSize]="size" nzType="dashed" routerLink="/technician/comment/{{task.task_id}}">
+                     Finish
+                   </button>
+                  </span>
+                </ng-template>
+                  <nz-list-item-meta
+                      [nzAvatar]="'assets/images/avatars/avatar.png'"
+                      [nzTitle]="nzTitle"
+                      [nzDescription]="task.task_description">
+                      <ng-template #nzTitle>{{task.task_name}}</ng-template>
+                  </nz-list-item-meta>
+                  <ng-template #extra>
+                      <!-- <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"> -->
+                  </ng-template>
+              </nz-list-item>
+          </ng-template>
+          <ng-template #pagination>
+              <nz-pagination [nzPageIndex]="1" [nzTotal]="50" [nzPageSize]="10"></nz-pagination>
+          </ng-template>
+          </nz-list>
+        </nz-tab>
+        <nz-tab nzTitle="COMPLETED">
+          <nz-list
+          [nzDataSource]="completed"
+          [nzItemLayout]="'vertical'"
+          [nzRenderItem]="complete"
+          [nzPagination]="pagination">
+          <ng-template #complete let-complete>
+              <nz-list-item [nzContent]="complete.content" [nzExtra]="extra">
+                  <nz-list-item-meta
+                      [nzAvatar]="'assets/images/avatars/avatar.png'"
+                      [nzTitle]="nzTitle"
+                      [nzDescription]="complete.task_description">
+                      <ng-template #nzTitle>{{complete.task_name}}</ng-template>
+                  </nz-list-item-meta>
+                  <ng-template #extra>
+                      <!-- <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"> -->
+                  </ng-template>
+              </nz-list-item>
+          </ng-template>
+          <ng-template #pagination>
+              <nz-pagination [nzPageIndex]="1" [nzTotal]="50" [nzPageSize]="10"></nz-pagination>
+          </ng-template>
+          </nz-list>
+        </nz-tab>
+      </nz-tabset>`
+  </nz-card>
+  </div>
+
+</div>
+
+

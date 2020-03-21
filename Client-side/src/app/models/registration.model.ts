@@ -5,7 +5,6 @@ export class Registration {
   firstname: string;
   lastname: string;
   jobTitle: string;
-  department: string;
   address: string;
   id: number;
 }

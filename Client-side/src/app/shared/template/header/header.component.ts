@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { ThemeConstantService } from '../../services/theme-constant.service';
+import { AuthService } from 'src/app/authentication/auth.service';
+import { EmployeeService } from 'src/app/employee/employee.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -13,12 +17,30 @@ export class HeaderComponent{
     isFolded : boolean;
     isExpand : boolean;
 
-    constructor( private themeService: ThemeConstantService) {}
+    constructor( private themeService: ThemeConstantService,
+       private auth: AuthenticationService,
+       private empService: EmployeeService,
+       private _router: Router
+       ) {}
+
+    currentUser = this.auth.currentUserValue;
+    userId = this.currentUser.user_id;
+
+    fname; lname; role;
 
     ngOnInit(): void {
         this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
         this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
+
+        this.empService.getEmployee(this.userId).subscribe((res: any) => {
+            const employee = res.data;
+            this.fname = employee.firstname;
+            this.lname = employee.lastname;
+            this.role = employee.jobTitle;
+
+        });
     }
+
 
     toggleFold() {
         this.isFolded = !this.isFolded;
@@ -38,6 +60,10 @@ export class HeaderComponent{
 
     quickViewToggle(): void {
         this.quickViewVisible = !this.quickViewVisible;
+    }
+
+    getUserDetails() {
+
     }
 
     notificationList = [
@@ -66,4 +92,9 @@ export class HeaderComponent{
             color: 'ant-avatar-' + 'gold'
         }
     ];
+
+    logout() {
+        this.auth.logout();
+        this._router.navigateByUrl('/authentication/login');
+    }
 }

@@ -4,7 +4,7 @@
           <div class="row">
               <div class="col-md-5">
                   <nz-input-group [nzPrefix]="searchPrefix">
-                      <input type="text" nz-input placeholder="Search Employee">
+                      <input type="text" nz-input placeholder="Search Employee" [(ngModel)]="search">
                   </nz-input-group>
                   <ng-template #searchPrefix>
                       <i class="opacity-04" nz-icon nzType="search"></i>
@@ -14,7 +14,7 @@
       </div>
       <div class="col-md-6">
           <div class="text-md-right m-v-10">
-              <button nz-button nzType="primary" [routerLink]="['/employee/add-employee']">
+              <button nz-button nzType="primary" [routerLink]="['/employees/add-employee']">
                   <i nz-icon nzType="plus"></i>
                   <span>New Employee</span>
               </button>
@@ -24,21 +24,20 @@
 </div>
 <div class="container-fluid">
   <nz-card>
-      <nz-table #listViewTable [nzData]="projectList">
+      <nz-table #listViewTable  nzBordered [nzPageSize]="15" [nzData]="employeeList" nzTitle="EMPLOYEES">
           <thead>
               <tr>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Address</th>
-                  <th>Department</th>
                   <th>Role</th>
                   <th class="text-center">Status</th>
-                  <th></th>
+                  <th>Action</th>
               </tr>
           </thead>
           <tbody>
-              <tr *ngFor="let item of listViewTable.data">
+              <tr *ngFor="let item of listViewTable.data | search:'firstname':search as count ;  let i=index">
                   <td>
                     {{item.firstname + " " + item.lastname}}
                   </td>
@@ -48,9 +47,6 @@
                   </td>
                   <td>
                      {{item.address}}
-                  </td>
-                  <td class="text-center">
-                     {{item.department}}
                   </td>
                   <td class="text-center">
                     {{item.jobTitle}}
@@ -65,25 +61,31 @@
                               </a>
                               <nz-dropdown-menu #projectListSetting2="nzDropdownMenu">
                                   <ul nz-menu nzSelectable>
-                                      <li nz-menu-item>
-                                          <a [routerLink]="['/apps/projects/project-details']">
+                                      <li nz-menu-item *ngIf="item.status == 'ACTIVE'">
+                                          <a routerLink="/employees/profile/{{item.id}}">
                                               <i nz-icon nzType="eye" theme="outline"></i>
                                               <span class="m-l-10">View</span>
                                           </a>
                                       </li>
-                                      <li nz-menu-item>
-                                          <a>
-                                              <i nz-icon nzType="edit" theme="outline"></i>
-                                              <span class="m-l-10">Edit</span>
-                                          </a>
-                                      </li>
                                       <li nz-menu-divider></li>
-                                      <li nz-menu-item>
-                                          <a>
-                                              <i nz-icon nzType="delete" theme="outline"></i>
-                                              <span class="m-l-10">Delete</span>
+                                      <li nz-menu-item *ngIf="item.status == 'ACTIVE'">
+                                          <a (click)="deactivateEmployee(item.id)">
+                                              <i nz-icon nzType="reset" theme="outline"></i>
+                                              <span class="m-l-10">Deactivate</span>
                                           </a>
                                       </li>
+                                      <li nz-menu-item *ngIf="item.status == 'INACTIVE'">
+                                        <a (click)="activateEmployee(item.id)">
+                                            <i nz-icon nzType="reset" theme="outline"></i>
+                                            <span class="m-l-10">Ativate</span>
+                                        </a>
+                                      </li>
+                                      <li nz-menu-item>
+                                        <a (click)="removeEmployee(item.id)">
+                                            <i nz-icon nzType="delete" theme="outline"></i>
+                                            <span class="m-l-10">Delete</span>
+                                        </a>
+                                    </li>
                                   </ul>
                               </nz-dropdown-menu>
                       </div>

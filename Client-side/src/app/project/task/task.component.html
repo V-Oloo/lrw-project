@@ -1,0 +1,102 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-12">
+          <nz-card>
+              <div class="d-flex justify-content-between">
+                  <div class="media align-items-center">
+                      <nz-avatar nzShape="square" nzSrc="assets/images/others/thumb-3.jpg"></nz-avatar>
+                      <div class="m-l-10">
+                          <h4 class="m-b-0">{{name}}</h4>
+                      </div>
+                  </div>
+                  <div>
+                      <nz-tag class="m-b-0" [nzColor]="'blue'">{{status}}</nz-tag>
+                  </div>
+              </div>
+              <div class="m-t-40">
+                  <h6>Description:</h6>
+                  {{description}}
+              </div>
+              <div class="d-md-flex m-t-30 align-items-center justify-content-between">
+                  <div class="d-flex align-items-center m-t-10">
+                      <span class="text-dark font-weight-semibold m-r-10 m-b-5">Team: </span>
+                      <a class="m-r-5 m-b-5" *ngFor="let item of memberList">
+                          <nz-avatar [nzSize]="30" [nzSrc]="item.avatar" nz-tooltip [nzTitle]="item.name"></nz-avatar>
+                      </a>
+                  </div>
+                  <div class="m-t-10">
+                      <span class="font-weight-semibold m-r-10 m-b-5 text-dark">Due Date: </span>
+                      <span>{{endDate | date}}</span>
+                  </div>
+              </div>
+              <div class="off-gutter-x m-t-30">
+                  <nz-tabset>
+                      <nz-tab nzTitle="Comments">
+                        <nz-card>
+                          <div class="p-h-30 p-v-25">
+                            <nz-list [nzDataSource]="comments" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzPagination]="pagination">
+                              <ng-template #item let-item>
+                                  <nz-comment [nzAuthor]="item.name" [nzDatetime]="item.createdAt | date">
+                                      <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="'assets/images/avatars/avatar.png'"></nz-avatar>
+                                      <nz-comment-content>
+                                          <p>{{ item.review }}</p>
+                                      </nz-comment-content>
+                                      <!-- <nz-comment-action>Reply to</nz-comment-action> -->
+                                  </nz-comment>
+                              </ng-template>
+                              <nz-divider></nz-divider>
+                              <ng-template #pagination>
+                                <nz-pagination [nzPageIndex]="1"  [nzPageSize]="5" [nzTotal]="total"></nz-pagination>
+                            </ng-template>
+                          </nz-list>
+
+                        </div>
+                        </nz-card>
+                      </nz-tab>
+                      <nz-tab nzTitle="Add Comment">
+                        <nz-card>
+                          <h4>Add Comment</h4>
+
+                          <div class="m-t-25">
+                            <form nz-form [formGroup]="CommentForm" (ngSubmit)="addComment(CommentForm.value)">
+                              <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon></nz-alert>
+                             <div class="row">
+                              <div class="col-md-12">
+                                  <nz-form-item>
+                                    <nz-form-label nzRequired nzFor="name">Comment</nz-form-label>
+                                    <nz-form-control nzHasFeedback [nzErrorTip]="descErrorTp">
+                                      <nz-input-group>
+                                        <textarea nz-input formControlName="comment"></textarea>
+                                      </nz-input-group>
+                                      <ng-template #descErrorTp let-control>
+                                        <ng-container *ngIf="control.hasError('required')">
+                                          Please Enter Comment!
+                                        </ng-container>
+                                      </ng-template>
+                                    </nz-form-control>
+                                  </nz-form-item>
+                               </div>
+                              </div>
+
+                         <div class="row">
+                           <nz-form-item>
+                             <nz-form-control class="pull-right">
+                              <button nz-button [disabled]="loading" nzType="primary">
+                                Add Comment
+                                <nz-spin [nzSpinning]="loading"></nz-spin>
+                              </button>
+                             </nz-form-control>
+                           </nz-form-item>
+                         </div>
+                            </form>
+                              <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+                              <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+                          </div>
+                        </nz-card>
+                      </nz-tab>
+                  </nz-tabset>
+              </div>
+          </nz-card>
+      </div>
+  </div>
+</div>

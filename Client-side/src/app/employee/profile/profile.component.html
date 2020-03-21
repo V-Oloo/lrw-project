@@ -4,13 +4,33 @@
           <div class="col-md-7">
               <div class="d-md-flex align-items-center">
                   <div class="text-center text-sm-left ">
-                      <nz-avatar class="shadow-sm m-v-15" [nzSize]="150" nzSrc="assets/images/avatars/thumb-3.jpg"></nz-avatar>
+                    <div class="clearfix">
+                      <nz-upload
+                          nzAction="http://localhost:3000/api/employees/{{userId}}/avatar"
+                          nzListType="picture-card"
+                          [(nzFileList)]="fileList"
+                          [nzShowButton]="fileList.length < 1"
+                          [nzPreview]="handlePreview">
+                          <i nz-icon nzType="plus"></i>
+                          <div class="ant-upload-text">Upload</div>
+                      </nz-upload>
+                      <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+                          <ng-template #modalContent>
+                              <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+                          </ng-template>
+                      </nz-modal>
+                  </div>
                   </div>
                   <div class="text-center text-sm-left m-v-15 p-l-30">
                       <h2 class="m-b-5">{{fname}} {{lname}}</h2>
                       <p class="text-opacity font-size-13">@{{fname}}</p>
                       <p class="text-dark m-b-20">{{role}}</p>
-                      <button nz-button nzType="primary" nzGhost>Contact</button>
+
+                      <!-- <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
+                        <button nz-button>
+                            <i nz-icon nzType="upload"></i><span>Upload Profile</span>
+                        </button>
+                    </nz-upload> -->
                   </div>
               </div>
           </div>
@@ -161,27 +181,8 @@
                 </nz-form-item>
             </div>
             <div class="col-md-6">
-                <nz-form-item>
-                  <nz-form-label nzRequired nzFor="department">Department</nz-form-label>
-                  <nz-form-control nzHasFeedback [nzErrorTip]="deptErrorTp">
-                    <nz-select id="department" formControlName="department" nzPlaceHolder="Select Department">
-                      <nz-option nzValue="HUMAN RESOURCE" nzLabel="HUMAN RESOURCE"></nz-option>
-                      <nz-option nzValue="ICT" nzLabel="ICT"></nz-option>
-                      <nz-option nzValue="FINANCE" nzLabel="FINANCE"></nz-option>
-                    </nz-select>
-                    <ng-template #deptErrorTp let-control>
-                      <ng-container *ngIf="control.hasError('required')">
-                        Please select department!
-                      </ng-container>
-                    </ng-template>
-                  </nz-form-control>
-                </nz-form-item>
-            </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
               <nz-form-item>
-                <nz-form-label nzRequired nzFor="address">Contact Address</nz-form-label>
+                <nz-form-label nzRequired nzFor="address">Home Address</nz-form-label>
                 <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
                   <nz-input-group>
                     <input type="text" nz-input formControlName="address" placeholder="Address">
@@ -193,8 +194,8 @@
                   </ng-template>
                 </nz-form-control>
               </nz-form-item>
-          </div>
-       </div>
+            </div>
+        </div>
        <div class="row">
          <nz-form-item>
            <nz-form-control class="pull-right">

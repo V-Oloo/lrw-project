@@ -6,11 +6,14 @@ import { CommonLayoutComponent } from "./layouts/common-layout/common-layout.com
 
 import { FullLayout_ROUTES } from "./shared/routes/full-layout.routes";
 import { CommonLayout_ROUTES } from "./shared/routes/common-layout.routes";
+import { PAGENOTFOUND } from './shared/errors/page-not-found.component';
+import { ACCESSDENIED } from './shared/errors/error-2.component';
+
 
 const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: '/dashboard/home',
+        redirectTo: '/authentication/login',
         pathMatch: 'full',
     },
     {
@@ -22,7 +25,15 @@ const appRoutes: Routes = [
         path: '',
         component: FullLayoutComponent,
         children: FullLayout_ROUTES
-    }
+    },
+
+    {
+      path: 'unauthorised',
+      component: ACCESSDENIED,
+    },
+
+    { path: '**', component: PAGENOTFOUND }
+
 ];
 
 @NgModule({
