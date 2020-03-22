@@ -1,3 +1,5 @@
+import { CreatePassword } from './../../models/create-password.model';
+import { ChangePasswordDTO } from './../../../../../server/src/employee/dto/change-password.dto';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -59,14 +61,14 @@ export class AuthenticationService {
     }
 
     resetPassword(email: string) {
-      return this.http.get<any>(`${API_URL}/users/genpasswordreset/${email}`);
+      return this.http.post<any>(`${API_URL}/employees/genpasswordreset`, email);
     }
 
     resendEmail(email: string) {
       return this.http.get<any>(`${API_URL}/employees/resendconfirmationemail/${email}`);
     }
 
-    passwordReset(user: { newPassword: any; token: any; userId: any; }) {
-      return this.http.post<any>(`${API_URL}/employees/password_reset` , user);
+    passwordReset(userId: number, data: CreatePassword) {
+      return this.http.patch<any>(`${API_URL}/employees/${userId}/createPassword` , data);
     }
 }

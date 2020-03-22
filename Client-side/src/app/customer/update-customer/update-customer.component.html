@@ -80,23 +80,68 @@
           </nz-form-item>
       </div>
     </div>
-  <div class="row">
-    <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3">
         <nz-form-item>
-          <nz-form-label nzRequired nzFor="address">Contact Address</nz-form-label>
+          <nz-form-label nzRequired nzFor="address">Street.</nz-form-label>
           <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
             <nz-input-group>
-              <input type="text" nz-input formControlName="address" placeholder="Address">
+              <input type="text" nz-input formControlName="street" placeholder="eg. 777 Brockton Avenue">
             </nz-input-group>
             <ng-template #addressErrorTp let-control>
               <ng-container *ngIf="control.hasError('required')">
-                Please enter the address!
+                Please enter the street.!
               </ng-container>
             </ng-template>
           </nz-form-control>
         </nz-form-item>
-    </div>
- </div>
+     </div>
+     <div class="col-md-3">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="address">City</nz-form-label>
+        <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+          <nz-input-group>
+            <input type="text" nz-input formControlName="city" placeholder="eg. Abington">
+          </nz-input-group>
+          <ng-template #addressErrorTp let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Please enter the city!
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+     </div>
+     <div class="col-md-3">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="address">State</nz-form-label>
+        <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+          <nz-input-group>
+            <input type="text" nz-input formControlName="state" placeholder="eg. MA">
+          </nz-input-group>
+          <ng-template #addressErrorTp let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Please enter the state!
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+     </div>
+     <div class="col-md-3">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="address">Zip Code</nz-form-label>
+        <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+          <nz-input-group>
+            <input type="text" nz-input formControlName="zipCode" placeholder="zip code">
+          </nz-input-group>
+          <ng-template #addressErrorTp let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Please enter the zip code!
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+     </div>
+   </div>
  <div class="row">
    <nz-form-item>
      <nz-form-control class="pull-right">

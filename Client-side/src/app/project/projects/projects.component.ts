@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import * as _ from 'lodash'
 
 @Component({
   selector: 'app-projects',
@@ -16,7 +17,7 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectService.getProjectTbDetails().subscribe((res:any) => {
-      this.projectList = res;
+      this.projectList = res
     });
   }
 

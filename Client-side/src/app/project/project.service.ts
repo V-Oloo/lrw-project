@@ -1,10 +1,10 @@
+import { TaskModel } from 'src/app/models/task.model';
 import { Status } from './../models/task-status.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Project } from '../models/project.model';
 import { Globals } from '../global';
 import { map, shareReplay } from 'rxjs/operators';
-import { TaskModel } from '../models/task.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -69,6 +69,10 @@ export class ProjectService {
 
   updateStatus(id: number, status: any) {
     return this.http.patch(`${environment.apiUrl}/project/${id}/status`, status);
+   }
+
+   updateTask(id: number, data: TaskModel) {
+     return this.http.patch(`${environment.apiUrl}/tasks/${id}/update`, data)
    }
 
 }

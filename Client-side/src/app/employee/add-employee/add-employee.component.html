@@ -3,136 +3,174 @@
 
   <div class="m-t-25">
       <form nz-form [formGroup]="RegistrationForm" class="login-form" (ngSubmit)="submitForm(RegistrationForm.value)">
-        <div nz-row nzGutter="16">
-          <div nz-col class="gutter-row" nzSpan="12">
-            <nz-form-item>
-            <nz-form-label nzRequired nzFor="firstname">First Name</nz-form-label>
-            <nz-form-control nzHasFeedback [nzErrorTip]="fnameErrorTp">
-              <nz-input-group>
-                <input type="text" nz-input formControlName="firstname" placeholder="First Name">
-              </nz-input-group>
-              <ng-template #fnameErrorTp let-control>
-                <ng-container *ngIf="control.hasError('required')">
-                  Please input your First Name!
-                </ng-container>
-              </ng-template>
-            </nz-form-control>
-            </nz-form-item>
+          <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon></nz-alert>
+          <div class="row">
+            <div class="col-md-6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzFor="firstname">First Name</nz-form-label>
+                  <nz-form-control nzHasFeedback [nzErrorTip]="fnameErrorTp">
+                    <nz-input-group>
+                      <input type="text" nz-input formControlName="firstname" placeholder="First Name">
+                    </nz-input-group>
+                    <ng-template #fnameErrorTp let-control>
+                      <ng-container *ngIf="control.hasError('required')">
+                        Please input your First Name!
+                      </ng-container>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzFor="lastname">Last Name</nz-form-label>
+                  <nz-form-control nzHasFeedback [nzErrorTip]="lnameErrorTp">
+                      <nz-input-group>
+                        <input type="text" nz-input formControlName="lastname" placeholder="Last Name">
+                      </nz-input-group>
+                      <ng-template #lnameErrorTp let-control>
+                        <ng-container *ngIf="control.hasError('required')">
+                          Please input your First Name!
+                        </ng-container>
+                      </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+            </div>
           </div>
-          <div nz-col class="gutter-row" nzSpan="12">
-            <nz-form-item>
-             <nz-form-label nzRequired nzFor="lastname">Last Name</nz-form-label>
-              <nz-form-control nzHasFeedback [nzErrorTip]="lnameErrorTp">
+        <div class="row">
+          <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
+                <nz-form-control  nzHasFeedback [nzErrorTip]="emailErrorTp">
                   <nz-input-group>
-                    <input type="text" nz-input formControlName="lastname" placeholder="Last Name">
+                    <input type="text" nz-input formControlName="email" placeholder="Email">
                   </nz-input-group>
-                  <ng-template #lnameErrorTp let-control>
+                  <ng-template #emailErrorTp let-control>
+                    <ng-container *ngIf="control.hasError('email')">
+                      The input is not valid E-mail!
+                    </ng-container>
                     <ng-container *ngIf="control.hasError('required')">
-                      Please input your First Name!
+                      Please input your E-mail!
                     </ng-container>
                   </ng-template>
-              </nz-form-control>
-            </nz-form-item>
+                </nz-form-control>
+              </nz-form-item>
           </div>
-        </div>
-        <div nz-row nzGutter="16">
-          <div nz-col class="gutter-row" nzSpan="12">
-            <nz-form-item>
-              <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
-              <nz-form-control  nzHasFeedback [nzErrorTip]="emailErrorTp">
-                <nz-input-group>
-                  <input type="text" nz-input formControlName="email" placeholder="Email">
-                </nz-input-group>
-                <ng-template #emailErrorTp let-control>
-                  <ng-container *ngIf="control.hasError('email')">
-                    The input is not valid E-mail!
-                  </ng-container>
-                  <ng-container *ngIf="control.hasError('required')">
-                    Please input your E-mail!
-                  </ng-container>
-                </ng-template>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col class="gutter-row" nzSpan="12">
-            <nz-form-item>
-              <nz-form-label nzRequired nzFor="phone">Phone No.</nz-form-label>
-              <nz-form-control nzHasFeedback [nzErrorTip]="phoneErrorTp" >
+          <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-label  [textMask]="{mask: mask}" nzRequired nzFor="phone">Phone No.</nz-form-label>
+                <nz-form-control nzHasFeedback [nzErrorTip]="phoneErrorTp" >
 
-                <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
-                  <ng-template #addOnBeforeTemplate>
-                      <nz-select formControlName="phonePrefix" style="width: 70px;">
-                       <nz-option nzLabel="+1" nzValue="+1"></nz-option>
-                      </nz-select>
+                  <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+                    <ng-template #addOnBeforeTemplate>
+                        <nz-select formControlName="phonePrefix" style="width: 70px;">
+                         <nz-option nzLabel="+1" nzValue="+1"></nz-option>
+                        </nz-select>
+                    </ng-template>
+                    <input formControlName="phone" id="'phone'" nz-input>
+                  </nz-input-group>
+                  <ng-template #phoneErrorTp let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please input your phone number!
+                    </ng-container>
+                    <!-- <ng-container *ngIf="control.hasError('pattern')">
+                      Please input a valid phone number!
+                    </ng-container> -->
                   </ng-template>
-                  <input [textMask]="{mask: mask}" formControlName="phone" id="'phone'" nz-input type="text" >
-                </nz-input-group>
-                <ng-template #phoneErrorTp let-control>
-                  <ng-container *ngIf="control.hasError('required')">
-                    Please input your phone number!
-                  </ng-container>
-                  <!-- <ng-container *ngIf="control.hasError('pattern')">
-                    Please input a valid phone number!
-                  </ng-container> -->
-                </ng-template>
-              </nz-form-control>
-            </nz-form-item>
-
+                </nz-form-control>
+              </nz-form-item>
           </div>
         </div>
-
-        <div nz-row nzGutter="16">
-          <div nz-col class="gutter-row" nzSpan="12">
+        <div class="row">
+          <div class="col-md-3">
             <nz-form-item>
-              <nz-form-label nzRequired nzFor="title">Role</nz-form-label>
-              <nz-form-control  nzHasFeedback [nzErrorTip]="jobErrorTp">
-                <nz-select id="title" formControlName="jobTitle" nzPlaceHolder="Select Job Title">
-                  <nz-option nzValue="SUPERVISOR" nzLabel="SUPERVISOR"></nz-option>
-                  <nz-option nzValue="TECHNICIAN" nzLabel="TECHNICIAN"></nz-option>
-                </nz-select>
-                <ng-template #jobErrorTp let-control>
-                  <ng-container *ngIf="control.hasError('required')">
-                    Please select employee role!
-                  </ng-container>
-                </ng-template>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col class="gutter-row" nzSpan="12">
-            <nz-form-item>
-              <nz-form-label nzRequired nzFor="address">Contact Address</nz-form-label>
+              <nz-form-label nzRequired nzFor="address">Street.</nz-form-label>
               <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
                 <nz-input-group>
-                  <input type="text" nz-input formControlName="address" placeholder="Address">
+                  <input type="text" nz-input formControlName="street" placeholder="eg. 777 Brockton Avenue">
                 </nz-input-group>
                 <ng-template #addressErrorTp let-control>
                   <ng-container *ngIf="control.hasError('required')">
-                    Please enter the address!
+                    Please enter the street.!
                   </ng-container>
                 </ng-template>
               </nz-form-control>
             </nz-form-item>
-          </div>
-        </div>
-
-        <div nz-row nzGutter="16">
-          <div nz-col class="gutter-row" nzSpan="24">
-            <nz-form-item nz-row style="margin-bottom:8px; margin-top:8px; margin-left:8px">
-              <nz-form-control class="pull-left" [nzSpan]="14">
-
-                  <button nz-button [disabled]="loading" nzType="primary">
-                    Register
-                    <nz-spin [nzSpinning]="loading"></nz-spin>
-                  </button>
-
-              </nz-form-control>
-          </nz-form-item>
-          </div>
-        </div>
-
+         </div>
+         <div class="col-md-3">
           <nz-form-item>
-
+            <nz-form-label nzRequired nzFor="address">City</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+              <nz-input-group>
+                <input type="text" nz-input formControlName="city" placeholder="eg. Abington">
+              </nz-input-group>
+              <ng-template #addressErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please enter the city!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
           </nz-form-item>
+         </div>
+         <div class="col-md-3">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="address">State</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+              <nz-input-group>
+                <input type="text" nz-input formControlName="state" placeholder="eg. MA">
+              </nz-input-group>
+              <ng-template #addressErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please enter the state!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+         </div>
+         <div class="col-md-3">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="address">Zip Code</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+              <nz-input-group>
+                <input type="text" nz-input formControlName="zipCode" placeholder="zip code">
+              </nz-input-group>
+              <ng-template #addressErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please enter the zip code!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+         </div>
+       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="title">Job Title</nz-form-label>
+            <nz-form-control  nzHasFeedback [nzErrorTip]="jobErrorTp">
+              <nz-select id="title" formControlName="jobTitle" nzPlaceHolder="Select Job Title">
+                <nz-option nzValue="SUPERVISOR" nzLabel="SUPERVISOR"></nz-option>
+                <nz-option nzValue="TECHNICIAN" nzLabel="TECHNICIAN"></nz-option>
+              </nz-select>
+              <ng-template #jobErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please select job title!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+      </div>
+      </div>
+     <div class="row">
+       <nz-form-item>
+         <nz-form-control class="pull-right">
+          <button nz-button [disabled]="loading" nzType="primary">
+            Update
+            <nz-spin [nzSpinning]="loading"></nz-spin>
+          </button>
+         </nz-form-control>
+       </nz-form-item>
+     </div>
+
       </form>
       <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
       <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>

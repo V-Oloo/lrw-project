@@ -10,11 +10,13 @@ import { UpdateProjectComponent } from './update-project/update-project.componen
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskComponent } from './task/task.component';
+import { CompletedTasksComponent } from './completed-tasks/completed-tasks.component';
+import { UpdateTaskComponent } from './update-task/update-task.component';
 
 
 
 @NgModule({
-  declarations: [ProjectsComponent, AddProjectComponent, ProjectDetailsComponent, UpdateProjectComponent, TaskComponent],
+  declarations: [ProjectsComponent, AddProjectComponent, ProjectDetailsComponent, UpdateProjectComponent, TaskComponent, CompletedTasksComponent, UpdateTaskComponent],
   imports: [
     CommonModule,
     ProjectRoutingModule,

@@ -62,8 +62,12 @@ export class ProjectDetailsComponent implements OnInit {
    this.TaskForm = this.fb.group({
      name: [null, [Validators.required]],
      description: [null, [Validators.required]],
-     expectedStartDate: [null, [Validators.required]],
-     expectedEndDate: [null, [Validators.required]],
+     plannedStartDate: [null, [Validators.required]],
+     plannedEndDate: [null, [Validators.required]],
+     street: [null, [Validators.required]],
+     zipCode: [null, [Validators.required]],
+     city: [null, [Validators.required]],
+     state: [null, [Validators.required]],
      assignedEmployees: [null, [Validators.required]],
  });
 

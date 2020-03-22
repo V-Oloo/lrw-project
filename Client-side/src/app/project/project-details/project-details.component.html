@@ -45,9 +45,9 @@
                       <td>
                         {{item.name}}
                       </td>
-                      <td>{{item.expectedStartDate | date}}</td>
+                      <td>{{item.plannedStartDate | date}}</td>
                       <td>
-                        {{item.expectedEndDate | date}}
+                        {{item.plannedEndDate | date}}
                       </td>
                       <td>
                         {{item.status}}
@@ -67,7 +67,7 @@
                                 </a>
                               </li>
                               <li nz-menu-item>
-                                <a routerLink="/projects/task/{{item.id}}">
+                                <a routerLink="/projects/update-task/{{item.id}}">
                                   <i nz-icon nzType="edit" theme="outline"></i>
                                   <span class="m-l-10">Edit</span>
                                 </a>
@@ -102,7 +102,7 @@
                           <nz-form-label nzRequired nzFor="name">Task Name</nz-form-label>
                           <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTp">
                             <nz-input-group>
-                              <input type="text" nz-input formControlName="name" placeholder="Project Name">
+                              <input type="text" nz-input formControlName="name" placeholder="Task Name">
                             </nz-input-group>
                             <ng-template #nameErrorTp let-control>
                               <ng-container *ngIf="control.hasError('required')">
@@ -137,7 +137,7 @@
                           <nz-form-control nzHasFeedback [nzErrorTip]="startErrorTp">
                             <nz-input-group>
                               <nz-date-picker nzShowTime class="w-100" nzFormat="MM/dd/yyyy HH:mm:ss"
-                                [nzDisabledDate]="disabledDate" formControlName="expectedStartDate" nzPlaceHolder="Select Date"
+                                [nzDisabledDate]="disabledDate" formControlName="plannedStartDate" nzPlaceHolder="Select Date"
                                 (ngModelChange)="onChange($event)" (nzOnOk)="onOk($event)">
                               </nz-date-picker>
 
@@ -156,7 +156,7 @@
                           <nz-form-control nzHasFeedback [nzErrorTip]="endErrorTp">
                             <nz-input-group>
                               <nz-date-picker nzShowTime class="w-100" nzFormat="MM/dd/yyyy HH:mm:ss"
-                                [nzDisabledDate]="disabledDate" formControlName="expectedEndDate" nzPlaceHolder="Select Date"
+                                [nzDisabledDate]="disabledDate" formControlName="plannedEndDate" nzPlaceHolder="Select Date"
                                 (ngModelChange)="onChange($event)" (nzOnOk)="onOk($event)">
                               </nz-date-picker>
                             </nz-input-group>
@@ -169,7 +169,68 @@
                         </nz-form-item>
                       </div>
                     </div>
-
+                    <div class="row">
+                      <div class="col-md-3">
+                        <nz-form-item>
+                          <nz-form-label nzRequired nzFor="address">Street.</nz-form-label>
+                          <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+                            <nz-input-group>
+                              <input type="text" nz-input formControlName="street" placeholder="eg. 777 Brockton Avenue">
+                            </nz-input-group>
+                            <ng-template #addressErrorTp let-control>
+                              <ng-container *ngIf="control.hasError('required')">
+                                Please enter the street.!
+                              </ng-container>
+                            </ng-template>
+                          </nz-form-control>
+                        </nz-form-item>
+                     </div>
+                     <div class="col-md-3">
+                      <nz-form-item>
+                        <nz-form-label nzRequired nzFor="address">City</nz-form-label>
+                        <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+                          <nz-input-group>
+                            <input type="text" nz-input formControlName="city" placeholder="eg. Abington">
+                          </nz-input-group>
+                          <ng-template #addressErrorTp let-control>
+                            <ng-container *ngIf="control.hasError('required')">
+                              Please enter the city!
+                            </ng-container>
+                          </ng-template>
+                        </nz-form-control>
+                      </nz-form-item>
+                     </div>
+                     <div class="col-md-3">
+                      <nz-form-item>
+                        <nz-form-label nzRequired nzFor="address">State</nz-form-label>
+                        <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+                          <nz-input-group>
+                            <input type="text" nz-input formControlName="state" placeholder="eg. MA">
+                          </nz-input-group>
+                          <ng-template #addressErrorTp let-control>
+                            <ng-container *ngIf="control.hasError('required')">
+                              Please enter the state!
+                            </ng-container>
+                          </ng-template>
+                        </nz-form-control>
+                      </nz-form-item>
+                     </div>
+                     <div class="col-md-3">
+                      <nz-form-item>
+                        <nz-form-label nzRequired nzFor="address">Zip Code</nz-form-label>
+                        <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+                          <nz-input-group>
+                            <input type="text" nz-input formControlName="zipCode" placeholder="zip code">
+                          </nz-input-group>
+                          <ng-template #addressErrorTp let-control>
+                            <ng-container *ngIf="control.hasError('required')">
+                              Please enter the zip code!
+                            </ng-container>
+                          </ng-template>
+                        </nz-form-control>
+                      </nz-form-item>
+                     </div>
+                   </div>
                     <div class="row">
                       <div class="col-md-12">
                         <nz-form-item>

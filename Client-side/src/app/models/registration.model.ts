@@ -5,6 +5,9 @@ export class Registration {
   firstname: string;
   lastname: string;
   jobTitle: string;
-  address: string;
+  street: string;
+  state: string;
+  zipCode: string;
+  city: string;
   id: number;
 }

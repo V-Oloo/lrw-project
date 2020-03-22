@@ -21,7 +21,7 @@ import {
             errorMessage = `Error: ${error.error.message}`;
           } else {
             // server-side error
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+            errorMessage = `Error Code: ${error.status}\n message: ${error.message}`;
           }
           return throwError(errorMessage);
         })

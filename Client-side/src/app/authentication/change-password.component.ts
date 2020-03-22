@@ -37,7 +37,7 @@ export class ChangePasswordComponent implements OnInit {
 
     const data = this.passwordCreationForm.value;
 
-    this.auth.passwordReset({newPassword: data.newPassword, token: data.token, userId: data.userId }).subscribe(res => {
+    this.auth.passwordReset(this.urlParams.userId, {password: data.newPassword}).subscribe(res => {
       this.loading = false;
       this._router.navigateByUrl('/authentication/login');
     },
@@ -50,13 +50,10 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.urlParams.token = this.route.snapshot.queryParamMap.get('token');
-    this.urlParams.userId = this.route.snapshot.queryParamMap.get('userId');
+    this.urlParams.userId = +this.route.snapshot.queryParamMap.get('userId');
     this.passwordCreationForm = this.fb.group({
-      token: [this.urlParams.token],
-      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      newPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirmPass: ['', [Validators.required]],
-      userId: [this.urlParams.userId],
     }, { validator: MustMatch('newPassword', 'confirmPass')});
   }
 

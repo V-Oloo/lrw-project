@@ -5,6 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer.model';
 
+
 @Component({
   selector: 'app-add-customer',
   templateUrl: './add-customer.component.html',
@@ -31,8 +32,13 @@ export class AddCustomerComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       phone: [null, [Validators.required]],
       phonePrefix: ['+1' , [Validators.required]],
-      address: [null, [Validators.required]],
+      street: [null, [Validators.required]],
+      zipCode: [null, [Validators.required]],
+      city: [null, [Validators.required]],
+      state: [null, [Validators.required]],
+
   });
+
   }
 
   addCustomer(data: Customer) {
@@ -41,8 +47,9 @@ export class AddCustomerComponent implements OnInit {
       this.displayValidationErrors();
       return;
     }
+    this.loading = true;
     this.customerService.addCustomer(data).subscribe((res:any) => {
-      this.loading = false;
+
       this.loading = false;
       this.message.create('success', `Employee added successfully`);
       this.router.navigate(['/customers']);

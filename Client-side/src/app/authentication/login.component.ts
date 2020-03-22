@@ -32,7 +32,20 @@ export class LoginComponent implements OnInit {
 
     this.auth.login(loginInfo).subscribe(res => {
       this.loading = false;
-      this._router.navigateByUrl('/dashboard');
+      const currentUser = this.auth.currentUserValue;
+      const role = currentUser.role;
+
+          if (currentUser) {
+
+            if (role === 'SUPERVISOR') {
+              this._router.navigateByUrl('/dashboard');
+            }
+
+            if (role === 'TECHNICIAN') {
+              this._router.navigateByUrl('/technician');
+            }
+
+          }
     },
     error => {
       this.loading = false;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { Event, ActivatedRoute, NavigationEnd, Router, NavigationStart, NavigationError } from "@angular/router";
 import { Observable } from "rxjs";
 import { distinctUntilChanged, filter, map, startWith } from "rxjs/operators";
 import { IBreadcrumb } from "../../shared/interfaces/breadcrumb.type";
@@ -18,6 +18,7 @@ export class CommonLayoutComponent  {
     isSideNavDark : boolean;
     isExpand: boolean;
     selectedHeaderColor: string;
+    showLoadingIndicator = true;
 
     constructor(private router: Router,  private activatedRoute: ActivatedRoute, private themeService: ThemeConstantService) {
         this.router.events.pipe(
@@ -38,6 +39,23 @@ export class CommonLayoutComponent  {
         ).subscribe( (data: any) => {
             this.contentHeaderDisplay = data;
         });
+
+        this.router.events.subscribe((routerEvent: Event) => {
+          if (routerEvent instanceof NavigationStart) {
+           this.showLoadingIndicator = true;
+
+          }
+          if (routerEvent instanceof NavigationError) {
+           this.showLoadingIndicator = false;
+
+          }
+
+          if (routerEvent instanceof NavigationEnd) {
+           this.showLoadingIndicator = false;
+
+         }
+
+       } );
     }
 
     ngOnInit() {
@@ -48,8 +66,8 @@ export class CommonLayoutComponent  {
         );
         this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
         this.themeService.isSideNavDarkChanges.subscribe(isDark => this.isSideNavDark = isDark);
-        this.themeService.selectedHeaderColor.subscribe(color => this.selectedHeaderColor = color);   
-        this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);     
+        this.themeService.selectedHeaderColor.subscribe(color => this.selectedHeaderColor = color);
+        this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
     }
 
     private buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadcrumb[] = []): IBreadcrumb[] {
@@ -76,4 +94,6 @@ export class CommonLayoutComponent  {
         }
         return newBreadcrumbs;
     }
+
+
 }

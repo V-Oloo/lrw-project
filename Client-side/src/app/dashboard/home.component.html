@@ -31,10 +31,89 @@
                   <i class="text-danger" nz-icon nzType="team" theme="outline"></i>
               </div>
               <div class="d-flex align-items-center m-l-10">
-                  <h2 class="m-b-0 m-r-5">{{employees}}</h2>
+                  <h2 class="m-b-0 m-r-5">{{totalEmp}}</h2>
                   <span class="text-gray">Employees</span>
               </div>
           </div>
       </div>
   </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+      <nz-card>
+          <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">Projects</h5>
+              <div>
+                  <a nz-button nzSize="small" [routerLink]="['/projects']">View All</a>
+              </div>
+          </div>
+          <div class="m-t-30">
+              <nz-table #projectsTable [nzData]="projectList"  [nzShowPagination]="false" class="no-border-last">
+                  <thead>
+                    <tr>
+                      <th>Project</th>
+                      <th>Tasks</th>
+                      <th>Customer</th>
+                      <th>Due Date</th>
+                      <th class="text-center">Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of projectsTable.data">
+                        <td>
+                          {{item.name}}
+                      </td>
+                      <td>{{item.tasks}} Tasks</td>
+                      <td>
+                         {{item.customers}}
+                      </td>
+                      <td>
+                          {{item.dueDate | date}}
+                      </td>
+                      <td class="text-center">
+                          <nz-tag class="m-b-0" *ngIf="item.status == 'OPEN'" [nzColor]="'blue'">{{item.status}}</nz-tag>
+                          <nz-tag class="m-b-0" *ngIf="item.status == 'Ready'" [nzColor]="'cyan'">{{item.status}}</nz-tag>
+                          <nz-tag class="m-b-0" *ngIf="item.status == 'Behind'" [nzColor]="'red'">{{item.status}}</nz-tag>
+                      </td>
+                      </tr>
+                  </tbody>
+              </nz-table>
+          </div>
+      </nz-card>
+  </div>
+  <div class="col-lg-4">
+    <nz-card>
+        <div class="d-flex justify-content-between align-items-center">
+            <h5>Employees</h5>
+            <div>
+                <a nz-button nzType="default" nzSize="small" [routerLink]="['/employees']">View All</a>
+            </div>
+        </div>
+        <div class="m-t-30">
+            <nz-list [nzDataSource]="employeeList" [nzRenderItem]="employees" [nzItemLayout]="'horizontal'">
+                <ng-template #employees let-item>
+                    <nz-list-item [nzContent]="status">
+                        <nz-list-item-meta
+                            [nzTitle]="employeeName"
+                            [nzAvatar]="'assets/images/avatars/avatar.png'"
+                            [nzDescription]="email">
+                            <ng-template #employeeName>
+                                <a class="font-size-15">{{item.firstname}} {{item.lastname}}</a>
+                            </ng-template>
+                            <ng-template #email>
+                                <span class="m-b-0 text-muted">{{item.email}}</span>
+                            </ng-template>
+                            <ng-template #status>
+                                <nz-tag class="m-r-0 m-b-0" [nzColor]="'cyan'">
+                                    {{item.status}}
+                                </nz-tag>
+                            </ng-template>
+                        </nz-list-item-meta>
+                    </nz-list-item>
+                </ng-template>
+            </nz-list>
+        </div>
+    </nz-card>
+</div>
 </div>

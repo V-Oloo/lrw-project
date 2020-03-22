@@ -12,8 +12,7 @@ export const CommonLayout_ROUTES: Routes = [
     } ,
     {
       path: 'employees',
-      canActivate: [MainAuthGuard,RoleGuard],
-      data: { role: [Role.SUPERVISOR]},
+      // canActivate: [MainAuthGuard,RoleGuard],
       loadChildren: () => import('../../employee/employee.module').then(m => m.EmployeeModule)
     },
     {

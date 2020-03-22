@@ -1,3 +1,4 @@
+import { UpdateTaskComponent } from './update-task/update-task.component';
 import { TaskComponent } from './task/task.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -28,6 +29,14 @@ const routes: Routes = [
     component: UpdateProjectComponent,
     data: {
         title: 'Update Project'
+    }
+  },
+
+  {
+    path: 'update-task/:id',
+    component: UpdateTaskComponent,
+    data: {
+        title: 'Update Task'
     }
   },
   {

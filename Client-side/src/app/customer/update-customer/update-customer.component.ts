@@ -33,7 +33,10 @@ export class UpdateCustomerComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       phone: [null, [Validators.required]],
       phonePrefix: ['+1' , [Validators.required]],
-      address: [null, [Validators.required]],
+      street: [null, [Validators.required]],
+      zipCode: [null, [Validators.required]],
+      city: [null, [Validators.required]],
+      state: [null, [Validators.required]],
     });
   }
 
@@ -44,7 +47,10 @@ export class UpdateCustomerComponent implements OnInit {
       email: data.email,
       phone: data.phone,
       phonePrefix: data.phonePrefix,
-      address: data.address,
+      street: data.street,
+      state: data.state,
+      city: data.city,
+      zipCode: data.zipCode
     });
   }
 
@@ -54,8 +60,8 @@ export class UpdateCustomerComponent implements OnInit {
       this.displayValidationErrors();
       return;
     }
+    this.loading = true;
     this.customerService.updateCustomer(data, this.id).subscribe((res:any) => {
-      this.loading = false;
       this.loading = false;
       this.message.create('success', `Customer Updated successfully`);
       this.router.navigate(['/customers']);

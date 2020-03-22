@@ -21,6 +21,7 @@ export class AddEmployeeComponent implements OnInit {
 
   RegistrationForm: FormGroup;
   loading = false;
+  errMessage;
   public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
     submitForm(registrationInfo: Registration): void {
@@ -37,7 +38,7 @@ export class AddEmployeeComponent implements OnInit {
           this.router.navigate(['/employees']);
         }, error => {
           this.loading = false;
-          this.message.create('error', `operation Unsucceeful, try again`);
+          this.errMessage= error.error.message;
           console.log(error)
 
         });
@@ -52,7 +53,10 @@ export class AddEmployeeComponent implements OnInit {
             phone: [null, [Validators.required]],
             phonePrefix: ['+1' , [Validators.required]],
             jobTitle: [null, [Validators.required]],
-            address: [null, [Validators.required]],
+            street: [null, [Validators.required]],
+            zipCode: [null, [Validators.required]],
+            city: [null, [Validators.required]],
+            state: [null, [Validators.required]],
         });
 
         this.getAddress()
@@ -68,7 +72,7 @@ export class AddEmployeeComponent implements OnInit {
 
      getAddress() {
       var address = zipcode.lookup(60173);
-      console.log("this is address");
+      console.log(address.city);
       console.log(address);
      }
 

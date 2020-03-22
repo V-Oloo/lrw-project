@@ -46,7 +46,7 @@
                      {{item.phone}}
                   </td>
                   <td>
-                     {{item.address}}
+                     {{item.street}} {{item.city}} {{item.state}}  {{item.zipCode}}
                   </td>
                   <td class="text-center">
                     {{item.jobTitle}}
@@ -70,13 +70,13 @@
                                       <li nz-menu-divider></li>
                                       <li nz-menu-item *ngIf="item.status == 'ACTIVE'">
                                           <a (click)="deactivateEmployee(item.id)">
-                                              <i nz-icon nzType="reset" theme="outline"></i>
+                                              <i nz-icon nzType="rest" theme="outline"></i>
                                               <span class="m-l-10">Deactivate</span>
                                           </a>
                                       </li>
                                       <li nz-menu-item *ngIf="item.status == 'INACTIVE'">
                                         <a (click)="activateEmployee(item.id)">
-                                            <i nz-icon nzType="reset" theme="outline"></i>
+                                            <i nz-icon nzType="rest" theme="outline"></i>
                                             <span class="m-l-10">Ativate</span>
                                         </a>
                                       </li>

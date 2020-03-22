@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
       this.fname = this.employee.firstname;
       this.lname = this.employee.lastname;
       this.email = this.employee.email;
-      this.location = this.employee.address;
+      this.location = this.employee.city;
       this.phone = this.employee.phone;
       this.role = this.employee.jobTitle;
     })
@@ -64,12 +64,15 @@ export class ProfileComponent implements OnInit {
     phone: [null, [Validators.required]],
     phonePrefix: ['+1' , [Validators.required]],
     jobTitle: [null, [Validators.required]],
-    address: [null, [Validators.required]],
+    street: [null, [Validators.required]],
+    zipCode: [null, [Validators.required]],
+    city: [null, [Validators.required]],
+    state: [null, [Validators.required]],
   });
   }
 
   editEmployee (data: Registration) {
-    // console.log(data);
+    console.log(data);
     this.RegistrationForm.patchValue({
       firstname: data.firstname,
       lastname: data.lastname,
@@ -77,7 +80,10 @@ export class ProfileComponent implements OnInit {
       phone: data.phone,
       phonePrefix: data.phonePrefix,
       jobTitle: data.jobTitle,
-      address: data.address,
+      street: data.street,
+      zipCode: data.zipCode,
+      city: data.city,
+      state: data.state
     });
   }
 

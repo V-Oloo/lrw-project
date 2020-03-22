@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
@@ -22,6 +22,8 @@ import { PAGENOTFOUND } from './shared/errors/page-not-found.component';
 import { JwtInterceptor } from './shared/interceptor/token.interceptor';
 import { HttpErrorInterceptor } from './shared/interceptor/error.interceptor';
 import { ACCESSDENIED } from './shared/errors/error-2.component';
+import { GlobalErrorHandler } from './shared/interceptor/global-error-handler';
+import { ServerErrorInterceptor } from './shared/interceptor/server-error.interceptor';
 
 
 registerLocaleData(en);
@@ -50,11 +52,8 @@ registerLocaleData(en);
         useClass: JwtInterceptor,
         multi: true
        },
-      //  {
-      //   provide: HTTP_INTERCEPTORS,
-      //   useClass: HttpErrorInterceptor,
-      //   multi: true
-      //  },
+       { provide: ErrorHandler, useClass: GlobalErrorHandler },
+       { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
         Globals,
         {
             provide: NZ_I18N,

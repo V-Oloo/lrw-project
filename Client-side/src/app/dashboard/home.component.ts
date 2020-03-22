@@ -3,6 +3,10 @@ import { ThemeConstantService } from '../shared/services/theme-constant.service'
 import { AuthService } from '../authentication/auth.service';
 import { EmployeeService } from '../employee/employee.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
+import { ProjectService } from '../project/project.service';
+import * as _ from 'lodash'
+import { forkJoin } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -30,27 +34,39 @@ export class HomeComponent implements OnInit {
     red = this.themeColors.red;
     transparent = this.themeColors.transparent
 
-    constructor( private colorConfig:ThemeConstantService, private auth: AuthenticationService, private empService: EmployeeService ) {}
+    constructor(
+      private colorConfig:ThemeConstantService,
+      private auth: AuthenticationService,
+      private _route: ActivatedRoute
+      ) {}
 
     currentUser = this.auth.currentUserValue;
     userId = this.currentUser.user_id;
     fname; role;
-    projects; tasks; employees;
+    projects; tasks; totalEmp;
+    projectList: [];
+    employeeList: [];
 
     ngOnInit(): void {
-      this.empService.getEmployee(this.userId).subscribe((res: any) => {
-        console.log(this.userId);
-        const employee = res.data;
+
+      this.getDashboardData();
+    }
+
+    getDashboardData() {
+
+      this._route.data.subscribe((data: {stats : any}) => {
+        console.log(data.stats);
+        const employee = data.stats[0].data;
         this.fname = employee.firstname;
         this.role = employee.jobTitle;
+        this.projects = data.stats[1].data.projects[0].count;
+        this.tasks = data.stats[1].data.tasks[0].count;
+        this.totalEmp = data.stats[1].data.employees[0].count;
+        this.projectList = _.take(data.stats[2], 5);
+        this.employeeList = _.take(data.stats[3], 5);
 
-      });
-
-      this.empService.dashboardStats().subscribe((res: any) => {
-          this.projects = res.data.projects[0].count;
-          this.tasks = res.data.tasks[0].count;
-          this.employees = res.data.employees[0].count;
       });
 
     }
+
 }

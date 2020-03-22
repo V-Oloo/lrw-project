@@ -57,6 +57,7 @@ export class UpdateProjectComponent implements OnInit {
       this.displayValidationErrors();
       return;
     }
+    this.loading = true
     this.projectService.updateProject(data, this.id).subscribe((res:any) => {
       this.loading = false;
       this.message.create('success', `project updated successfully`);

@@ -22,6 +22,7 @@ export class EmployeeComponent implements OnInit {
 
   getEmployees() {
     this.empService.getEmployees().subscribe(res => {
+      console.log(res)
       this.employeeList = res;
     });
   }
@@ -29,6 +30,7 @@ export class EmployeeComponent implements OnInit {
   deactivateEmployee(id: number) {
     this.empService.updateEmpStatus(id, {status : "INACTIVE"}).subscribe((res) => {
       this.message.create('success', `Employee Deactivated`);
+      window.location.reload();
     }, (error) => {
       this.message.create('error', `operation Unsucceeful, try again`);
     });
@@ -37,6 +39,7 @@ export class EmployeeComponent implements OnInit {
   removeEmployee(id: number) {
     this.empService.updateEmpStatus(id, {status : "DELETED"}).subscribe((res) => {
       this.message.create('success', `Employee Deleted`);
+      window.location.reload();
     }, (error) => {
       this.message.create('error', `operation Unsucceeful, try again`);
     });
@@ -45,6 +48,7 @@ export class EmployeeComponent implements OnInit {
   activateEmployee(id: number) {
     this.empService.updateEmpStatus(id, {status : "ACTIVE"}).subscribe((res) => {
       this.message.create('success', `Employee Activated`);
+      window.location.reload();
     }, (error) => {
       this.message.create('error', `operation Unsucceeful, try again`);
     });

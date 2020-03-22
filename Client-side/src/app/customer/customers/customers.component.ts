@@ -32,6 +32,7 @@ export class CustomersComponent implements OnInit {
   deactivateCustomer(id: number) {
     this.customerServise.updateStatus(id, {status : "INACTIVE"}).subscribe((res) => {
       this.message.create('success', `Customer Deactivated`);
+      window.location.reload()
     }, (error) => {
       this.message.create('error', `operation Unsucceeful, try again`);
     });
@@ -40,6 +41,7 @@ export class CustomersComponent implements OnInit {
   activateCustomer(id: number) {
     this.customerServise.updateStatus(id, {status : "ACTIVE"}).subscribe((res) => {
       this.message.create('success', `Customer Activated`);
+      window.location.reload()
     }, (error) => {
       this.message.create('error', `operation Unsucceeful, try again`);
     });

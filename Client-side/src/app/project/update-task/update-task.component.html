@@ -1,0 +1,178 @@
+<nz-card>
+  <h4>Update Task</h4>
+
+  <div class="m-t-25">
+    <form nz-form [formGroup]="TaskForm" (ngSubmit)="updateTask(TaskForm.value)">
+      <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon>
+      </nz-alert>
+      <div class="row">
+        <div class="col-md-12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="name">Task Name</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTp">
+              <nz-input-group>
+                <input type="text" nz-input formControlName="name" placeholder="Task Name">
+              </nz-input-group>
+              <ng-template #nameErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please insert Task Name!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="name">Task Description</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="descErrorTp">
+              <nz-input-group>
+                <textarea nz-input formControlName="description"></textarea>
+              </nz-input-group>
+              <ng-template #descErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please Enter project Description!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="startDate">Planned start Date</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="startErrorTp">
+              <nz-input-group>
+                <nz-date-picker nzShowTime class="w-100" nzFormat="MM/dd/yyyy HH:mm:ss"
+                  [nzDisabledDate]="disabledDate" formControlName="plannedStartDate" nzPlaceHolder="Select Date"
+                  (ngModelChange)="onChange($event)" (nzOnOk)="onOk($event)">
+                </nz-date-picker>
+
+              </nz-input-group>
+              <ng-template #startErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please input Start Date!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="startDate">Planned end date</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="endErrorTp">
+              <nz-input-group>
+                <nz-date-picker nzShowTime class="w-100" nzFormat="MM/dd/yyyy HH:mm:ss"
+                  [nzDisabledDate]="disabledDate" formControlName="plannedEndDate" nzPlaceHolder="Select Date"
+                  (ngModelChange)="onChange($event)" (nzOnOk)="onOk($event)">
+                </nz-date-picker>
+              </nz-input-group>
+              <ng-template #endErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please input End Date!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="address">Street.</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+              <nz-input-group>
+                <input type="text" nz-input formControlName="street" placeholder="eg. 777 Brockton Avenue">
+              </nz-input-group>
+              <ng-template #addressErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please enter the street.!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+       </div>
+       <div class="col-md-3">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="address">City</nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="city" placeholder="eg. Abington">
+            </nz-input-group>
+            <ng-template #addressErrorTp let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                Please enter the city!
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+       </div>
+       <div class="col-md-3">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="address">State</nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="state" placeholder="eg. MA">
+            </nz-input-group>
+            <ng-template #addressErrorTp let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                Please enter the state!
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+       </div>
+       <div class="col-md-3">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="address">Zip Code</nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="zipCode" placeholder="zip code">
+            </nz-input-group>
+            <ng-template #addressErrorTp let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                Please enter the zip code!
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+       </div>
+     </div>
+      <div class="row">
+        <div class="col-md-12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="address">Assign Employee(s)</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+              <nz-input-group>
+                <nz-select  class="w-100" nzMode="multiple"
+                  nzPlaceHolder="Please select" formControlName="assignedEmployees">
+                  <nz-option *ngFor="let item of employees" [nzLabel]="item.name" [nzValue]="item.emp_id">
+                  </nz-option>
+                </nz-select>
+              </nz-input-group>
+              <ng-template #addressErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please assign employee(s)!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div class="row">
+        <nz-form-item>
+          <nz-form-control class="pull-right">
+            <button nz-button [disabled]="loading" nzType="primary">
+              Add
+              <nz-spin [nzSpinning]="loading"></nz-spin>
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </form>
+    <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+    <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+  </div>
+</nz-card>
