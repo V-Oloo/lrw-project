@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
 
 import { TechnicianRoutingModule } from './technician-routing.module';
@@ -9,16 +9,20 @@ import { CommentComponent } from './comment.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { CancelTaskComponent } from './cancel-task.component';
+import { ConfirmTaskCompleteComponent } from './confirm-task-complete.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, CommentComponent, CancelTaskComponent],
+  declarations: [DashboardComponent, CommentComponent, CancelTaskComponent, ConfirmTaskCompleteComponent],
   imports: [
     CommonModule,
     SharedModule,
     TechnicianRoutingModule,
     ReactiveFormsModule,
     QuillModule,
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class TechnicianModule { }

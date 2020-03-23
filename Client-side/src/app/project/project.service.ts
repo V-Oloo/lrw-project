@@ -75,4 +75,13 @@ export class ProjectService {
      return this.http.patch(`${environment.apiUrl}/tasks/${id}/update`, data)
    }
 
+   getTaskById(id: number) {
+    return this.http.get(`${environment.apiUrl}/tasks/${id}`)
+                    .pipe(map((data: any) => data.data), shareReplay(),);
+   }
+
+   sendClientEmail(data: any, id: number) {
+    return this.http.post(`${environment.apiUrl}/tasks/${id}/sendMail`, data);
+   }
+
 }

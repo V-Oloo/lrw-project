@@ -45,7 +45,7 @@ export class CommentComponent implements OnInit {
    const result = this.projectService.addComment(this.id, data).subscribe((res:any) => {
       this.loading = false;
       this.message.create('success', `Comment added successfully`);
-      this._router.navigateByUrl('/technician')
+      this._router.navigate(['technician/task-summary', this.id])
     },
     (error: any) => {
       this.loading = false;

@@ -53,6 +53,7 @@ const routes: Routes = [
         title: 'Task Details'
     }
   },
+
 ];
 
 @NgModule({

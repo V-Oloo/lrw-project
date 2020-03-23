@@ -1,0 +1,33 @@
+<nz-card nzTitle="Task Summary">
+  <nz-descriptions>
+    <nz-descriptions-item nzTitle="Task Name">{{name}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Task Start">{{workStart | date:'medium' }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Task End">{{workEnd | date:'medium'}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Address">
+        {{street}}, {{city}} , {{state}}, {{zipCode}}
+    </nz-descriptions-item>
+  </nz-descriptions>
+  <nz-descriptions >
+    <nz-descriptions-item nzTitle="Description">
+     {{description}}
+    </nz-descriptions-item>
+
+  </nz-descriptions>
+  <nz-descriptions>
+    <nz-descriptions-item nzTitle="Client :">{{org}}</nz-descriptions-item>
+  </nz-descriptions>
+
+    <nz-comment>
+      <nz-comment-content>
+        <form nz-form>
+          <nz-form-item>
+              <button nz-button nzType="primary" (click)="sendMail()">
+                  Confirm Task Completion
+              </button>
+          </nz-form-item>
+
+        </form>
+
+      </nz-comment-content>
+   </nz-comment>
+</nz-card>
