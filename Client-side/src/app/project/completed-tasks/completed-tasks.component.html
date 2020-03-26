@@ -1,1 +1,65 @@
-<p>completed-tasks works!</p>
+<div class="page-header">
+  <div class="row align-items-md-center">
+      <div class="col-md-6">
+          <div class="row">
+              <div class="col-md-5">
+                  <nz-input-group [nzPrefix]="searchPrefix">
+                      <input type="text" nz-input placeholder="Search Project" [(ngModel)]="search">
+                  </nz-input-group>
+                  <ng-template #searchPrefix>
+                      <i class="opacity-04" nz-icon nzType="search"></i>
+                  </ng-template>
+              </div>
+          </div>
+      </div>
+      <!-- <div class="col-md-6">
+          <div class="text-md-right m-v-10">
+              <button nz-button nzType="primary" [routerLink]="['/projects/add-project']">
+                  <i nz-icon nzType="plus"></i>
+                  <span>New Project</span>
+              </button>
+          </div>
+      </div> -->
+  </div>
+</div>
+<div class="container-fluid">
+  <nz-card>
+      <nz-table #listViewTable nzBordered [nzPageSize]="15" nzTitle="COMPLETED TASKS" [nzData]="taskArr">
+          <thead>
+              <tr>
+                  <th>Project</th>
+                  <th>Task</th>
+                  <th>Customer</th>
+                  <th>Assigned</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Total Hours</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of listViewTable.data | search:'name':search as count ;  let i=index">
+                  <td>
+                    {{item.project}}
+                  </td>
+                  <td>
+                      {{item.task}}
+                  </td>
+                  <td>
+                    {{item.customer}}
+                  </td>
+                  <td>{{item.name}}</td>
+                  <td>
+                     {{item.start | date:'short'}}
+                  </td>
+                  <td>
+                      {{item.end | date:'short'}}
+                  </td>
+                  <td>
+                    {{item.hours}}
+                </td>
+              </tr>
+          </tbody>
+      </nz-table>
+  </nz-card>
+</div>
+

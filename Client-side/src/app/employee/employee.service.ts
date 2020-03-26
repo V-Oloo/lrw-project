@@ -52,4 +52,13 @@ export class EmployeeService {
      return this.http.post(`${this.global._BaseUri}/employees/4/avatar'`, formData);
    }
 
+   getNotifications(id: number) {
+    return this.http.get(`${this.global._BaseUri}/employees/${id}/notifications`)
+                    .pipe(map((data: any) => data), shareReplay(), );
+   }
+
+   updateNotificationStatus(id: number, status: any) {
+    return this.http.patch(`${this.global._BaseUri}/employees/notification/${id}/status`, status)
+   }
+
 }

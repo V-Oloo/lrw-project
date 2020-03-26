@@ -51,7 +51,7 @@ export class AddCustomerComponent implements OnInit {
     this.customerService.addCustomer(data).subscribe((res:any) => {
 
       this.loading = false;
-      this.message.create('success', `Employee added successfully`);
+      this.message.create('success', `Customer added successfully`);
       this.router.navigate(['/customers']);
     },
     (error: any) => {

@@ -5,6 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
 import { EmployeeService } from 'src/app/employee/employee.service';
+import * as _ from 'lodash'
 
 @Component({
   selector: 'app-update-task',
@@ -28,6 +29,7 @@ export class UpdateTaskComponent implements OnInit {
   id = +this._route.snapshot.paramMap.get('id');
   loading = false;
   public errMessage: string;
+  emps;
 
   ngOnInit(): void {
 
@@ -53,8 +55,14 @@ export class UpdateTaskComponent implements OnInit {
   });
   }
 
+
   editTask (data) {
-    console.log(data);
+
+   var arr = [];
+   _.forOwn(data.employees, function(value) {
+       arr.push(value.empId)
+    });
+
     this.TaskForm.patchValue({
       name: data.task_name,
       description: data.task_description,
@@ -64,7 +72,7 @@ export class UpdateTaskComponent implements OnInit {
       zipCode: data.task_zipCode,
       city: data.task_city,
       state: data.task_state,
-      assignedEmployees: [data.employees[0].empId],
+      assignedEmployees: arr,
     });
 
   }

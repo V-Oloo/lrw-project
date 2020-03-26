@@ -1,0 +1,29 @@
+<div class="page-header">
+</div>
+<div class="container-fluid">
+  <nz-card>
+    <nz-table #listViewTable  [nzPageSize]="15" [nzData]="notifications">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Message</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listViewTable.data">
+          <td>
+            {{item.event}}
+          </td>
+          <td>{{item.message}}</td>
+          <td>
+
+              <label nz-checkbox [(ngModel)]="checkbox" (change)="onChange($event, item.id)" > <span class="m-l-10">Mark as read</span></label>
+
+
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</div>

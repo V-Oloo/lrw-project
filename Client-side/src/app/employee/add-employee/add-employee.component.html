@@ -57,7 +57,7 @@
           </div>
           <div class="col-md-6">
               <nz-form-item>
-                <nz-form-label  [textMask]="{mask: mask}" nzRequired nzFor="phone">Phone No.</nz-form-label>
+                <nz-form-label  nzRequired nzFor="phone">Phone No.</nz-form-label>
                 <nz-form-control nzHasFeedback [nzErrorTip]="phoneErrorTp" >
 
                   <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
@@ -66,7 +66,7 @@
                          <nz-option nzLabel="+1" nzValue="+1"></nz-option>
                         </nz-select>
                     </ng-template>
-                    <input formControlName="phone" id="'phone'" nz-input>
+                    <input [textMask]="{mask: mask}" formControlName="phone" id="'phone'" nz-input>
                   </nz-input-group>
                   <ng-template #phoneErrorTp let-control>
                     <ng-container *ngIf="control.hasError('required')">
@@ -164,7 +164,7 @@
        <nz-form-item>
          <nz-form-control class="pull-right">
           <button nz-button [disabled]="loading" nzType="primary">
-            Update
+            ADD
             <nz-spin [nzSpinning]="loading"></nz-spin>
           </button>
          </nz-form-control>

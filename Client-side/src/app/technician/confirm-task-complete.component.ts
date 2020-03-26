@@ -43,12 +43,16 @@ export class ConfirmTaskCompleteComponent implements OnInit {
     });
   }
 
+
   sendMail() {
+    var time = ((new Date(this.workEnd).getHours()) - (new Date(this.workStart).getHours()))
+
      this.loading = true;
      let address = this.street + ',' + this.city + ',' + this.state + ',' + this.zipCode;
      let start = this.datePipe.transform(this.workStart,'short');
      let end = this.datePipe.transform(this.workEnd,'short');
-     this.projectService.sendClientEmail({email: this.email, address: address, org: this.org, start: start, end: end, name: this.name }, this.id).subscribe(res => {
+     const data = {email: this.email, address: address, org: this.org, start: start, end: end, name: this.name, time: time }
+     this.projectService.sendClientEmail(data, this.id).subscribe(res => {
       this.loading = false;
       this.message.create('success', `Confirmation successfull`);
       this._router.navigate(['/technician'])

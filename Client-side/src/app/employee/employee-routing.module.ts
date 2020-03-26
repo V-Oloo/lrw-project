@@ -5,6 +5,7 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { ProfileComponent } from './profile/profile.component';
 import { Role } from '../models/roles.model';
 import { EmployeeListResolver } from './employee-list-resolver';
+import { NotificationComponent } from './notification/notification.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,7 @@ const routes: Routes = [
     component: EmployeeComponent,
     resolve: {usersList: EmployeeListResolver},
     data: {
-        role: [Role.SUPERVISOR],
+        role: [Role.SUPERVISOR, Role.ADMIN],
         title: 'Employee List'
     }
   },
@@ -22,7 +23,7 @@ const routes: Routes = [
     path: 'add-employee',
     component: AddEmployeeComponent,
     data: {
-         role: [Role.SUPERVISOR],
+         role: [Role.SUPERVISOR, Role.ADMIN],
         title: 'Add Employee'
     }
   },
@@ -30,7 +31,16 @@ const routes: Routes = [
     path: 'profile/:id',
     component: ProfileComponent,
     data: {
+        role: [Role.SUPERVISOR, Role.ADMIN, Role.TECHNICIAN],
         title: 'Profile'
+    }
+  },
+  {
+    path: 'notifications',
+    component: NotificationComponent,
+    data: {
+        role: [Role.SUPERVISOR, Role.ADMIN, Role.TECHNICIAN],
+        title: 'Notifications'
     }
   }
 ];

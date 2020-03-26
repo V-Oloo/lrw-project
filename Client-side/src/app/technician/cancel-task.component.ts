@@ -1,3 +1,4 @@
+import { User } from './../shared/interfaces/user.type';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -27,25 +28,50 @@ export class CancelTaskComponent implements OnInit {
     ) { }
 
     id = +this._route.snapshot.paramMap.get('id');
-    currentUser = this.auth.currentUserValue;
-    empId = this.currentUser.user_id;
+    task: any;
+    name; street; state; city; zipCode; createdBy;
 
   ngOnInit(): void {
 
+    this.projectService.getTaskById(this.id).subscribe((res: any) => {
+      this.task = res;
+      this.name = this.task.name;
+      this.street = this.task.street;
+      this.city = this.task.city;
+      this.state = this.task.state;
+      this.zipCode = this.task.zipCode;
+      this.createdBy= this.task.createdBy
+
+    });
+
+    const event = "Task Cancelled"
+    const status= "UNREAD"
     this.CommentForm = this.fb.group({
-      comment: [null, [Validators.required]],
-      emp_id: [this.empId],
+      event : [event],
+      message: [null, [Validators.required]],
+      user: [this.createdBy],
+      status: [status],
   });
   }
 
-  addComment(data : Comment) {
+  addComment() {
     if (this.CommentForm.invalid) {
       this.displayValidationErrors();
       return;
     }
-   const result = this.projectService.addComment(this.id, data).subscribe((res:any) => {
+    const reason = this.CommentForm.value.message;
+    const event = this.CommentForm.value.event;
+    const user = this.CommentForm.value.user;
+    const status = this.CommentForm.value.status;
+
+    const message = "The task " + "" + this.name + " " + "at " + this.street + ','
+                      + this.city + ' ' + this.state + ' ' + this.zipCode + ' '
+                      + "has been cancelled. Reason being: " + reason;
+    const data = {message: message,event: event, status: status, user:user };
+
+   const result = this.projectService.addNotification(data).subscribe((res:any) => {
       this.loading = false;
-      this.message.create('success', `Comment added successfully`);
+      this.message.create('success', `Task Cancelled`);
       this._router.navigateByUrl('/technician')
     },
     (error: any) => {

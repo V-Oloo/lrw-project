@@ -32,6 +32,7 @@ export class UpdateProjectComponent implements OnInit {
   ngOnInit(): void {
     this.customerService.getCustomers().subscribe((res:any) => {
        this.customers = res;
+       console.log(res);
     });
 
     this.projectService.getProject(this.id).subscribe((res:any) => {
@@ -57,18 +58,19 @@ export class UpdateProjectComponent implements OnInit {
       this.displayValidationErrors();
       return;
     }
-    this.loading = true
-    this.projectService.updateProject(data, this.id).subscribe((res:any) => {
-      this.loading = false;
-      this.message.create('success', `project updated successfully`);
-      this.router.navigate(['/projects']);
-    },
-    (error: any) => {
-      this.loading = false;
-      this.errMessage = error.error.message;
-      console.log(error);
-    }
-    );
+    console.log(this.ProjectForm.value);
+    // this.loading = true
+    // this.projectService.updateProject(data, this.id).subscribe((res:any) => {
+    //   this.loading = false;
+    //   this.message.create('success', `project updated successfully`);
+    //   this.router.navigate(['/projects']);
+    // },
+    // (error: any) => {
+    //   this.loading = false;
+    //   this.errMessage = error.error.message;
+    //   console.log(error);
+    // }
+    // );
   }
 
   displayValidationErrors() {
@@ -104,6 +106,7 @@ handleEndOpenChange(open: boolean): void {
 }
 
 editProject (data: Project) {
+  console.log(data);
   this.ProjectForm.patchValue({
     name: data.name,
     description: data.description,

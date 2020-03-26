@@ -5,6 +5,7 @@ import { EmployeeService } from '../employee/employee.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import * as _ from 'lodash'
 import { ProjectService } from '../project/project.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,9 @@ export class DashboardComponent implements OnInit {
   constructor(
     private empService: EmployeeService,
     private auth: AuthenticationService,
-    private projectService: ProjectService) { }
+    private projectService: ProjectService,
+    private message: NzMessageService,
+    ) { }
 
   currentUser = this.auth.currentUserValue;
   userId = this.currentUser.user_id;
@@ -54,7 +57,8 @@ export class DashboardComponent implements OnInit {
 
   startTask(taskId: number) {
     this.projectService.startTask(taskId, {status: "IN_PROGRESS"}).subscribe((res:any) => {
-      console.log('task started');
+      this.message.create('success', `Task started`);
+      window.location.reload();
     }, (err: any) => {
       console.log(err);
     });

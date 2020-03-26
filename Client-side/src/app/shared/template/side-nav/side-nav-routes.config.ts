@@ -36,5 +36,14 @@ export const ROUTES: SideNavInterface[] = [
       submenu: []
     },
 
+    {
+      path: '/projects/completed/tasks',
+      title: 'Completed Tasks',
+      iconType: 'fontawesome',
+      iconTheme: 'outline',
+      icon: 'fa fa-r-project',
+      submenu: []
+    },
+
 
 ]

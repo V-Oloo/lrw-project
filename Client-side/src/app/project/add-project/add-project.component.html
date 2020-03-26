@@ -39,6 +39,68 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-md-3">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="address">flagger's rate</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+              <nz-input-group>
+                <input type="text" nz-input formControlName="flagger_rate" placeholder="flagger's rate">
+              </nz-input-group>
+              <ng-template #addressErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please enter the flagger's rate.!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+       </div>
+       <div class="col-md-3">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="address">Cones Rate</nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="cone_rate" placeholder="Cones Rate">
+            </nz-input-group>
+            <ng-template #addressErrorTp let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                Please enter the cones rate!
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+       </div>
+       <div class="col-md-3">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="address">Stop/Slow Sign Rate</nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="sign_rate" placeholder="Stop/Slow Sign Rate">
+            </nz-input-group>
+            <ng-template #addressErrorTp let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                Please enter the sign rate!
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+       </div>
+       <div class="col-md-3">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="address">Traffic/Arrow Board Rate</nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="boards_rate" placeholder="Boards Rate">
+            </nz-input-group>
+            <ng-template #addressErrorTp let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                Please enter the rate!
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+       </div>
+      </div>
+      <div class="row">
         <div class="col-md-6">
           <nz-form-item>
             <nz-form-label nzRequired nzFor="startDate">Planned start Date</nz-form-label>
@@ -78,7 +140,22 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="address">Min. Chargeble Hours</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+              <nz-input-group>
+                <input type="text" nz-input formControlName="min_hours" placeholder="Minimum Hours">
+              </nz-input-group>
+              <ng-template #addressErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please enter the sign rate!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-md-6">
           <nz-form-item>
             <nz-form-label nzRequired nzFor="address">Customer</nz-form-label>
             <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
@@ -91,7 +168,7 @@
               </nz-input-group>
               <ng-template #addressErrorTp let-control>
                 <ng-container *ngIf="control.hasError('required')">
-                  Please enter the address!
+                  Please select a customer!
                 </ng-container>
               </ng-template>
             </nz-form-control>

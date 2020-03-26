@@ -97,40 +97,6 @@
                     <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon>
                     </nz-alert>
                     <div class="row">
-                      <div class="col-md-12">
-                        <nz-form-item>
-                          <nz-form-label nzRequired nzFor="name">Task Name</nz-form-label>
-                          <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTp">
-                            <nz-input-group>
-                              <input type="text" nz-input formControlName="name" placeholder="Task Name">
-                            </nz-input-group>
-                            <ng-template #nameErrorTp let-control>
-                              <ng-container *ngIf="control.hasError('required')">
-                                Please insert Task Name!
-                              </ng-container>
-                            </ng-template>
-                          </nz-form-control>
-                        </nz-form-item>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <nz-form-item>
-                          <nz-form-label nzRequired nzFor="name">Task Description</nz-form-label>
-                          <nz-form-control nzHasFeedback [nzErrorTip]="descErrorTp">
-                            <nz-input-group>
-                              <textarea nz-input formControlName="description"></textarea>
-                            </nz-input-group>
-                            <ng-template #descErrorTp let-control>
-                              <ng-container *ngIf="control.hasError('required')">
-                                Please Enter project Description!
-                              </ng-container>
-                            </ng-template>
-                          </nz-form-control>
-                        </nz-form-item>
-                      </div>
-                    </div>
-                    <div class="row">
                       <div class="col-md-6">
                         <nz-form-item>
                           <nz-form-label nzRequired nzFor="startDate">Planned start Date</nz-form-label>
@@ -220,7 +186,7 @@
                         <nz-form-label nzRequired nzFor="address">Zip Code</nz-form-label>
                         <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
                           <nz-input-group>
-                            <input type="text" nz-input formControlName="zipCode" placeholder="zip code">
+                            <input type="text" [textMask]="{mask: mask}" nz-input formControlName="zipCode" placeholder="zip code">
                           </nz-input-group>
                           <ng-template #addressErrorTp let-control>
                             <ng-container *ngIf="control.hasError('required')">
@@ -230,15 +196,15 @@
                         </nz-form-control>
                       </nz-form-item>
                      </div>
-                   </div>
+                    </div>
                     <div class="row">
                       <div class="col-md-12">
                         <nz-form-item>
-                          <nz-form-label nzRequired nzFor="address">Assign Employee(s)</nz-form-label>
+                          <nz-form-label nzRequired nzFor="address">Flaggers</nz-form-label>
                           <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
                             <nz-input-group>
                               <nz-select [nzMaxMultipleCount]="3" class="w-100" nzMode="multiple"
-                                nzPlaceHolder="Please select" formControlName="assignedEmployees">
+                                nzPlaceHolder="Please select" formControlName="flaggers">
                                 <nz-option *ngFor="let item of employees" [nzLabel]="item.name" [nzValue]="item.emp_id">
                                 </nz-option>
                               </nz-select>

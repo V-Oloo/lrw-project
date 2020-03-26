@@ -8,10 +8,11 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 @NgModule({
-  declarations: [EmployeeComponent, AddEmployeeComponent, ProfileComponent],
+  declarations: [EmployeeComponent, AddEmployeeComponent, ProfileComponent, NotificationComponent],
   imports: [
     CommonModule,
     EmployeeRoutingModule,

@@ -4,4 +4,9 @@ export class Project {
    startDate: string;
    endDate: string;
    customerId? : number;
+   cone_rate: number;
+   flagger_rate: number;
+   boards_rate: number;
+   sign_rate: number;
+   min_hours: string;
 }

@@ -7,7 +7,7 @@ export const CommonLayout_ROUTES: Routes = [
     {
         path: 'dashboard',
         canActivate: [MainAuthGuard,RoleGuard],
-        data: { role: [Role.SUPERVISOR]},
+        data: { role: [Role.SUPERVISOR, Role.ADMIN]},
         loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule)
     } ,
     {
@@ -18,13 +18,13 @@ export const CommonLayout_ROUTES: Routes = [
     {
       path: 'customers',
       canActivate: [MainAuthGuard,RoleGuard],
-      data: { role: [Role.SUPERVISOR]},
+      data: { role: [Role.SUPERVISOR, Role.ADMIN]},
       loadChildren: () => import('../../customer/customer.module').then(m => m.CustomerModule)
     },
     {
       path: 'projects',
       canActivate: [MainAuthGuard,RoleGuard],
-      data: { role: [Role.SUPERVISOR]},
+      data: { role: [Role.SUPERVISOR, Role.ADMIN]},
       loadChildren: () => import('../../project/project.module').then(m => m.ProjectModule)
     },
 

@@ -84,4 +84,13 @@ export class ProjectService {
     return this.http.post(`${environment.apiUrl}/tasks/${id}/sendMail`, data);
    }
 
+   getCompletedTasks() {
+     return this.http.get(`${environment.apiUrl}/tasks/completedTasks/summary`)
+                     .pipe(map((data: any) => data.data), shareReplay(),);
+   }
+
+   addNotification(data: any) {
+      return this.http.post(`${environment.apiUrl}/employees/notification`, data)
+   }
+
 }

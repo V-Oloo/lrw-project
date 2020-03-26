@@ -1,3 +1,4 @@
+import { CompletedTasksComponent } from './completed-tasks/completed-tasks.component';
 import { UpdateTaskComponent } from './update-task/update-task.component';
 import { TaskComponent } from './task/task.component';
 import { NgModule } from '@angular/core';
@@ -51,6 +52,13 @@ const routes: Routes = [
     component: TaskComponent,
     data: {
         title: 'Task Details'
+    }
+  },
+  {
+    path: 'completed/tasks',
+    component: CompletedTasksComponent,
+    data: {
+        title: 'Complete Task'
     }
   },
 

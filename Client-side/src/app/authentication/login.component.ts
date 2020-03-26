@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
           if (currentUser) {
 
-            if (role === 'SUPERVISOR') {
+            if (role === 'SUPERVISOR' || role === 'ADMIN') {
               this._router.navigateByUrl('/dashboard');
             }
 

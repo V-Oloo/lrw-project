@@ -1,34 +1,59 @@
-import { ErrorHandler, Injectable, Injector } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorService } from '../services/error.service';
-import { LoggingService } from '../services/logging.service';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 
 
 @Injectable()
-export class GlobalErrorHandler implements ErrorHandler {
+export class HttpErrorInterceptor implements HttpInterceptor {
+    constructor() { }
 
-  constructor(private injector: Injector) { }
+    intercept(request: HttpRequest<any>, next: HttpHandler) {
 
-  handleError(error: Error | HttpErrorResponse) {
-    const errorService = this.injector.get(ErrorService);
-    const logger = this.injector.get(LoggingService);
+        return next.handle(request)
+            .pipe(
+                catchError(err => {
+                    let errMsg = "";
+                    if (err.error instanceof ErrorEvent) {
 
+                      console.log('An error occurred:' + err.error.message);
+                    } else {
+                        // The backend returned an unsuccessful response code.
+                        // The response body may contain clues as to what went wrong,
+                        console.log(
+                            `Backend returned code ${err.status}, `
+                             + `body was: ${err.error}`);
+                    }
 
-    let message;
-    let stackTrace;
-    if (error instanceof HttpErrorResponse) {
-      // Server error
-      message = errorService.getServerErrorMessage(error);
-      //stackTrace = errorService.getServerErrorStackTrace(error);
-
-    } else {
-      // Client Error
-      message = "Bad request";
-
+                    return throwError(
+                        'Something bad happened; please try again later.');
+                })
+            )
     }
-    // Always log errors
-    logger.logError(message, stackTrace);
-    console.error(error);
-  }
+
+
+    private handleError(error: HttpErrorResponse) {
+        console.log('Handle Error')
+        if (error.error instanceof ErrorEvent) {
+            // A client-side or network error occurred. Handle it accordingly.
+            // console.error('An error occurred:', error.error.message);
+            // this._ngbModal.open(AlertPopupComponent);
+            // modalRef.componentInstance.name = 'World';
+        } else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            // console.error(
+            //     `Backend returned code ${error.status}, ` +
+            //     `body was: ${error.error}`);
+
+            // modalRef.componentInstance.name = 'World';
+        }
+
+        // this.httpErrorService.addErrors(["Something bad happened; please try again later."]);
+
+        // return an observable with a user-facing error message
+        return throwError(
+            'Something bad happened; please try again later.');
+    };
 }

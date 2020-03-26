@@ -20,7 +20,7 @@ export class RoleGuard implements CanActivate {
       const currentUser = this.auth.currentUserValue;
       const emp_role = currentUser.role;
 
-      if (role[0] === emp_role) {
+      if (role[0] === emp_role || role[1] === emp_role) {
         return true;
       }
 

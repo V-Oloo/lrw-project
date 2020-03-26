@@ -1,3 +1,4 @@
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -27,17 +28,22 @@ export class ProjectDetailsComponent implements OnInit {
 
   Tasks: [];
   name; description; startDate; endDate; status;
+  public mask = [/\d/, /\d/, /\d/, /\d/, /\d/];
 
   constructor(private fb: FormBuilder,
     private projectService: ProjectService,
     private customerService: CustomerService,
     private empService: EmployeeService,
     private message: NzMessageService,
+    private auth: AuthenticationService,
     private router: Router,
     private _route: ActivatedRoute,
     ) { }
 
     id = +this._route.snapshot.paramMap.get('id');
+    currentUser = this.auth.currentUserValue
+    userId = +this.currentUser.user_id;
+
 
   ngOnInit(): void {
 
@@ -60,15 +66,14 @@ export class ProjectDetailsComponent implements OnInit {
    });
 
    this.TaskForm = this.fb.group({
-     name: [null, [Validators.required]],
-     description: [null, [Validators.required]],
      plannedStartDate: [null, [Validators.required]],
      plannedEndDate: [null, [Validators.required]],
      street: [null, [Validators.required]],
      zipCode: [null, [Validators.required]],
      city: [null, [Validators.required]],
      state: [null, [Validators.required]],
-     assignedEmployees: [null, [Validators.required]],
+     flaggers: [null, [Validators.required]],
+     createdBy: [this.userId]
  });
 
   }
@@ -80,9 +85,8 @@ export class ProjectDetailsComponent implements OnInit {
     }
     this.projectService.addTask(this.id, data).subscribe((res:any) => {
       this.loading = false;
-      this.loading = false;
       this.message.create('success', `Task added successfully`);
-      window.location.reload();`  `
+      window.location.reload();
     },
     (error: any) => {
       this.loading = false;
