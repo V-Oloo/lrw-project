@@ -53,6 +53,7 @@ export class ProjectDetailsComponent implements OnInit {
 
    this.projectService.getProjectTasks(this.id).subscribe((res:any) =>{
         this.Tasks = res.tasks;
+        console.log(this.Tasks);
         this.total = this.Tasks.length;
         this.name = res.name;
         this.description = res.description;
@@ -62,7 +63,8 @@ export class ProjectDetailsComponent implements OnInit {
    });
 
    this.empService.getAssignableEmployees().subscribe((res:any) => {
-        this.employees = res;
+        console.log(res)
+        this.employees = res.data;
    });
 
    this.TaskForm = this.fb.group({
@@ -85,7 +87,7 @@ export class ProjectDetailsComponent implements OnInit {
     }
     this.projectService.addTask(this.id, data).subscribe((res:any) => {
       this.loading = false;
-      this.message.create('success', `Task added successfully`);
+      this.message.create('success', `Job added successfully`);
       window.location.reload();
     },
     (error: any) => {
@@ -97,11 +99,11 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
 onChange(result: Date): void {
-    console.log('Selected Time: ', result);
+    //console.log('Selected Time: ', result);
 }
 
 onOk(result: Date): void {
-    console.log('onOk', result);
+    //console.log('onOk', result);
 }
 
   disabledDate = (current: Date): boolean => {

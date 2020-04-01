@@ -9,4 +9,5 @@ export class Project {
    boards_rate: number;
    sign_rate: number;
    min_hours: string;
+   createdBy: number;
 }

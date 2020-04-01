@@ -1,3 +1,4 @@
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { SettingsService } from './../../settings/settings.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -32,10 +33,14 @@ export class AddProjectComponent implements OnInit {
   customers: [];
   company;
 
+  currentUser = this.auth.currentUserValue;
+  userId = this.currentUser.user_id;
+
   constructor(private fb: FormBuilder,
     private projectService: ProjectService,
     private customerService: CustomerService,
     private message: NzMessageService,
+    private auth: AuthenticationService,
     private router: Router,
     private setting: SettingsService
     ) { }
@@ -44,7 +49,7 @@ export class AddProjectComponent implements OnInit {
     const status = 'ACTIVE'
     const id = 1
     this.customerService.getCustomers(status).subscribe((res:any) => {
-       this.customers = res;
+       this.customers = res.data;
     });
     this.setting.getCompany(id).subscribe((res:any) => {
       this.company = res;
@@ -62,16 +67,17 @@ export class AddProjectComponent implements OnInit {
       min_hours: [null,[Validators.required]],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
+      createdBy: [this.userId],
       customerId: [null , [Validators.required]],
   });
   }
 
 onChange(result: Date): void {
-    console.log('Selected Time: ', result);
+    //console.log('Selected Time: ', result);
 }
 
 onOk(result: Date): void {
-    console.log('onOk', result);
+    //console.log('onOk', result);
 }
 
   disabledDate = (current: Date): boolean => {
@@ -88,7 +94,7 @@ onOk(result: Date): void {
                                   startDate: data.startDate, endDate:data.endDate,
                                   cone_rate: data.cone_rate, flagger_rate: data.flagger_rate,
                                   sign_rate: data.sign_rate, boards_rate: data.boards_rate,
-                                  min_hours: data.min_hours
+                                  min_hours: data.min_hours, createdBy: this.userId
                                 }
 
     if (this.ProjectForm.invalid) {

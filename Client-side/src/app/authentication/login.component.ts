@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
               this._router.navigateByUrl('/dashboard');
             }
 
-            if (role === 'TECHNICIAN') {
+            if (role === 'FLAGGER') {
               this._router.navigateByUrl('/technician');
             }
 

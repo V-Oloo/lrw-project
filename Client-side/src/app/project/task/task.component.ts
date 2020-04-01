@@ -26,7 +26,7 @@ export class TaskComponent implements OnInit {
 
   Tasks: [];
   Employees: [];
-  name; description; startDate; endDate; status; street; city; state; zipCode;
+  startDate; endDate; status; street; city; state; zipCode;
 
   constructor(private fb: FormBuilder,
     private projectService: ProjectService,
@@ -42,10 +42,8 @@ export class TaskComponent implements OnInit {
   ngOnInit(): void {
 
     this.projectService.getProjectTaskInfo(this.id).subscribe((res: any) => {
-
+        console.log(res)
         this.Tasks = res.tasks;
-        this.name = res.task_name;
-        this.description = res.task_description;
         this.status = res.task_status;
         this.endDate = res.task_plannedEndDate;
         this.street = res.task_street;

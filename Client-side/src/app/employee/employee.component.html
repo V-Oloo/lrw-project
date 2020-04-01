@@ -24,7 +24,11 @@
 </div>
 <div class="container-fluid">
   <nz-card>
+    <div class="text-md-right m-v-10">
+      <button (click)="export()"  nz-button nzType="primary" [nzSize]="'small'"><i nz-icon nzType="download"></i>Export</button>
+    </div>
       <nz-table #listViewTable  nzBordered [nzPageSize]="15" [nzData]="employeeList" nzTitle="EMPLOYEES">
+
           <thead>
               <tr>
                   <th>Name</th>

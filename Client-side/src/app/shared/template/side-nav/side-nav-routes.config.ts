@@ -41,7 +41,16 @@ export const ROUTES: SideNavInterface[] = [
       title: 'Completed Tasks',
       iconType: 'fontawesome',
       iconTheme: 'outline',
-      icon: 'fa fa-r-project',
+      icon: 'fa fa-stream',
+      submenu: []
+    },
+
+    {
+      path: '/settings/company',
+      title: 'Settings',
+      iconType: 'fontawesome',
+      iconTheme: 'outline',
+      icon: 'fas fa-cogs',
       submenu: []
     },
 

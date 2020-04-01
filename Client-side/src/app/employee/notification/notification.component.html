@@ -7,6 +7,7 @@
         <tr>
           <th>Event</th>
           <th>Message</th>
+          <th>Status</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -17,10 +18,20 @@
           </td>
           <td>{{item.message}}</td>
           <td>
+            {{item.status}}
+          </td>
+          <td *ngIf="item.status === 'UNREAD'">
+            <a (click)="markAsRead(item.id)">
+              <i class="far fa-envelope-open"></i>
+              <span class="m-l-10">Mark as read</span>
+            </a>
 
-              <label nz-checkbox [(ngModel)]="checkbox" (change)="onChange($event, item.id)" > <span class="m-l-10">Mark as read</span></label>
-
-
+          </td>
+          <td *ngIf="item.status === 'READ'">
+            <a (click)="markAsUnread(item.id)" >
+              <i class="far fa-envelope"></i>
+              <span class="m-l-10">Mark as unread</span>
+            </a>
           </td>
         </tr>
       </tbody>

@@ -6,6 +6,7 @@ import { AuthenticationService } from '../shared/services/authentication.service
 import * as _ from 'lodash'
 import { ProjectService } from '../project/project.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +23,7 @@ export class DashboardComponent implements OnInit {
     private auth: AuthenticationService,
     private projectService: ProjectService,
     private message: NzMessageService,
+    private _router: Router
     ) { }
 
   currentUser = this.auth.currentUserValue;
@@ -37,7 +39,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
 
     this.empService.getEmployee(this.userId).subscribe((res: any) => {
-      console.log(this.userId);
       const employee = res.data;
       this.fname = employee.firstname;
       this.role = employee.jobTitle;
@@ -45,7 +46,7 @@ export class DashboardComponent implements OnInit {
     });
 
     this.projectService.getEmployeeTasks(this.userId).subscribe((res:any) => {
-       this.tasks = res;
+       this.tasks = res.data;
        this.totalTasks = this.tasks.length;
        this.openTasks =  _.filter(this.tasks, {task_status: 'OPEN'});
        this.inprogress =  _.filter(this.tasks, {task_status: 'IN_PROGRESS'});

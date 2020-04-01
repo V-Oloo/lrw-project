@@ -1,90 +1,21 @@
 <div class="container">
-  <nz-card>
-      <div class="row align-items-center">
-          <div class="col-md-7">
-              <div class="d-md-flex align-items-center">
-                  <div class="text-center text-sm-left ">
-                    <div class="clearfix">
-                      <nz-upload
-                          nzAction="http://localhost:3000/api/employees/{{id}}/avatar"
-                          nzListType="picture-card"
-                          [(nzFileList)]="fileList"
-                          [nzShowButton]="fileList.length < 1"
-                          [nzPreview]="handlePreview">
-                          <i nz-icon nzType="plus"></i>
-                          <div class="ant-upload-text">Upload</div>
-                      </nz-upload>
-                      <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
-                          <ng-template #modalContent>
-                              <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
-                          </ng-template>
-                      </nz-modal>
-                  </div>
-                  </div>
-                  <div class="text-center text-sm-left m-v-15 p-l-30">
-                      <h2 class="m-b-5">{{fname}} {{lname}}</h2>
-                      <p class="text-opacity font-size-13">@{{fname}}</p>
-                      <p class="text-dark m-b-20">{{role}}</p>
-
-                      <!-- <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
-                        <button nz-button>
-                            <i nz-icon nzType="upload"></i><span>Upload Profile</span>
-                        </button>
-                    </nz-upload> -->
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-5">
-              <div class="row">
-                  <div class="d-md-block d-none border-left col-1"></div>
-                  <div class="col">
-                      <ul class="list-unstyled m-t-10">
-                          <li class="row">
-                              <p class="col-sm-3 col-4 font-weight-semibold text-dark m-b-5">
-                                  <i class="m-r-10 text-primary" nz-icon nzType="mail" theme="outline"></i>
-                                  <span>Email: </span>
-                              </p>
-                              <p class="col font-weight-semibold">{{email}}</p>
-                          </li>
-                          <li class="row">
-                              <p class="col-sm-3 col-4 font-weight-semibold text-dark m-b-5">
-                                  <i class="m-r-10 text-primary" nz-icon nzType="phone" theme="outline"></i>
-                                  <span>Phone: </span>
-                              </p>
-                              <p class="col font-weight-semibold">{{phone}}</p>
-                          </li>
-                          <li class="row">
-                              <p class="col-sm-3 col-5 font-weight-semibold text-dark m-b-5">
-                                  <i class="m-r-10 text-primary" nz-icon nzType="compass" theme="outline"></i>
-                                  <span>City: </span>
-                              </p>
-                              <p class="col font-weight-semibold">{{location}}</p>
-                          </li>
-                      </ul>
-
-                  </div>
-              </div>
-          </div>
-      </div>
-  </nz-card>
-
   <nz-tabset>
-    <nz-tab nzTitle="Account">
+    <nz-tab nzTitle="Company Details">
       <div class="container">
-        <nz-card nzTitle="Basic Infomation">
-          <form nz-form [formGroup]="RegistrationForm">
+        <nz-card nzTitle="Company Infomation">
+          <form nz-form [formGroup]="CompanyForm" (click)="updateCompany(this.CompanyForm.value)">
             <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon></nz-alert>
             <div class="row">
               <div class="col-md-6">
                   <nz-form-item>
-                    <nz-form-label nzRequired nzFor="firstname">First Name</nz-form-label>
+                    <nz-form-label nzRequired nzFor="firstname">Company Name</nz-form-label>
                     <nz-form-control nzHasFeedback [nzErrorTip]="fnameErrorTp">
                       <nz-input-group>
-                        <input type="text" nz-input formControlName="firstname" placeholder="First Name">
+                        <input type="text" nz-input formControlName="organization" placeholder="Company Name">
                       </nz-input-group>
                       <ng-template #fnameErrorTp let-control>
                         <ng-container *ngIf="control.hasError('required')">
-                          Please input your First Name!
+                          Please input Company Name!
                         </ng-container>
                       </ng-template>
                     </nz-form-control>
@@ -92,14 +23,14 @@
               </div>
               <div class="col-md-6">
                   <nz-form-item>
-                    <nz-form-label nzRequired nzFor="lastname">Last Name</nz-form-label>
+                    <nz-form-label nzRequired nzFor="lastname">Contact Person</nz-form-label>
                     <nz-form-control nzHasFeedback [nzErrorTip]="lnameErrorTp">
                         <nz-input-group>
-                          <input type="text" nz-input formControlName="lastname" placeholder="Last Name">
+                          <input type="text" nz-input formControlName="contact_person" placeholder="Contact Person">
                         </nz-input-group>
                         <ng-template #lnameErrorTp let-control>
                           <ng-container *ngIf="control.hasError('required')">
-                            Please input your First Name!
+                            Please input Contact Person!
                           </ng-container>
                         </ng-template>
                     </nz-form-control>
@@ -130,21 +61,13 @@
                   <nz-form-label nzRequired nzFor="phone">Phone No.</nz-form-label>
                   <nz-form-control nzHasFeedback [nzErrorTip]="phoneErrorTp" >
 
-                    <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
-                      <ng-template #addOnBeforeTemplate>
-                          <nz-select formControlName="phonePrefix" style="width: 70px;">
-                           <nz-option nzLabel="+1" nzValue="+1"></nz-option>
-                          </nz-select>
-                      </ng-template>
+                    <nz-input-group>
                       <input formControlName="phone" id="'phone'" nz-input>
                     </nz-input-group>
                     <ng-template #phoneErrorTp let-control>
                       <ng-container *ngIf="control.hasError('required')">
                         Please input your phone number!
                       </ng-container>
-                      <!-- <ng-container *ngIf="control.hasError('pattern')">
-                        Please input a valid phone number!
-                      </ng-container> -->
                     </ng-template>
                   </nz-form-control>
                 </nz-form-item>
@@ -153,14 +76,14 @@
           <div class="row">
             <div class="col-md-3">
               <nz-form-item>
-                <nz-form-label nzRequired nzFor="address">Street.</nz-form-label>
+                <nz-form-label nzRequired nzFor="address">Cone Rate.</nz-form-label>
                 <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
                   <nz-input-group>
-                    <input type="text" nz-input formControlName="street" placeholder="eg. 777 Brockton Avenue">
+                    <input type="text" nz-input formControlName="cone_rate" placeholder="Cone Rate ">
                   </nz-input-group>
                   <ng-template #addressErrorTp let-control>
                     <ng-container *ngIf="control.hasError('required')">
-                      Please enter the street.!
+                      Please enter the cone rate.!
                     </ng-container>
                   </ng-template>
                 </nz-form-control>
@@ -168,14 +91,14 @@
            </div>
            <div class="col-md-3">
             <nz-form-item>
-              <nz-form-label nzRequired nzFor="address">City</nz-form-label>
+              <nz-form-label nzRequired nzFor="address">Stop/Slow sign rate</nz-form-label>
               <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
                 <nz-input-group>
-                  <input type="text" nz-input formControlName="city" placeholder="eg. Abington">
+                  <input type="text" nz-input formControlName="sign_rate" placeholder="Stop/Slow sign rate">
                 </nz-input-group>
                 <ng-template #addressErrorTp let-control>
                   <ng-container *ngIf="control.hasError('required')">
-                    Please enter the city!
+                    Please enter the sign Rate!
                   </ng-container>
                 </ng-template>
               </nz-form-control>
@@ -183,14 +106,14 @@
            </div>
            <div class="col-md-3">
             <nz-form-item>
-              <nz-form-label nzRequired nzFor="address">State</nz-form-label>
+              <nz-form-label nzRequired nzFor="address">Boards Rate</nz-form-label>
               <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
                 <nz-input-group>
-                  <input type="text" nz-input formControlName="state" placeholder="eg. MA">
+                  <input type="text" nz-input formControlName="boards_rate" placeholder="Boards Rate">
                 </nz-input-group>
                 <ng-template #addressErrorTp let-control>
                   <ng-container *ngIf="control.hasError('required')">
-                    Please enter the state!
+                    Please enter the Boards Rate!
                   </ng-container>
                 </ng-template>
               </nz-form-control>
@@ -198,14 +121,14 @@
            </div>
            <div class="col-md-3">
             <nz-form-item>
-              <nz-form-label nzRequired nzFor="address">Zip Code</nz-form-label>
+              <nz-form-label nzRequired nzFor="address">Flaggers Rate</nz-form-label>
               <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
                 <nz-input-group>
-                  <input type="text" nz-input formControlName="zipCode" placeholder="zip code">
+                  <input type="text" nz-input formControlName="flagger_rate" placeholder="Flaggers Rate">
                 </nz-input-group>
                 <ng-template #addressErrorTp let-control>
                   <ng-container *ngIf="control.hasError('required')">
-                    Please enter the zip code!
+                    Please enter the flaggers Rate!
                   </ng-container>
                 </ng-template>
               </nz-form-control>
@@ -213,28 +136,41 @@
            </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <nz-form-item>
-              <nz-form-label nzRequired nzFor="title">Job Title</nz-form-label>
-              <nz-form-control  nzHasFeedback [nzErrorTip]="jobErrorTp">
-                <nz-select id="title" formControlName="jobTitle" nzPlaceHolder="Select Job Title">
-                  <nz-option nzValue="SUPERVISOR" nzLabel="SUPERVISOR"></nz-option>
-                  <nz-option nzValue="FLAGGER" nzLabel="FLAGGER"></nz-option>
-                  <nz-option nzValue="ADMIN" nzLabel="ADMIN"></nz-option>
-                </nz-select>
-                <ng-template #jobErrorTp let-control>
+              <nz-form-label nzRequired nzFor="address">Minimum Chargable Hours</nz-form-label>
+              <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+                <nz-input-group>
+                  <input type="text" nz-input formControlName="min_hours" placeholder="Minimum Chargable Hours">
+                </nz-input-group>
+                <ng-template #addressErrorTp let-control>
                   <ng-container *ngIf="control.hasError('required')">
-                    Please select job title!
+                    Please enter the min hours!
                   </ng-container>
                 </ng-template>
               </nz-form-control>
             </nz-form-item>
-        </div>
+           </div>
+           <div class="col-md-6">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
+              <nz-form-control nzHasFeedback [nzErrorTip]="addressErrorTp">
+                <nz-input-group>
+                  <input type="text" nz-input formControlName="address" placeholder="Address">
+                </nz-input-group>
+                <ng-template #addressErrorTp let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please enter the company address!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+           </div>
         </div>
        <div class="row">
          <nz-form-item>
            <nz-form-control class="pull-right">
-            <button nz-button [disabled]="loading" (click)="updateEmployeeDetails(this.RegistrationForm.value)" nzType="primary">
+            <button nz-button [disabled]="loading" nzType="primary">
               Update
               <nz-spin [nzSpinning]="loading"></nz-spin>
             </button>
@@ -246,7 +182,7 @@
         </nz-card>
     </div>
     </nz-tab>
-    <nz-tab nzTitle="Change Password">
+    <!-- <nz-tab nzTitle="Change Password">
       <nz-card nzTitle="Change Password">
         <form nz-form [formGroup]="changePWForm" (ngSubmit)="changePassword()">
           <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon></nz-alert>
@@ -288,6 +224,7 @@
             </div>
         </form>
     </nz-card>
-    </nz-tab>
+    </nz-tab> -->
   </nz-tabset>
 </div>
+

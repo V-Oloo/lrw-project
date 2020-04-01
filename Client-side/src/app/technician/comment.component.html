@@ -1,27 +1,109 @@
-<div class="container-fluid">
-  <div class="row">
-      <div class="col-md-12">
-        <nz-card>
-          <h4>Add Comment</h4>
-
-          <nz-comment>
-            <nz-comment-content>
-              <form nz-form [formGroup]="CommentForm" (ngSubmit)="addComment(CommentForm.value)">
-
-                <nz-form-item>
-                  <textarea  nz-input rows="4" formControlName="comment"></textarea>
-                </nz-form-item>
-                <nz-form-item>
-                    <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="CommentForm.invalid">
-                        Add Comment
-                    </button>
-                </nz-form-item>
-
-              </form>
-
-            </nz-comment-content>
-        </nz-comment>
-        </nz-card>
+<nz-card nzTitle="Job Summary & Confirmation">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <div class="row">
+          <div class="d-md-block d-none border-left col-1"></div>
+          <div class="col">
+              <ul class="list-unstyled m-t-10">
+                  <li class="row">
+                      <p class="col-sm-3 col-4 font-weight-semibold text-dark m-b-5">
+                          <span>Address: </span>
+                      </p>
+                      <p class="col font-weight-semibold"> {{street}}, {{city}} , {{state}}, {{zipCode}} </p>
+                  </li>
+                  <li class="row">
+                      <p class="col-sm-3 col-4 font-weight-semibold text-dark m-b-5">
+                          <span>Client: </span>
+                      </p>
+                      <p class="col font-weight-semibold"> {{org}}</p>
+                  </li>
+                  <li class="row">
+                      <p class="col-sm-3 col-6 font-weight-semibold text-dark m-b-5">
+                          <span>Flaggers: </span>
+                      </p>
+                      <p class="col font-weight-semibold">{{flaggers}}</p>
+                  </li>
+                  <li class="row">
+                    <p class="col-sm-3 col-6 font-weight-semibold text-dark m-b-5">
+                        <span>Traffic/Arrow Boards: </span>
+                    </p>
+                    <p class="col font-weight-semibold"> {{boards}}</p>
+                </li>
+              </ul>
+          </div>
       </div>
   </div>
-</div>
+      <div class="col-md-6">
+          <div class="row">
+              <div class="d-md-block d-none border-left col-1"></div>
+              <div class="col">
+                  <ul class="list-unstyled m-t-10">
+
+                      <li class="row">
+                          <p class="col-sm-3 col-6 font-weight-semibold text-dark m-b-5">
+                              <span>Stop/Slow Signs: </span>
+                          </p>
+                          <p class="col font-weight-semibold">{{signs}}</p>
+                      </li>
+                      <li class="row">
+                        <p class="col-sm-3 col-6 font-weight-semibold text-dark m-b-5">
+                            <span>Cones: </span>
+                        </p>
+                        <p class="col font-weight-semibold">{{cones}}</p>
+                    </li>
+                    <li class="row">
+                      <p class="col-sm-3 col-6 font-weight-semibold text-dark m-b-5">
+                          <span>Total Hours: </span>
+                      </p>
+                      <p class="col font-weight-semibold">{{duration}}</p>
+                   </li>
+                   <li class="row">
+                    <p class="col-sm-3 col-6 font-weight-semibold text-dark m-b-5">
+                        <span>Bill: </span>
+                    </p>
+                    <p class="col font-weight-semibold">{{amount}}$</p>
+                   </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</nz-card>
+ <nz-card>
+      <div class="m-t-15">
+        <form nz-form [formGroup]="Form" (ngSubmit)="submitForm()">
+          <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon></nz-alert>
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="address">Client Rate</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="flaggerErrorTp">
+              <nz-input-group>
+                <nz-radio-group formControlName="client_rate">
+                  <label nz-radio nzValue="v.Good">V.Good</label>
+                  <label nz-radio nzValue="Good">Good</label>
+                  <label nz-radio nzValue="Average">Average</label>
+                  <label nz-radio nzValue="Poor">Poor</label>
+                </nz-radio-group>
+              </nz-input-group>
+              <ng-template #flaggerErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please rate the work done!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <div class="row">
+            <nz-form-item>
+              <nz-form-control class="pull-right">
+                <button nz-button [disabled]="loading" nzType="primary">
+                  Rate
+                  <nz-spin [nzSpinning]="loading"></nz-spin>
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </form>
+        <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+        <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+      </div>
+    </nz-card>

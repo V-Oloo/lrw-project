@@ -4,8 +4,9 @@ import { EmployeeService } from '../employee.service';
 import { Registration } from 'src/app/models/registration.model';
 import { AuthService } from 'src/app/authentication/auth.service';
 import { NzMessageService, UploadFile } from 'ng-zorro-antd';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MustMatch } from 'src/app/shared/pipes/password-validator';
+import { url } from 'inspector';
 
 
 @Component({
@@ -21,24 +22,25 @@ export class ProfileComponent implements OnInit {
   loading = false;
   public errMessage: string;
 
-  fname; lname; email; role; location; phone
+  fname; lname; email; role; location; phone; avatar
 
-  currentUser = this.auth.currentUserValue;
-  userId = +this.currentUser.user_id;
+
+  id = +this._route.snapshot.paramMap.get('id');
 
 
   constructor(private fb: FormBuilder,
      private empService: EmployeeService,
      private auth: AuthService,
      private message: NzMessageService,
-     private router: Router
+     private router: Router,
+     private _route: ActivatedRoute,
      ) {
 
    }
 
   ngOnInit() {
 
-    this.empService.getEmployee(this.userId).subscribe((res: any) => {
+    this.empService.getEmployee(this.id).subscribe((res: any) => {
       this.employee = res.data;
       this.editEmployee(res.data);
       console.log(res.data);
@@ -50,6 +52,8 @@ export class ProfileComponent implements OnInit {
       this.location = this.employee.city;
       this.phone = this.employee.phone;
       this.role = this.employee.jobTitle;
+      this.avatar = this.employee.avatar
+
     })
     this.changePWForm = this.fb.group({
       oldPassword: [ null, [ Validators.required ] ],
@@ -72,7 +76,6 @@ export class ProfileComponent implements OnInit {
   }
 
   editEmployee (data: Registration) {
-    console.log(data);
     this.RegistrationForm.patchValue({
       firstname: data.firstname,
       lastname: data.lastname,
@@ -89,14 +92,14 @@ export class ProfileComponent implements OnInit {
 
   updateEmployeeDetails(data: Registration) {
 
-    if (this.changePWForm.invalid) {
+    if (this.RegistrationForm.invalid) {
       this.loading = false;
        this.displayValidationErrors();
        return;
     }
 
     this.loading = true;
-    this.empService.updateEmpDetails(data, this.userId).subscribe((res: any) => {
+    this.empService.updateEmpDetails(data, this.id).subscribe((res: any) => {
       this.loading = false;
       this.message.create('success', `employee updated successfully`);
     }, (err: any) => {
@@ -128,7 +131,7 @@ export class ProfileComponent implements OnInit {
     }
     this.loading =  true;
     const data = this.changePWForm.value;
-    this.empService.changePassword({oldPassword: data.oldPassword, newPassword: data.newPassword}, this.userId)
+    this.empService.changePassword({oldPassword: data.oldPassword, newPassword: data.newPassword}, this.id)
                    .subscribe((res: any) => {
                     this.loading = false;
                     this.message.create('success', `password updated successfully, please login in`);
@@ -141,8 +144,9 @@ export class ProfileComponent implements OnInit {
                    );
   }
 
-  fileList = [
-
+  fileList = [{
+   url : this.avatar
+  }
 ];
 previewImage = '';
 previewVisible = false;

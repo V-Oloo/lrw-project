@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from './employee.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { error } from 'protractor';
+import { ExportService } from '../shared/services/export.service';
 
 @Component({
   selector: 'app-employee',
@@ -14,7 +15,7 @@ export class EmployeeComponent implements OnInit {
 
   search : any;
 
-  constructor(private empService: EmployeeService,  private message: NzMessageService,) { }
+  constructor(private empService: EmployeeService,  private message: NzMessageService, private exportService: ExportService) { }
 
   ngOnInit() {
     this.getEmployees()
@@ -22,8 +23,7 @@ export class EmployeeComponent implements OnInit {
 
   getEmployees() {
     this.empService.getEmployees().subscribe(res => {
-      console.log(res)
-      this.employeeList = res;
+      this.employeeList = res.data;
     });
   }
 
@@ -52,6 +52,10 @@ export class EmployeeComponent implements OnInit {
     }, (error) => {
       this.message.create('error', `operation Unsucceeful, try again`);
     });
+  }
+
+  export() {
+    this.exportService.exportExcel(this.employeeList, 'employees');
   }
 
 }

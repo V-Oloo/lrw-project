@@ -6,7 +6,7 @@
                   <div class="media align-items-center">
                       <nz-avatar nzShape="square" nzSrc="assets/images/others/thumb-3.jpg"></nz-avatar>
                       <div class="m-l-10">
-                          <h4 class="m-b-0">{{name}}</h4>
+                          <h4 class="m-b-0">FLAGGING</h4>
                       </div>
                   </div>
                   <div>
@@ -14,8 +14,6 @@
                   </div>
               </div>
               <div class="m-t-40">
-                  <h6>Description:</h6>
-                  {{description}}
               </div>
               <div class="m-t-40">
                 <span class="font-weight-semibold m-r-10 m-b-5 text-dark">Location Address:</span>
@@ -23,7 +21,7 @@
               </div>
               <div class="d-md-flex m-t-30 align-items-center justify-content-between">
                   <div class="d-flex align-items-center m-t-10">
-                      <span class="text-dark font-weight-semibold m-r-10 m-b-5">Assigned: </span>
+                      <span class="text-dark font-weight-semibold m-r-10 m-b-5">Flaggers: </span>
                       <a class="m-r-5 m-b-5" *ngFor="let item of employees">
                           {{item.name}},
                       </a>

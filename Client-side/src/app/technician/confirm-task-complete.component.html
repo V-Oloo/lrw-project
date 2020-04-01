@@ -1,33 +1,118 @@
-<nz-card nzTitle="Task Summary">
-  <nz-descriptions>
-    <nz-descriptions-item nzTitle="Task Name">{{name}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Task Start">{{workStart | date:'medium' }}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Task End">{{workEnd | date:'medium'}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Address">
-        {{street}}, {{city}} , {{state}}, {{zipCode}}
-    </nz-descriptions-item>
-  </nz-descriptions>
-  <nz-descriptions >
-    <nz-descriptions-item nzTitle="Description">
-     {{description}}
-    </nz-descriptions-item>
+<nz-card nzTitle="Job Completion Form">
+    <nz-card>
+      <div class="m-t-15">
+        <form nz-form [formGroup]="JobForm" (ngSubmit)="submitJobForm()">
+          <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon></nz-alert>
+          <div class="row">
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="address">flaggers</nz-form-label>
+                <nz-form-control nzHasFeedback [nzErrorTip]="flaggerErrorTp">
+                  <nz-input-group>
+                    <input type="number" nz-input formControlName="flaggers" placeholder="flaggers">
+                  </nz-input-group>
+                  <ng-template #flaggerErrorTp let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please enter the number of flaggers!
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+           </div>
+           <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="address">Cones</nz-form-label>
+              <nz-form-control nzHasFeedback [nzErrorTip]="coneErrorTp">
+                <nz-input-group>
+                  <input type="number" nz-input formControlName="cones" placeholder="Cones">
+                </nz-input-group>
+                <ng-template #coneErrorTp let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please enter the number of cones!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+           </div>
+           <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="address">Stop/Slow Sign</nz-form-label>
+              <nz-form-control nzHasFeedback [nzErrorTip]="signErrorTp">
+                <nz-input-group>
+                  <input type="number" nz-input formControlName="signs" placeholder="Stop/Slow Sign used">
+                </nz-input-group>
+                <ng-template #signErrorTp let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please enter the number of signs used!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+           </div>
 
-  </nz-descriptions>
-  <nz-descriptions>
-    <nz-descriptions-item nzTitle="Client :">{{org}}</nz-descriptions-item>
-  </nz-descriptions>
-
-    <nz-comment>
-      <nz-comment-content>
-        <form nz-form>
-          <nz-form-item>
-              <button nz-button nzType="primary" (click)="sendMail()">
-                  Confirm Task Completion
-              </button>
-          </nz-form-item>
-
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="address">Traffic/Arrow Board</nz-form-label>
+                <nz-form-control nzHasFeedback [nzErrorTip]="boardErrorTp">
+                  <nz-input-group>
+                    <input type="number" nz-input formControlName="boards" placeholder="Boards used">
+                  </nz-input-group>
+                  <ng-template #boardErrorTp let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please enter the number of boards used!
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+             </div>
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="address">Total Hours</nz-form-label>
+                <nz-form-control nzHasFeedback [nzErrorTip]="hoursErrorTp">
+                  <nz-input-group>
+                    <input type="number" nz-input formControlName="total_hours" placeholder="Total Hours">
+                  </nz-input-group>
+                  <ng-template #hoursErrorTp let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please enter the total hours taked!
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="name">Comment</nz-form-label>
+                <nz-form-control nzHasFeedback [nzErrorTip]="descErrorTp">
+                  <nz-input-group>
+                    <textarea nz-input formControlName="comment"></textarea>
+                  </nz-input-group>
+                  <ng-template #descErrorTp let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please Enter project Description!
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div class="row">
+            <nz-form-item>
+              <nz-form-control class="pull-right">
+                <button nz-button [disabled]="loading" nzType="primary">
+                  Add
+                  <nz-spin [nzSpinning]="loading"></nz-spin>
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
         </form>
+        <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+        <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+      </div>
+    </nz-card>
 
-      </nz-comment-content>
-   </nz-comment>
-</nz-card>

@@ -31,8 +31,16 @@ export const CommonLayout_ROUTES: Routes = [
     {
       path: 'technician',
       canActivate: [MainAuthGuard,RoleGuard],
-      data: { role: [Role.TECHNICIAN]},
+      data: { role: [Role.FLAGGER]},
       loadChildren: () => import('../../technician/technician.module').then(m => m.TechnicianModule)
+    },
+
+    {
+      path: 'settings',
+      canActivate: [MainAuthGuard,RoleGuard],
+      data: { role: [Role.ADMIN]},
+      loadChildren: () => import('../../settings/settings.module').then(m => m.SettingsModule)
     }
+
 
 ];

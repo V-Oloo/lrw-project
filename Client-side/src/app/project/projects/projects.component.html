@@ -48,9 +48,9 @@
                       {{item.dueDate | date}}
                   </td>
                   <td class="text-center">
-                      <nz-tag class="m-b-0" *ngIf="item.status == 'OPEN'" [nzColor]="'blue'">{{item.status}}</nz-tag>
-                      <nz-tag class="m-b-0" *ngIf="item.status == 'Ready'" [nzColor]="'cyan'">{{item.status}}</nz-tag>
-                      <nz-tag class="m-b-0" *ngIf="item.status == 'Behind'" [nzColor]="'red'">{{item.status}}</nz-tag>
+                      <nz-tag class="m-b-0" *ngIf="item.status == 'ACTIVE'" [nzColor]="'blue'">{{item.status}}</nz-tag>
+                      <nz-tag class="m-b-0" *ngIf="item.status == 'COMPLETED'" [nzColor]="'cyan'">{{item.status}}</nz-tag>
+                      <nz-tag class="m-b-0" *ngIf="item.status == 'INACTIVE'" [nzColor]="'red'">{{item.status}}</nz-tag>
                   </td>
                   <td class="text-right">
                       <div>
@@ -65,21 +65,26 @@
                                               <span class="m-l-10">View</span>
                                           </a>
                                       </li>
-                                      <li nz-menu-item>
+                                      <li nz-menu-item *ngIf="item.status != 'COMPLETED'">
                                           <a routerLink="/projects/update-project/{{item.projectId}}">
                                               <i nz-icon nzType="edit" theme="outline"></i>
                                               <span class="m-l-10">Edit</span>
                                           </a>
                                       </li>
+                                      <li nz-menu-item *ngIf="item.status != 'COMPLETED'">
+                                        <a (click)="completeProject(item.projectId)">
+                                            <span class="m-l-10">Mak as Complete</span>
+                                        </a>
+                                      </li>
                                       <li nz-menu-divider></li>
-                                      <li nz-menu-item >
-                                        <a (click)="activateProject(item.id)">
+                                      <li nz-menu-item *ngIf="item.status == 'INACTIVE' && item.status != 'COMPLETED'">
+                                        <a (click)="activateProject(item.projectId)">
                                             <i nz-icon nzType="delete" theme="outline"></i>
                                             <span class="m-l-10">Activate</span>
                                         </a>
                                       </li>
-                                      <li nz-menu-item *ngIf="item.status == 'ACTIVE'">
-                                          <a (click)="deactivateProject(item.id)">
+                                      <li nz-menu-item *ngIf="item.status == 'ACTIVE' && item.status != 'COMPLETED'">
+                                          <a (click)="deactivateProject(item.projectId)">
                                               <i nz-icon nzType="delete" theme="outline"></i>
                                               <span class="m-l-10">Deactivate</span>
                                           </a>

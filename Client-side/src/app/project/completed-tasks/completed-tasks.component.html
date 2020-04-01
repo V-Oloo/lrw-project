@@ -24,16 +24,23 @@
 </div>
 <div class="container-fluid">
   <nz-card>
-      <nz-table #listViewTable nzBordered [nzPageSize]="15" nzTitle="COMPLETED TASKS" [nzData]="taskArr">
+    <div class="text-md-right m-v-10">
+      <button (click)="export()"  nz-button nzType="primary" [nzSize]="'small'"><i nz-icon nzType="download"></i>Export</button>
+    </div>
+
+      <nz-table #listViewTable nzBordered [nzPageSize]="15" nzTitle="COMPLETED TASKS" [nzData]="taskArr" [nzScroll]="{x:'1300px'}">
           <thead>
               <tr>
                   <th>Project</th>
-                  <th>Task</th>
+                  <th>Job Address</th>
                   <th>Customer</th>
                   <th>Assigned</th>
                   <th>Start Date</th>
                   <th>End Date</th>
-                  <th>Total Hours</th>
+                  <th>Billable Time</th>
+                  <th>Flagger,s Time</th>
+                  <th>Bill</th>
+                  <th>Customer Review</th>
               </tr>
           </thead>
           <tbody>
@@ -42,20 +49,29 @@
                     {{item.project}}
                   </td>
                   <td>
-                      {{item.task}}
+                      {{item.address}}
                   </td>
                   <td>
                     {{item.customer}}
                   </td>
                   <td>{{item.name}}</td>
                   <td>
-                     {{item.start | date:'short'}}
+                     {{item.start | date:'shortTime'}}
                   </td>
                   <td>
-                      {{item.end | date:'short'}}
+                      {{item.end | date:'shortTime'}}
                   </td>
                   <td>
-                    {{item.hours}}
+                    {{item.btime}}Hrs
+                 </td>
+                 <td>
+                  {{item.ftime}}Hrs
+                </td>
+                <td>
+                  {{item.bill}}$
+                </td>
+                <td>
+                  {{item.review}}
                 </td>
               </tr>
           </tbody>

@@ -1,7 +1,7 @@
 import { TaskModel } from 'src/app/models/task.model';
 import { Status } from './../models/task-status.model';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Project } from '../models/project.model';
 import { Globals } from '../global';
 import { map, shareReplay } from 'rxjs/operators';
@@ -27,6 +27,11 @@ export class ProjectService {
 
   getProjectTbDetails() {
     return this.http.get(`${environment.apiUrl}/project/projectDetails/stat`)
+                    .pipe(map((data: any) => data.data), shareReplay(),);
+  }
+
+  getUserProjectTbDetails(id: number) {
+    return this.http.get(`${environment.apiUrl}/project/projectDetails/stat/${id}`)
                     .pipe(map((data: any) => data.data), shareReplay(),);
   }
 
@@ -75,14 +80,22 @@ export class ProjectService {
      return this.http.patch(`${environment.apiUrl}/tasks/${id}/update`, data)
    }
 
+   patchTaskData(id: number, data: any){
+    return this.http.patch(`${environment.apiUrl}/tasks/${id}/patchTask`, data)
+   }
+
+   updateTaskBill(id: number, data: any){
+    return this.http.patch(`${environment.apiUrl}/tasks/${id}/billing`, data)
+   }
+
    getTaskById(id: number) {
     return this.http.get(`${environment.apiUrl}/tasks/${id}`)
                     .pipe(map((data: any) => data.data), shareReplay(),);
    }
 
-   sendClientEmail(data: any, id: number) {
-    return this.http.post(`${environment.apiUrl}/tasks/${id}/sendMail`, data);
-   }
+  //  sendClientEmail(data: any, id: number) {
+  //   return this.http.post(`${environment.apiUrl}/tasks/${id}/sendMail`, data);
+  //  }
 
    getCompletedTasks() {
      return this.http.get(`${environment.apiUrl}/tasks/completedTasks/summary`)
@@ -91,6 +104,11 @@ export class ProjectService {
 
    addNotification(data: any) {
       return this.http.post(`${environment.apiUrl}/employees/notification`, data)
+   }
+
+   getFlaggerNo(id: number) {
+    return this.http.get(`${environment.apiUrl}/tasks/flaggers/${id}`)
+                    .pipe(map((data: any) => data.data), shareReplay(),);
    }
 
 }

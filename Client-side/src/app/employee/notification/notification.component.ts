@@ -21,23 +21,21 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit(): void {
      this.emp.getNotifications(this.userId).subscribe(res => {
-       this.notifications = res.data;
-       console.log(res.data);
+       this.notifications = res.data.data;
      });
   }
 
-  onChange(e, id: number) {
-    if(e.target.checked === true) {
+  markAsRead(id: number) {
        this.emp.updateNotificationStatus(id, {status : "READ"}).subscribe(res => {
-         console.log(res);
+         window.location.reload()
        });
-    }
-    if(e.target.checked === true){
-        this.emp.updateNotificationStatus(id, {status: "UNREAD"}).subscribe(res => {
-          console.log(res);
-        });
-    }
-
   }
+
+  markAsUnread(id: number) {
+
+     this.emp.updateNotificationStatus(id, {status: "UNREAD"}).subscribe(res => {
+      window.location.reload()
+     });
+}
 
 }

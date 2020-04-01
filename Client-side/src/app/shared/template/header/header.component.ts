@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/authentication/auth.service';
 import { EmployeeService } from 'src/app/employee/employee.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
+import * as _ from 'lodash'
 
 @Component({
     selector: 'app-header',
@@ -26,17 +27,29 @@ export class HeaderComponent{
     currentUser = this.auth.currentUserValue;
     userId = this.currentUser.user_id;
 
-    fname; lname; role;
+    fname; lname; role;url;
+    notifications
+    unread;
+    total
 
     ngOnInit(): void {
         this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
         this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
+
+        this.empService.getNotifications(this.userId).subscribe(res => {
+          this.notifications = res.data.data;
+          this.unread =  _.filter(this.notifications, {status: 'UNREAD'});
+          this.total = this.unread.length;
+          console.log(this.total)
+          console.log(this.unread);
+        });
 
         this.empService.getEmployee(this.userId).subscribe((res: any) => {
             const employee = res.data;
             this.fname = employee.firstname;
             this.lname = employee.lastname;
             this.role = employee.jobTitle;
+            this.url = employee.avatar;
 
         });
     }

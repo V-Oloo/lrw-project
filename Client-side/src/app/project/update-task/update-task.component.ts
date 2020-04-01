@@ -43,15 +43,13 @@ export class UpdateTaskComponent implements OnInit {
 
 
     this.TaskForm = this.fb.group({
-      name: [null, [Validators.required]],
-      description: [null, [Validators.required]],
       plannedStartDate: [null, [Validators.required]],
       plannedEndDate: [null, [Validators.required]],
       street: [null, [Validators.required]],
       zipCode: [null, [Validators.required]],
       city: [null, [Validators.required]],
       state: [null, [Validators.required]],
-      assignedEmployees: [null, [Validators.required]],
+      flaggers: [null, [Validators.required]],
   });
   }
 
@@ -64,15 +62,13 @@ export class UpdateTaskComponent implements OnInit {
     });
 
     this.TaskForm.patchValue({
-      name: data.task_name,
-      description: data.task_description,
       plannedStartDate:  data.task_plannedStartDate,
       plannedEndDate: data.task_plannedEndDate,
       street: data.task_street,
       zipCode: data.task_zipCode,
       city: data.task_city,
       state: data.task_state,
-      assignedEmployees: arr,
+      flaggers: arr,
     });
 
   }

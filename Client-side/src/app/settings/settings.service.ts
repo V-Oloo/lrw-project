@@ -14,4 +14,8 @@ export class SettingsService {
     return this.http.get(`${environment.apiUrl}/company/${id}`)
                .pipe(map((data: any) => data.data), shareReplay());
   }
+
+  updateCompany(data: any, id: number) {
+    return this.http.patch(`${environment.apiUrl}/company/${id}/update`, data);
+  }
 }

@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'comment/:id',
     component: CommentComponent,
     data: {
-        title: 'Add Comment'
+        title: 'Job Summary'
     }
   },
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
     path: 'task-summary/:id',
     component: ConfirmTaskCompleteComponent,
     data: {
-        title: 'Confirm Task Completion'
+        title: 'Job Completion Form'
     }
   },
 ];

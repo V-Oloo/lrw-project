@@ -18,14 +18,12 @@ export class CustomersComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.getEmployees()
+    this.getCustomers()
   }
 
-  getEmployees() {
+  getCustomers() {
     this.customerServise.getCustomers().subscribe(res => {
-      this.customersList = res;
-      console.log("this is my project")
-      console.log(this.customersList);
+      this.customersList = res.data;
     });
   }
 

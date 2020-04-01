@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
 
     currentUser = this.auth.currentUserValue;
     userId = this.currentUser.user_id;
-    fname; role;
+    fname; role;url;
     projects; tasks; totalEmp;
     projectList: [];
     employeeList: [];
@@ -55,15 +55,17 @@ export class HomeComponent implements OnInit {
     getDashboardData() {
 
       this._route.data.subscribe((data: {stats : any}) => {
-        console.log(data.stats);
+        console.log(data.stats[3].data)
         const employee = data.stats[0].data;
         this.fname = employee.firstname;
+        this.url = employee.avatar;
         this.role = employee.jobTitle;
         this.projects = data.stats[1].data.projects[0].count;
         this.tasks = data.stats[1].data.tasks[0].count;
         this.totalEmp = data.stats[1].data.employees[0].count;
         this.projectList = _.take(data.stats[2], 5);
-        this.employeeList = _.take(data.stats[3], 5);
+        this.employeeList = _.take(data.stats[3].data, 5);
+        console.log( this.employeeList);
 
       });
 

@@ -17,24 +17,6 @@
                   <span class="text-gray">Tasks</span>
               </div>
           </div>
-          <!-- <div class="media align-items-center m-r-40 m-v-5">
-              <div class="font-size-27">
-                  <i class="text-success" nz-icon nzType="appstore" theme="outline"></i>
-              </div>
-              <div class="d-flex align-items-center m-l-10">
-                  <h2 class="m-b-0 m-r-5">21</h2>
-                  <span class="text-gray">Projects</span>
-              </div>
-          </div> -->
-          <!-- <div class="media align-items-center m-v-5">
-              <div class="font-size-27">
-                  <i class="text-danger" nz-icon nzType="team" theme="outline"></i>
-              </div>
-              <div class="d-flex align-items-center m-l-10">
-                  <h2 class="m-b-0 m-r-5">39</h2>
-                  <span class="text-gray">Members</span>
-              </div>
-          </div> -->
       </div>
   </div>
 </div>
@@ -67,11 +49,11 @@
                   <nz-list-item-meta
                       [nzAvatar]="'assets/images/avatars/avatar.png'"
                       [nzTitle]="nzTitle"
-                      [nzDescription]="item.task_description">
-                      <ng-template #nzTitle>{{item.task_name}}</ng-template>
+                      [nzDescription]="nzDescription">
+                      <ng-template #nzTitle>Flagging</ng-template>
+                      <ng-template #nzDescription>{{item.task_street}},{{item.task_city}}{{item.task_street}}</ng-template>
                   </nz-list-item-meta>
                   <ng-template #extra>
-                      <!-- <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"> -->
                   </ng-template>
               </nz-list-item>
           </ng-template>
@@ -97,7 +79,7 @@
               </ng-template>
               <ng-template #msgAction>
                   <span nz-tooltip nzTitle="Finish Task">
-                   <button nz-button [nzSize]="size" nzType="dashed" routerLink="/technician/comment/{{task.task_id}}">
+                   <button nz-button [nzSize]="size" nzType="dashed" routerLink="/technician/task-summary/{{task.task_id}}">
                      Finish
                    </button>
                   </span>
@@ -105,11 +87,11 @@
                   <nz-list-item-meta
                       [nzAvatar]="'assets/images/avatars/avatar.png'"
                       [nzTitle]="nzTitle"
-                      [nzDescription]="task.task_description">
-                      <ng-template #nzTitle>{{task.task_name}}</ng-template>
+                      [nzDescription]="nzDescription">
+                      <ng-template #nzTitle>Flagging</ng-template>
+                      <ng-template #nzDescription>{{task.task_street}},{{task.task_city}}  {{task.task_state}} {{task.task_zipCode}}</ng-template>
                   </nz-list-item-meta>
                   <ng-template #extra>
-                      <!-- <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"> -->
                   </ng-template>
               </nz-list-item>
           </ng-template>
@@ -129,8 +111,9 @@
                   <nz-list-item-meta
                       [nzAvatar]="'assets/images/avatars/avatar.png'"
                       [nzTitle]="nzTitle"
-                      [nzDescription]="complete.task_description">
-                      <ng-template #nzTitle>{{complete.task_name}}</ng-template>
+                      [nzDescription]="nzDescription">
+                      <ng-template #nzTitle>Flagging</ng-template>
+                      <ng-template #nzDescription>{{complete.task_street}}  {{complete.task_city}}  {{complete.task_state}}  {{complete.task_zipCode}}</ng-template>
                   </nz-list-item-meta>
                   <ng-template #extra>
                       <!-- <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"> -->

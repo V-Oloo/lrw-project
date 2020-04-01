@@ -43,6 +43,11 @@ export class UpdateProjectComponent implements OnInit {
     this.ProjectForm = this.fb.group({
       name: [null, [Validators.required]],
       description: [null, [Validators.required]],
+      cone_rate: [null,[Validators.required] ],
+      flagger_rate: [null,[Validators.required]],
+      sign_rate: [null,[Validators.required]],
+      boards_rate: [null,[Validators.required]],
+      min_hours: [null,[Validators.required]],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
       customerId: [null , [Validators.required]],
@@ -59,18 +64,18 @@ export class UpdateProjectComponent implements OnInit {
       return;
     }
     console.log(this.ProjectForm.value);
-    // this.loading = true
-    // this.projectService.updateProject(data, this.id).subscribe((res:any) => {
-    //   this.loading = false;
-    //   this.message.create('success', `project updated successfully`);
-    //   this.router.navigate(['/projects']);
-    // },
-    // (error: any) => {
-    //   this.loading = false;
-    //   this.errMessage = error.error.message;
-    //   console.log(error);
-    // }
-    // );
+    this.loading = true
+    this.projectService.updateProject(data, this.id).subscribe((res:any) => {
+      this.loading = false;
+      this.message.create('success', `project updated successfully`);
+      this.router.navigate(['/projects']);
+    },
+    (error: any) => {
+      this.loading = false;
+      this.errMessage = error.error.message;
+      console.log(error);
+    }
+    );
   }
 
   displayValidationErrors() {
@@ -113,6 +118,11 @@ editProject (data: Project) {
     startDate: data.startDate,
     endDate: data.endDate,
     customerId: data.customerId,
+    cone_rate: data.cone_rate,
+    flagger_rate: data.flagger_rate,
+    sign_rate: data.sign_rate,
+    boards_rate: data.boards_rate,
+    min_hours: data.min_hours,
   });
 }
 

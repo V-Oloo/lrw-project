@@ -31,7 +31,7 @@ const routes: Routes = [
     path: 'profile/:id',
     component: ProfileComponent,
     data: {
-        role: [Role.SUPERVISOR, Role.ADMIN, Role.TECHNICIAN],
+        role: [Role.SUPERVISOR, Role.ADMIN, Role.FLAGGER],
         title: 'Profile'
     }
   },
@@ -39,7 +39,7 @@ const routes: Routes = [
     path: 'notifications',
     component: NotificationComponent,
     data: {
-        role: [Role.SUPERVISOR, Role.ADMIN, Role.TECHNICIAN],
+        role: [Role.SUPERVISOR, Role.ADMIN, Role.FLAGGER],
         title: 'Notifications'
     }
   }

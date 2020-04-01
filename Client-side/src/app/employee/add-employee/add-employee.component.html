@@ -149,7 +149,8 @@
             <nz-form-control  nzHasFeedback [nzErrorTip]="jobErrorTp">
               <nz-select id="title" formControlName="jobTitle" nzPlaceHolder="Select Job Title">
                 <nz-option nzValue="SUPERVISOR" nzLabel="SUPERVISOR"></nz-option>
-                <nz-option nzValue="TECHNICIAN" nzLabel="TECHNICIAN"></nz-option>
+                <nz-option nzValue="FLAGGER" nzLabel="FLAGGER"></nz-option>
+                <nz-option nzValue="ADMIN" nzLabel="ADMIN"></nz-option>
               </nz-select>
               <ng-template #jobErrorTp let-control>
                 <ng-container *ngIf="control.hasError('required')">
