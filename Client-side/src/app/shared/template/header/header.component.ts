@@ -40,8 +40,7 @@ export class HeaderComponent{
           this.notifications = res.data.data;
           this.unread =  _.filter(this.notifications, {status: 'UNREAD'});
           this.total = this.unread.length;
-          console.log(this.total)
-          console.log(this.unread);
+
         });
 
         this.empService.getEmployee(this.userId).subscribe((res: any) => {

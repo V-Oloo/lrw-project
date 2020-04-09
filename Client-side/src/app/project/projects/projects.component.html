@@ -59,25 +59,25 @@
                               </a>
                               <nz-dropdown-menu #projectListSetting2="nzDropdownMenu">
                                   <ul nz-menu nzSelectable>
-                                      <li nz-menu-item >
+                                      <li nz-menu-item *ngIf="item.status == 'ACTIVE' || item.status == 'COMPLETED'">
                                           <a routerLink="/projects/project-details/{{item.projectId}}">
                                               <i nz-icon nzType="eye" theme="outline"></i>
                                               <span class="m-l-10">View</span>
                                           </a>
                                       </li>
-                                      <li nz-menu-item *ngIf="item.status != 'COMPLETED'">
+                                      <li nz-menu-item *ngIf="item.status == 'ACTIVE'">
                                           <a routerLink="/projects/update-project/{{item.projectId}}">
                                               <i nz-icon nzType="edit" theme="outline"></i>
                                               <span class="m-l-10">Edit</span>
                                           </a>
                                       </li>
-                                      <li nz-menu-item *ngIf="item.status != 'COMPLETED'">
+                                      <li nz-menu-item *ngIf="item.status == 'ACTIVE'">
                                         <a (click)="completeProject(item.projectId)">
                                             <span class="m-l-10">Mak as Complete</span>
                                         </a>
                                       </li>
                                       <li nz-menu-divider></li>
-                                      <li nz-menu-item *ngIf="item.status == 'INACTIVE' && item.status != 'COMPLETED'">
+                                      <li nz-menu-item *ngIf="item.status == 'INACTIVE'">
                                         <a (click)="activateProject(item.projectId)">
                                             <i nz-icon nzType="delete" theme="outline"></i>
                                             <span class="m-l-10">Activate</span>

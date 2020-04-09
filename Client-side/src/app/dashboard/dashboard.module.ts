@@ -3,6 +3,8 @@ import { CommonModule } from "@angular/common";
 import { SharedModule } from '../shared/shared.module';
 import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { ThemeConstantService } from '../shared/services/theme-constant.service';
+import { ChartsModule } from 'ng2-charts';
+
 
 import { HomeComponent } from './home.component';
 
@@ -12,6 +14,7 @@ import { HomeComponent } from './home.component';
         CommonModule,
         SharedModule,
         DashboardRoutingModule,
+        ChartsModule
     ],
     exports: [],
     declarations: [

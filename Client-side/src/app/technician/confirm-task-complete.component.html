@@ -52,7 +52,7 @@
 
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <nz-form-item>
                 <nz-form-label nzRequired nzFor="address">Traffic/Arrow Board</nz-form-label>
                 <nz-form-control nzHasFeedback [nzErrorTip]="boardErrorTp">
@@ -67,16 +67,40 @@
                 </nz-form-control>
               </nz-form-item>
              </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <nz-form-item>
-                <nz-form-label nzRequired nzFor="address">Total Hours</nz-form-label>
-                <nz-form-control nzHasFeedback [nzErrorTip]="hoursErrorTp">
+                <nz-form-label nzRequired nzFor="startDate">Work Start Time</nz-form-label>
+                <nz-form-control nzHasFeedback [nzErrorTip]="startErrorTp">
                   <nz-input-group>
-                    <input type="number" nz-input formControlName="total_hours" placeholder="Total Hours">
+                    <nz-date-picker nzShowTime class="w-100" nzFormat="MM/dd/yyyy HH:mm:ss" [nzDisabledDate]="disabledDate"
+                      formControlName="startedAt" nzPlaceHolder="Select Date Time" (ngModelChange)="onChange($event)"
+                      (nzOnOk)="onOk($event)"
+                      >
+                    </nz-date-picker>
                   </nz-input-group>
-                  <ng-template #hoursErrorTp let-control>
+                  <ng-template #startErrorTp let-control>
                     <ng-container *ngIf="control.hasError('required')">
-                      Please enter the total hours taked!
+                      Please input Start Date Time!
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="endDate">Work End Time</nz-form-label>
+                <nz-form-control nzHasFeedback [nzErrorTip]="endErrorTp">
+                  <nz-input-group>
+                    <nz-date-picker nzShowTime class="w-100" nzFormat="MM/dd/yyyy HH:mm:ss" [nzDisabledDate]="disabledDate"
+                      formControlName="endedAt" nzPlaceHolder="Select Date Time"
+                      (ngModelChange)="onChangeEnd($event)"
+                      (nzOnOk)="onOk($event)"
+                      >
+                    </nz-date-picker>
+                  </nz-input-group>
+                  <ng-template #endErrorTp let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please input End Date Time!
                     </ng-container>
                   </ng-template>
                 </nz-form-control>
@@ -86,16 +110,11 @@
           <div class="row">
             <div class="col-md-12">
               <nz-form-item>
-                <nz-form-label nzRequired nzFor="name">Comment</nz-form-label>
-                <nz-form-control nzHasFeedback [nzErrorTip]="descErrorTp">
+                <nz-form-label nzRequired nzFor="address">Total Hours</nz-form-label>
+                <nz-form-control nzHasFeedback [nzErrorTip]="signErrorTp">
                   <nz-input-group>
-                    <textarea nz-input formControlName="comment"></textarea>
+                    <input type="number" nz-input formControlName="totalTime" placeholder="Total Hours">
                   </nz-input-group>
-                  <ng-template #descErrorTp let-control>
-                    <ng-container *ngIf="control.hasError('required')">
-                      Please Enter project Description!
-                    </ng-container>
-                  </ng-template>
                 </nz-form-control>
               </nz-form-item>
             </div>

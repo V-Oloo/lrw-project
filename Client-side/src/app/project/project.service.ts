@@ -84,6 +84,10 @@ export class ProjectService {
     return this.http.patch(`${environment.apiUrl}/tasks/${id}/patchTask`, data)
    }
 
+   patchWorkEnd(id: number){
+    return this.http.patch(`${environment.apiUrl}/tasks/${id}/workEnd`, null)
+   }
+
    updateTaskBill(id: number, data: any){
     return this.http.patch(`${environment.apiUrl}/tasks/${id}/billing`, data)
    }
@@ -97,7 +101,19 @@ export class ProjectService {
   //   return this.http.post(`${environment.apiUrl}/tasks/${id}/sendMail`, data);
   //  }
 
-   getCompletedTasks() {
+   getCompletedTasks(fromDate?: string, toDate?: string) {
+
+     if(fromDate && toDate){
+      let params = {fromDate: fromDate, toDate: toDate};
+      return this.http.get(`${environment.apiUrl}/tasks/completedTasks/summary`, {
+        params: params,
+        withCredentials: false
+      })
+      .pipe(map((data: any) => data.data), shareReplay(),);
+     }
+
+
+
      return this.http.get(`${environment.apiUrl}/tasks/completedTasks/summary`)
                      .pipe(map((data: any) => data.data), shareReplay(),);
    }
@@ -108,6 +124,11 @@ export class ProjectService {
 
    getFlaggerNo(id: number) {
     return this.http.get(`${environment.apiUrl}/tasks/flaggers/${id}`)
+                    .pipe(map((data: any) => data.data), shareReplay(),);
+   }
+
+   getStatusStat() {
+    return this.http.get(`${environment.apiUrl}/tasks/status/count`)
                     .pipe(map((data: any) => data.data), shareReplay(),);
    }
 

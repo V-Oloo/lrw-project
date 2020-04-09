@@ -71,7 +71,7 @@
 </nz-card>
  <nz-card>
       <div class="m-t-15">
-        <form nz-form [formGroup]="Form" (ngSubmit)="submitForm()">
+        <form nz-form [formGroup]="Form">
           <nz-alert *ngIf="errMessage" class="m-b-15" nzType="error" nzMessage={{errMessage}} nzShowIcon></nz-alert>
           <nz-form-item>
             <nz-form-label nzRequired nzFor="address">Client Rate</nz-form-label>
@@ -91,13 +91,35 @@
               </ng-template>
             </nz-form-control>
           </nz-form-item>
+          <nz-form-item>
+            <nz-form-control nzHasFeedback [nzErrorTip]="flaggerErrorTp">
+              <nz-form-label nzRequired nzFor="address">Client Sign:</nz-form-label>
+            <signature-pad
+              formControlName="signature"
+              #sigPad
+              [options]="signaturePadOptions"
+              formDataURL="setSignature()"
+              ngDefaultControl
+              >
+            </signature-pad>
+              <ng-template #signErrorTp let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please add signature!
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
 
           <div class="row">
             <nz-form-item>
               <nz-form-control class="pull-right">
-                <button nz-button [disabled]="loading" nzType="primary">
-                  Rate
+                <button nz-button [disabled]="loading" nzType="primary" (click)="submitForm()">
+                  Confirm
                   <nz-spin [nzSpinning]="loading"></nz-spin>
+                </button>
+                &nbsp;
+                <button nz-button (click)="sigPad.clear()"  nzType="danger">
+                  clear
                 </button>
               </nz-form-control>
             </nz-form-item>

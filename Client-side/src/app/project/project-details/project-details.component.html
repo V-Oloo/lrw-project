@@ -28,14 +28,15 @@
         </div>
         <div class="off-gutter-x m-t-30">
           <nz-tabset>
-            <nz-tab nzTitle="Tasks ({{total}})">
+            <nz-tab nzTitle="Jobs ({{total}})">
               <nz-card>
                 <nz-table #listViewTable nzBordered [nzPageSize]="15" [nzData]="Tasks">
                   <thead>
                     <tr>
                       <th>Address</th>
-                      <th>Start Date</th>
-                      <th>Due Date</th>
+                      <th>Duration</th>
+                      <th>Job Bill</th>
+                      <th>Client Review</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -45,9 +46,10 @@
                       <td>
                         {{item.street}}, {{item.city}},{{item.state}} {{item.zipCode}}
                       </td>
-                      <td>{{item.plannedStartDate | date}}</td>
+                      <td>{{item.billable_duration}}Hrs</td>
+                      <td>{{item.bill}}$</td>
                       <td>
-                        {{item.plannedEndDate | date}}
+                        {{item.client_rate}}
                       </td>
                       <td>
                         {{item.status}}
@@ -66,7 +68,7 @@
                                   <span class="m-l-10">View</span>
                                 </a>
                               </li>
-                              <li nz-menu-item *ngIf="status != 'COMPLETE'">
+                              <li nz-menu-item *ngIf="item.status !== 'COMPLETE'">
                                 <a routerLink="/projects/update-task/{{item.id}}">
                                   <i nz-icon nzType="edit" theme="outline"></i>
                                   <span class="m-l-10">Edit</span>
@@ -88,9 +90,9 @@
                 </nz-table>
               </nz-card>
             </nz-tab>
-            <nz-tab nzTitle="Add Task" *ngIf="status != 'COMPLETED'">
+            <nz-tab nzTitle="Add Job" *ngIf="status != 'COMPLETED'">
               <nz-card>
-                <h4>Add Task</h4>
+                <h4>Add Job</h4>
 
                 <div class="m-t-25">
                   <form nz-form [formGroup]="TaskForm" (ngSubmit)="addTask(TaskForm.value)">

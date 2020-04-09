@@ -21,7 +21,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PAGENOTFOUND } from './shared/errors/page-not-found.component';
 import { JwtInterceptor } from './shared/interceptor/token.interceptor';
 import { ACCESSDENIED } from './shared/errors/error-2.component';
-import { HttpErrorInterceptor } from './shared/interceptor/global-error-handler';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 
 
@@ -43,8 +43,9 @@ registerLocaleData(en);
         TemplateModule,
         SharedModule,
         NgChartjsModule,
-
+        SignaturePadModule
     ],
+    exports: [SignaturePadModule],
     providers: [
       {
         provide: HTTP_INTERCEPTORS,

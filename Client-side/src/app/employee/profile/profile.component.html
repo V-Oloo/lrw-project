@@ -3,34 +3,16 @@
       <div class="row align-items-center">
           <div class="col-md-7">
               <div class="d-md-flex align-items-center">
-                  <div class="text-center text-sm-left ">
-                    <div class="clearfix">
-                      <nz-upload
-                          nzAction="http://localhost:3000/api/employees/{{id}}/avatar"
-                          nzListType="picture-card"
-                          [(nzFileList)]="fileList"
-                          [nzShowButton]="fileList.length < 1"
-                          [nzPreview]="handlePreview">
-                          <i nz-icon nzType="plus"></i>
-                          <div class="ant-upload-text">Upload</div>
-                      </nz-upload>
-                      <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
-                          <ng-template #modalContent>
-                              <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
-                          </ng-template>
-                      </nz-modal>
-                  </div>
-                  </div>
+                <div class="text-center text-sm-left ">
+                  <nz-avatar class="shadow-sm m-v-15" [nzSize]="150" nzSrc="{{avatar}}"></nz-avatar>
+                </div>
                   <div class="text-center text-sm-left m-v-15 p-l-30">
                       <h2 class="m-b-5">{{fname}} {{lname}}</h2>
                       <p class="text-opacity font-size-13">@{{fname}}</p>
                       <p class="text-dark m-b-20">{{role}}</p>
-
-                      <!-- <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
-                        <button nz-button>
-                            <i nz-icon nzType="upload"></i><span>Upload Profile</span>
-                        </button>
-                    </nz-upload> -->
+                      <nz-upload [nzBeforeUpload]="beforeUpload" nzAction="http://localhost:3000/api/employees/{{id}}/avatar">
+                        <button nz-button><i nz-icon nzType="upload" ></i><span>Profile Upload</span></button>
+                      </nz-upload>
                   </div>
               </div>
           </div>

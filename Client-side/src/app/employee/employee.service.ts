@@ -60,5 +60,9 @@ export class EmployeeService {
    updateNotificationStatus(id: number, status: any) {
     return this.http.patch(`${this.global._BaseUri}/employees/notification/${id}/status`, status)
    }
+   //http://localhost:3000/api/employees/{{id}}/avatar
+   updateProfile(file, id: number) {
+     return this.http.post(`${this.global._BaseUri}/employees/${id}/avatar`, file)
+   }
 
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project.service';
 import * as _ from 'lodash'
 import { ExportService } from 'src/app/shared/services/export.service';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-completed-tasks',
@@ -10,17 +12,36 @@ import { ExportService } from 'src/app/shared/services/export.service';
 })
 export class CompletedTasksComponent implements OnInit {
 
-  constructor(private service: ProjectService, private exportService: ExportService) { }
+  constructor(private service: ProjectService, private exportService: ExportService, private fb: FormBuilder, private datePipe: DatePipe) { }
 
   tasks: [];
   taskArr: [];
   search : any;
 
+  validateForm: FormGroup;
+
   ngOnInit(): void {
     this.service.getCompletedTasks().subscribe(res => {
          this.tasks = res.data;
          this.newArrays();
+         console.log( this.tasks)
     })
+
+    this.validateForm = this.fb.group({
+      toDate: [null, [Validators.required]],
+      fromDate: [null, [Validators.required]],
+  });
+  }
+
+  submitForm() {
+    const fromDate = this.datePipe.transform(this.validateForm.value.fromDate, 'yyyy-MM-dd');
+    const toDate = this.datePipe.transform(this.validateForm.value.toDate, 'yyyy-MM-dd');
+     console.log(this.validateForm.value)
+    this.service.getCompletedTasks(fromDate,toDate).subscribe(res => {
+      this.tasks = res.data;
+      this.newArrays();
+      console.log( this.tasks)
+ })
   }
 
   newArrays() {

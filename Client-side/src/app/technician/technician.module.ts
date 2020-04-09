@@ -1,3 +1,4 @@
+import { SignaturePadModule } from 'angular2-signaturepad';
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
@@ -20,6 +21,7 @@ import { ConfirmTaskCompleteComponent } from './confirm-task-complete.component'
     TechnicianRoutingModule,
     ReactiveFormsModule,
     QuillModule,
+    SignaturePadModule
   ],
   providers: [
     DatePipe

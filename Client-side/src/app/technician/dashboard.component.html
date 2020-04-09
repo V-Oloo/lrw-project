@@ -1,7 +1,7 @@
 <div class="page-header">
   <div class="d-md-flex align-items-md-center justify-content-between">
       <div class="media m-v-10 align-items-center">
-          <nz-avatar nzIcon="user" [nzSize]="50" nzSrc="assets/images/avatars/thumb-3.jpg"></nz-avatar>
+          <nz-avatar nzIcon="user" [nzSize]="50" nzSrc="{{avatar}}"></nz-avatar>
           <div class="media-body m-l-15">
               <h4 class="m-b-0">Welcome back, {{fname}}!</h4>
               <span class="text-gray">{{role}}</span>
@@ -58,7 +58,7 @@
               </nz-list-item>
           </ng-template>
           <ng-template #pagination>
-              <nz-pagination [nzPageIndex]="1" [nzTotal]="50" [nzPageSize]="10"></nz-pagination>
+              <nz-pagination [nzPageIndex]="1" [nzTotal]="50" [nzPageSize]="50"></nz-pagination>
           </ng-template>
           </nz-list>
         </nz-tab>
@@ -79,7 +79,7 @@
               </ng-template>
               <ng-template #msgAction>
                   <span nz-tooltip nzTitle="Finish Task">
-                   <button nz-button [nzSize]="size" nzType="dashed" routerLink="/technician/task-summary/{{task.task_id}}">
+                   <button nz-button [nzSize]="size" nzType="dashed" (click)="updateWorkEnd(task.task_id)">
                      Finish
                    </button>
                   </span>
@@ -96,34 +96,35 @@
               </nz-list-item>
           </ng-template>
           <ng-template #pagination>
-              <nz-pagination [nzPageIndex]="1" [nzTotal]="50" [nzPageSize]="10"></nz-pagination>
+              <nz-pagination [nzPageIndex]="1" [nzTotal]="10" [nzPageSize]="1"></nz-pagination>
           </ng-template>
           </nz-list>
         </nz-tab>
         <nz-tab nzTitle="COMPLETED">
-          <nz-list
-          [nzDataSource]="completed"
-          [nzItemLayout]="'vertical'"
-          [nzRenderItem]="complete"
-          [nzPagination]="pagination">
-          <ng-template #complete let-complete>
-              <nz-list-item [nzContent]="complete.content" [nzExtra]="extra">
-                  <nz-list-item-meta
-                      [nzAvatar]="'assets/images/avatars/avatar.png'"
-                      [nzTitle]="nzTitle"
-                      [nzDescription]="nzDescription">
-                      <ng-template #nzTitle>Flagging</ng-template>
-                      <ng-template #nzDescription>{{complete.task_street}}  {{complete.task_city}}  {{complete.task_state}}  {{complete.task_zipCode}}</ng-template>
-                  </nz-list-item-meta>
-                  <ng-template #extra>
-                      <!-- <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"> -->
-                  </ng-template>
-              </nz-list-item>
-          </ng-template>
-          <ng-template #pagination>
-              <nz-pagination [nzPageIndex]="1" [nzTotal]="50" [nzPageSize]="10"></nz-pagination>
-          </ng-template>
-          </nz-list>
+          <nz-card>
+            <nz-table #listViewTable nzBordered [nzPageSize]="15" [nzData]="completed">
+              <thead>
+                <tr>
+                  <th>Address</th>
+                  <th>Date</th>
+                  <th>Job Duration</th>
+                  <th>Client Review</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listViewTable.data">
+                  <td>
+                    {{item.task_street}},{{item.task_city}}  {{item.task_state}} {{item.task_zipCode}}
+                  </td>
+                  <td>{{item.task_plannedStartDate | date}}</td>
+                  <td>{{item.task_flagger_duration}}Hrs</td>
+                  <td>
+                    {{item.task_client_rate}}
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </nz-card>
         </nz-tab>
       </nz-tabset>`
   </nz-card>

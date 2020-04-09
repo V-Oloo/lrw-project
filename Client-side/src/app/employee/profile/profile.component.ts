@@ -7,6 +7,8 @@ import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MustMatch } from 'src/app/shared/pipes/password-validator';
 import { url } from 'inspector';
+import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -24,8 +26,10 @@ export class ProfileComponent implements OnInit {
 
   fname; lname; email; role; location; phone; avatar
 
-
   id = +this._route.snapshot.paramMap.get('id');
+
+  uploading = false;
+  fileList: UploadFile;
 
 
   constructor(private fb: FormBuilder,
@@ -34,6 +38,7 @@ export class ProfileComponent implements OnInit {
      private message: NzMessageService,
      private router: Router,
      private _route: ActivatedRoute,
+     private http: HttpClient
      ) {
 
    }
@@ -43,7 +48,6 @@ export class ProfileComponent implements OnInit {
     this.empService.getEmployee(this.id).subscribe((res: any) => {
       this.employee = res.data;
       this.editEmployee(res.data);
-      console.log(res.data);
       // user information
 
       this.fname = this.employee.firstname;
@@ -144,16 +148,24 @@ export class ProfileComponent implements OnInit {
                    );
   }
 
-  fileList = [{
-   url : this.avatar
-  }
-];
-previewImage = '';
-previewVisible = false;
+  // beforeUpload = (file: UploadFile): boolean => {
+  //   this.fileList = file;
+  //   return false;
+  // };
 
-handlePreview = (file: UploadFile) => {
-    this.previewImage = file.url || file.thumbUrl;
-    this.previewVisible = true;
+
+  beforeUpload = (file: File) => {
+    const isJPG = file.type === ('image/jpeg' || 'image.jpg' || 'image.png').toLowerCase();
+    if (!isJPG) {
+        this.message.error('Invalid File Format, You can only upload JPG/JPEG/PNG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 3;
+    if (!isLt2M) {
+        this.message.error('Image must smaller than 3MB!');
+    }
+    return isJPG && isLt2M;
 }
+
+
 
 }

@@ -1,3 +1,4 @@
+import { error } from 'protractor';
 import { Status } from './../models/task-status.model';
 import { filter } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
@@ -28,7 +29,7 @@ export class DashboardComponent implements OnInit {
 
   currentUser = this.auth.currentUserValue;
   userId = this.currentUser.user_id;
-  fname; role;
+  fname; role; avatar;
   tasks: [];
   openTasks: [];
   completed: [];
@@ -42,6 +43,7 @@ export class DashboardComponent implements OnInit {
       const employee = res.data;
       this.fname = employee.firstname;
       this.role = employee.jobTitle;
+      this.avatar = employee.avatar
 
     });
 
@@ -63,6 +65,14 @@ export class DashboardComponent implements OnInit {
     }, (err: any) => {
       console.log(err);
     });
+  }
+
+  updateWorkEnd(taskId: number) {
+     this.projectService.patchWorkEnd(taskId).subscribe(res => {
+       this._router.navigate(["/technician/task-summary/", taskId])
+     }, error => {
+       console.log(error);
+     });
   }
 
 }

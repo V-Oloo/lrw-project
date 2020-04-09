@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../shared/services/authentication.service';
 import { Component } from '@angular/core';
 import { Event, ActivatedRoute, NavigationEnd, Router, NavigationStart, NavigationError } from "@angular/router";
 import { Observable } from "rxjs";
@@ -20,7 +21,11 @@ export class CommonLayoutComponent  {
     selectedHeaderColor: string;
     showLoadingIndicator = true;
 
-    constructor(private router: Router,  private activatedRoute: ActivatedRoute, private themeService: ThemeConstantService) {
+    constructor(private router: Router,
+      private activatedRoute: ActivatedRoute,
+      private themeService: ThemeConstantService,
+      private auth: AuthenticationService
+      ) {
         this.router.events.pipe(
             filter(event => event instanceof NavigationEnd),
             map(() => {
@@ -57,6 +62,9 @@ export class CommonLayoutComponent  {
 
        } );
     }
+
+    currentUser = this.auth.currentUserValue;
+    role = this.currentUser.role
 
     ngOnInit() {
         this.breadcrumbs$ = this.router.events.pipe(

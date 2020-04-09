@@ -1,11 +1,11 @@
-import { Comment } from './../../../../server/src/models/comment.entity';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../project/project.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { AuthenticationService } from '../shared/services/authentication.service';
-import { DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
+
 
 @Component({
   selector: 'app-confirm-task-complete',
@@ -14,15 +14,17 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ConfirmTaskCompleteComponent implements OnInit {
 
+  today = new Date();
   loading = false;
+  task;workStart;workEnd
   public errMessage: string;
+  start; stop; total;
   constructor(
     private _route: ActivatedRoute,
     private projectService: ProjectService,
     private auth: AuthenticationService,
     private message: NzMessageService,
     private _router: Router,
-    private datePipe: DatePipe,
     private fb: FormBuilder,
   ) { }
 
@@ -39,13 +41,21 @@ export class ConfirmTaskCompleteComponent implements OnInit {
         this.getFlaggers(this.flaggers);
      });
 
+     this.projectService.getTaskById(this.id).subscribe(res => {
+      this.task = res;
+      this.workStart = this.task.workStart;
+      this.workEnd = this.task.workEnd;
+      this.updateTime(this.workEnd,this.workStart);
+     });
+
     this.JobForm = this.fb.group({
-      comment: [null, [Validators.required]],
       cones: [null,[Validators.required] ],
       flaggers: [null,[Validators.required]],
       signs: [null,[Validators.required]],
       boards: [null,[Validators.required]],
-      total_hours: [null,[Validators.required]],
+      startedAt:[null, [Validators.required]],
+      endedAt:[null, [Validators.required]],
+      totalTime:[{value: 0,disabled: true}],
   });
   }
 
@@ -55,35 +65,54 @@ export class ConfirmTaskCompleteComponent implements OnInit {
     });
   }
 
+  updateTime(end, start){
+    this.JobForm.patchValue({
+      startedAt: start,
+      endedAt: end
+    });
+    this.updateTtim(end, start)
+  }
+
+  updateTtim(end, start){
+    const time = ((new Date(end).valueOf()) - (new Date(start).valueOf()));
+    const actualTime = Math.round(time/3600000)
+    this.JobForm.patchValue({
+      totalTime: actualTime,
+    });
+  }
+
   submitJobForm() {
     if (this.JobForm.invalid) {
       this.displayTaskFormValidationErrors();
       return;
     }
     this.loading = true;
-    const comment = this.JobForm.value.comment
+
     const cones = this.JobForm.value.cones;
     const flaggers = this.JobForm.value.flaggers;
     const signs = this.JobForm.value.signs;
     const boards = this.JobForm.value.boards;
-    const total_hours = this.JobForm.value.total_hours
+    const fstartTime = this.JobForm.value.startedAt
+    const fendTime = this.JobForm.value.endedAt
 
-    const Commdata = {comment: comment, emp_id: this.empId}
-    const job = {cones: cones, flaggers: flaggers, signs: signs, boards: boards, total_hours: total_hours}
+    const time = ((new Date(fendTime).valueOf()) - (new Date(fstartTime).valueOf()));
+    const actualTime = Math.round(time/3600000)
+
+    const job = {cones: cones, flaggers: flaggers, signs: signs, boards: boards,
+                 total_hours: actualTime, fworkStart: fstartTime, fworkEnd: fendTime}
 
     this.projectService.patchTaskData(this.id, job).subscribe((res:any) =>{
       this.loading = false;
-      this.addComment(Commdata)
+
       this.message.create('success', `Task updated successfully`);
       this._router.navigate(['technician/comment', this.id])
     } ,(error) => {
       this.loading = false;
       this.errMessage = error.error.message;
-      console.log(error);
     });
 
-    console.log(this.JobForm.value)
   }
+
 
   displayTaskFormValidationErrors() {
     for (const i in this.JobForm.controls) {
@@ -92,15 +121,31 @@ export class ConfirmTaskCompleteComponent implements OnInit {
     }
   }
 
-  addComment(data) {
-   const result = this.projectService.addComment(this.id, data).subscribe((res:any) => {
-      console.log(res);
-    },
-    (error: any) => {
-      console.log(error);
-    }
-    );
-
+  onChange(result: Date): void {
+    const start = result;
+    const time = ((new Date(this.JobForm.value.endedAt).valueOf()) - (new Date(start).valueOf()));
+    const actualTime = Math.round(time/3600000)
+    this.JobForm.patchValue({
+      totalTime: actualTime,
+    });
   }
+
+  onChangeEnd(result: Date): void{
+    const end = result;
+    const time = ((new Date(end).valueOf()) - (new Date(this.JobForm.value.startedAt).valueOf()));
+    const actualTime = Math.round(time/3600000)
+    this.JobForm.patchValue({
+      totalTime: actualTime,
+    });
+  }
+
+  onOk(result: Date): void {
+      console.log('onOk', result);
+  }
+
+  disabledDate = (current: Date): boolean => {
+    // Can not select days before today and today
+    return differenceInCalendarDays(current, this.today) < 0;
+ };
 
 }

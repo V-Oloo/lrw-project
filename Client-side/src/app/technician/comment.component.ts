@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../project/project.service';
 import { NzMessageService } from 'ng-zorro-antd';
-import { DatePipe } from '@angular/common';
+import { SignaturePad } from 'angular2-signaturepad';
 
 @Component({
   selector: 'app-comment',
@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
   styles: []
 })
 export class CommentComponent implements OnInit {
+  @ViewChild(SignaturePad, {static: true}) signaturePad: SignaturePad;
   Form: FormGroup;
   submitting = false;
   loading = false;
@@ -22,6 +23,13 @@ export class CommentComponent implements OnInit {
   flagger_rate;
   actual_duration;
   createdBy;
+
+  public signaturePadOptions = {
+    minWidth: 2,
+    maxWidth: 2,
+    canvasWidth: 300,
+    canvasHeight: 60
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -61,16 +69,21 @@ export class CommentComponent implements OnInit {
       billable_duration: [null,[Validators.required]],
       client_rate: [null,[Validators.required]],
       bill: [null, [Validators.required]],
-      supervisorId: [null, [Validators.required]]
+      supervisorId: [null, [Validators.required]],
+      signature: [null, [Validators.required]]
    });
   }
 
   submitForm() {
 
+    this.onSaveHandler();
+
     if (this.Form.invalid) {
       this.displayValidationErrors();
       return;
     }
+
+
     this.loading = true;
    this.projectService.updateTaskBill(this.id, this.Form.value).subscribe((res:any) => {
       this.loading = false;
@@ -127,5 +140,18 @@ export class CommentComponent implements OnInit {
       console.log(err);
     });
   }
+
+
+  onSaveHandler() {
+    const base64 = this.signaturePad.toDataURL('image/png', 0.5)
+    this.Form.patchValue({
+      signature: base64
+    })
+    //console.log(base64);
+  }
+
+  // onClearHandler() {
+  //   console.log('On Clear click');
+  // }
 
 }

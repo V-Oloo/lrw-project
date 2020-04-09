@@ -11,6 +11,7 @@ import { FooterComponent } from "./footer/footer.component";
 
 import { SideNavDirective } from "../directives/side-nav.directive";
 import { ThemeConstantService } from '../services/theme-constant.service';
+import { FlaggerSideNavComponent } from './flagger-side-nav/flagger-side-nav.component';
 
 @NgModule({
     exports: [
@@ -18,6 +19,7 @@ import { ThemeConstantService } from '../services/theme-constant.service';
         SearchComponent,
         QuickViewComponent,
         SideNavComponent,
+        FlaggerSideNavComponent,
         SideNavDirective,
         FooterComponent
     ],
@@ -31,9 +33,10 @@ import { ThemeConstantService } from '../services/theme-constant.service';
         QuickViewComponent,
         SideNavComponent,
         SideNavDirective,
-        FooterComponent
+        FooterComponent,
+        FlaggerSideNavComponent
     ],
-    providers: [ 
+    providers: [
         ThemeConstantService
     ]
 })

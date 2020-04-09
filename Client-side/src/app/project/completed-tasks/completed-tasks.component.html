@@ -22,11 +22,51 @@
       </div> -->
   </div>
 </div>
+
 <div class="container-fluid">
+
   <nz-card>
-    <div class="text-md-right m-v-10">
-      <button (click)="export()"  nz-button nzType="primary" [nzSize]="'small'"><i nz-icon nzType="download"></i>Export</button>
+
+    <div class="row">
+      <div class="col-md-9">
+        <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="startDate">From</nz-form-label>
+            <nz-form-control>
+              <nz-input-group>
+                <nz-date-picker nzShowTime class="w-100" nzFormat="MM/dd/yyyy"
+                  formControlName="fromDate" nzPlaceHolder="Select Date">
+                </nz-date-picker>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="startDate">To</nz-form-label>
+            <nz-form-control>
+              <nz-input-group>
+                <nz-date-picker nzShowTime class="w-100" nzFormat="MM/dd/yyyy"
+                  formControlName="toDate" nzPlaceHolder="Select Date">
+                </nz-date-picker>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+              <nz-form-control>
+                  <button nz-button nzType="primary" [disabled]="!validateForm.valid">View</button>
+              </nz-form-control>
+          </nz-form-item>
+        </form>
+        <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+        <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+      </div>
+      <div class="col-md-3">
+        <div class="text-md-right m-v-10">
+          <button (click)="export()"  nz-button nzType="primary" [nzSize]="'small'"><i nz-icon nzType="download"></i>Export</button>
+        </div>
+      </div>
     </div>
+
+
 
       <nz-table #listViewTable nzBordered [nzPageSize]="15" nzTitle="COMPLETED TASKS" [nzData]="taskArr" [nzScroll]="{x:'1300px'}">
           <thead>
@@ -35,8 +75,8 @@
                   <th>Job Address</th>
                   <th>Customer</th>
                   <th>Assigned</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
                   <th>Billable Time</th>
                   <th>Flagger,s Time</th>
                   <th>Bill</th>
