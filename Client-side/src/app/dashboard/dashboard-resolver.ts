@@ -33,8 +33,12 @@ export class DashboardResolver implements Resolve<any> {
 
      const pieChartData = this.projectService.getStatusStat();
 
+     const revenue = this.projectService.getRevenueData();
 
-    return forkJoin([emp, dashStat, proDetails, empList, pieChartData]);
+     const jobs = this.projectService.getFlaggerTotalJobs();
+
+
+    return forkJoin([emp, dashStat, proDetails, empList, pieChartData, revenue, jobs]);
 
 
 

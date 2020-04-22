@@ -11,10 +11,11 @@ import { CommentComponent } from './comment.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CancelTaskComponent } from './cancel-task.component';
 import { ConfirmTaskCompleteComponent } from './confirm-task-complete.component';
+import { SignatureFieldComponent } from './signature-field/signature-field.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, CommentComponent, CancelTaskComponent, ConfirmTaskCompleteComponent],
+  declarations: [DashboardComponent, CommentComponent, CancelTaskComponent, ConfirmTaskCompleteComponent, SignatureFieldComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -25,6 +26,7 @@ import { ConfirmTaskCompleteComponent } from './confirm-task-complete.component'
   ],
   providers: [
     DatePipe
-  ]
+  ],
+  exports: [SignatureFieldComponent]
 })
 export class TechnicianModule { }

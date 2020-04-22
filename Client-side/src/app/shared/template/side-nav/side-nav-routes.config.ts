@@ -38,7 +38,7 @@ export const ROUTES: SideNavInterface[] = [
 
     {
       path: '/projects/completed/tasks',
-      title: 'Completed Tasks',
+      title: 'Job Summary',
       iconType: 'fontawesome',
       iconTheme: 'outline',
       icon: 'fa fa-stream',

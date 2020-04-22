@@ -16,7 +16,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'comment/:id',
+    path: 'job-summary/:id',
     component: CommentComponent,
     data: {
         title: 'Job Summary'
@@ -31,7 +31,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'task-summary/:id',
+    path: 'job-completion-form/:id',
     component: ConfirmTaskCompleteComponent,
     data: {
         title: 'Job Completion Form'

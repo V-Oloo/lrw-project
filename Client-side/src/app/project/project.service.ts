@@ -132,4 +132,14 @@ export class ProjectService {
                     .pipe(map((data: any) => data.data), shareReplay(),);
    }
 
+   getRevenueData() {
+    return this.http.get(`${environment.apiUrl}/tasks/job/revenue`)
+                    .pipe(map((data: any) => data.data), shareReplay(),);
+   }
+
+   getFlaggerTotalJobs() {
+    return this.http.get(`${environment.apiUrl}/tasks/flaggers/job/total`)
+                    .pipe(map((data: any) => data.data), shareReplay(),);
+   }
+
 }

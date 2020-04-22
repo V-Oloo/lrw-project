@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit {
 
   updateWorkEnd(taskId: number) {
      this.projectService.patchWorkEnd(taskId).subscribe(res => {
-       this._router.navigate(["/technician/task-summary/", taskId])
+       this._router.navigate(["/technician/job-completion-form/", taskId])
      }, error => {
        console.log(error);
      });

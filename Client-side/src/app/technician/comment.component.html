@@ -92,16 +92,14 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-control nzHasFeedback [nzErrorTip]="flaggerErrorTp">
-              <nz-form-label nzRequired nzFor="address">Client Sign:</nz-form-label>
-            <signature-pad
-              formControlName="signature"
-              #sigPad
-              [options]="signaturePadOptions"
-              formDataURL="setSignature()"
-              ngDefaultControl
-              >
-            </signature-pad>
+            <nz-form-control nzHasFeedback [nzErrorTip]="signErrorTp">
+              <nz-form-label nzRequired nzFor="address">Client Signature/Initials</nz-form-label>
+              <div class="sig-container" style="border-radius: 8px; border: 1px solid #ccc; height: 80px; width: 330px;">
+                <div fxLayout="row">
+                  <signature-field formControlName="signature"></signature-field>
+                </div>
+              </div>
+
               <ng-template #signErrorTp let-control>
                 <ng-container *ngIf="control.hasError('required')">
                   Please add signature!
@@ -113,12 +111,12 @@
           <div class="row">
             <nz-form-item>
               <nz-form-control class="pull-right">
-                <button nz-button [disabled]="loading" nzType="primary" (click)="submitForm()">
+                <button nz-button [disabled]="loading || Form.invalid" nzType="primary" (click)="submitForm()">
                   Confirm
                   <nz-spin [nzSpinning]="loading"></nz-spin>
                 </button>
                 &nbsp;
-                <button nz-button (click)="sigPad.clear()"  nzType="danger">
+                <button nz-button (click)="sigs.first.clear()" [disabled]="!Form.controls.signature.valid"  nzType="danger">
                   clear
                 </button>
               </nz-form-control>

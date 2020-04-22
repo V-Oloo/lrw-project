@@ -105,7 +105,7 @@ export class ConfirmTaskCompleteComponent implements OnInit {
       this.loading = false;
 
       this.message.create('success', `Task updated successfully`);
-      this._router.navigate(['technician/comment', this.id])
+      this._router.navigate(['technician/job-summary', this.id])
     } ,(error) => {
       this.loading = false;
       this.errMessage = error.error.message;

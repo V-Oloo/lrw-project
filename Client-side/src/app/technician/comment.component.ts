@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../project/project.service';
 import { NzMessageService } from 'ng-zorro-antd';
-import { SignaturePad } from 'angular2-signaturepad';
+import { SignatureFieldComponent } from './signature-field/signature-field.component';
 
 @Component({
   selector: 'app-comment',
@@ -11,11 +11,14 @@ import { SignaturePad } from 'angular2-signaturepad';
   styles: []
 })
 export class CommentComponent implements OnInit {
-  @ViewChild(SignaturePad, {static: true}) signaturePad: SignaturePad;
+  @ViewChildren(SignatureFieldComponent) public sigs: QueryList<SignatureFieldComponent>;
+  @ViewChildren('sigContainer1') public sigContainer1: QueryList<ElementRef>;
+
   Form: FormGroup;
   submitting = false;
   loading = false;
   public errMessage: string;
+  public secondSig: SignatureFieldComponent;
   task; workStart; workEnd; state; street; city; zipCode; org; flaggers; cones; signs; boards; duration;
 
   amount = 0.00;
@@ -24,12 +27,12 @@ export class CommentComponent implements OnInit {
   actual_duration;
   createdBy;
 
-  public signaturePadOptions = {
-    minWidth: 2,
-    maxWidth: 2,
-    canvasWidth: 300,
-    canvasHeight: 60
-  }
+  // public signaturePadOptions = {
+  //   minWidth: 2,
+  //   maxWidth: 2,
+  //   canvasWidth: 300,
+  //   canvasHeight: 60
+  // }
 
   constructor(
     private fb: FormBuilder,
@@ -76,13 +79,11 @@ export class CommentComponent implements OnInit {
 
   submitForm() {
 
-    this.onSaveHandler();
-
     if (this.Form.invalid) {
       this.displayValidationErrors();
       return;
     }
-
+   console.log(this.Form.value)
 
     this.loading = true;
    this.projectService.updateTaskBill(this.id, this.Form.value).subscribe((res:any) => {
@@ -141,17 +142,36 @@ export class CommentComponent implements OnInit {
     });
   }
 
-
-  onSaveHandler() {
-    const base64 = this.signaturePad.toDataURL('image/png', 0.5)
-    this.Form.patchValue({
-      signature: base64
-    })
-    //console.log(base64);
+  public ngAfterViewInit() {
+    this.secondSig = this.sigs.find((sig, index) => index === 1);
+    this.beResponsive();
+    this.setOptions();
   }
 
-  // onClearHandler() {
-  //   console.log('On Clear click');
+   // set the dimensions of the signature pad canvas
+   public beResponsive() {
+    console.log('Resizing signature pad canvas to suit container size');
+    this.size(this.sigContainer1.first, this.sigs.first);
+  }
+
+  public size(container: ElementRef, sig: SignatureFieldComponent) {
+    sig.signaturePad.set('canvasWidth', container.nativeElement.clientWidth);
+    sig.signaturePad.set('canvasHeight', container.nativeElement.clientHeight);
+  }
+
+  public setOptions() {
+    this.sigs.first.signaturePad.set('penColor', 'rgb(255, 0, 0)');
+  }
+
+  public clear() {
+    this.sigs.first.clear();
+  }
+
+  // onSaveHandler() {
+  //   const base64 = this.signaturePad.toDataURL('image/png', 0.5)
+  //   this.Form.patchValue({
+  //     signature: base64
+  //   })
   // }
 
 }
