@@ -50,7 +50,7 @@
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "webpack-bundle-analyzer": "^3.0.3",
-    "xlsx": "^0.15.6",
+    "xlsx": "^0.17.0",
     "zipcodes": "^8.0.0",
     "zone.js": "~0.9.1"
   },
